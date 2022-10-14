@@ -1,5 +1,5 @@
 import { toast } from "react-toastify";
-import { Button } from "Ui";
+import { Button } from "ui";
 
 export const Home = () => {
   return (

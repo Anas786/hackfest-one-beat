@@ -37,7 +37,7 @@ export default class CategoriesController extends ApiResponse {
                     )
                     .paginate(page, limit ? limit : Env.get('PAGINATION_LIMIT'))
                     
-                    this.success(ctx, categories)
+                    return this.success(ctx, categories)
                     
                 } else {
                     const categories = await Category
@@ -52,13 +52,13 @@ export default class CategoriesController extends ApiResponse {
                         }
                     )
     
-                    this.success(ctx, categories)
+                    return this.success(ctx, categories)
                 }
             }
 
         } catch(error) {
             console.log(error)
-            this.error(ctx, error)
+            return this.error(ctx, error)
         }
         
     }

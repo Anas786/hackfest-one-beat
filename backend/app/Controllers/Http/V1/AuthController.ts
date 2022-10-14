@@ -23,8 +23,8 @@ export default class AuthController extends ApiResponse {
                 .firstOrFail()
 
             // Verify password
-            if ( !(await Hash.verify(user.password, password)) ) {
-                this.error(ctx, 'Invalid password')
+            if ( (await Hash.verify(user.password, password)) === false ) {
+                return this.error(ctx, 'Invalid password')
             }
 
             // Generate token
@@ -35,14 +35,14 @@ export default class AuthController extends ApiResponse {
             await user.load('role')
             await user.load('category')
 
-            this.success(ctx, {
+            return this.success(ctx, {
                 user: user,
                 token: token
             })
 
         } catch(error) {
             console.log(error)
-            this.error(ctx, 'No account found or account is inactive')
+            return this.error(ctx, 'No account found or account is inactive')
         }
     }
 

@@ -24,7 +24,7 @@ export default class UsersController extends ApiResponse {
                 .where('id', id)
                 .firstOrFail()
     
-                this.success(ctx, user)
+                return this.success(ctx, user)
     
             } else {
     
@@ -74,7 +74,7 @@ export default class UsersController extends ApiResponse {
                     )
                     .paginate(page, limit ? limit : Env.get('PAGINATION_LIMIT'))
                     
-                    this.success(ctx, users)
+                    return this.success(ctx, users)
                     
                 } else {
                     const users = await User
@@ -121,13 +121,13 @@ export default class UsersController extends ApiResponse {
                         }
                     )
     
-                    this.success(ctx, users)
+                    return this.success(ctx, users)
                 }
             }
 
         } catch(error) {
             console.log(error)
-            this.error(ctx, error)
+            return this.error(ctx, error)
         }
         
     }

@@ -19,7 +19,7 @@ export default class DegreesController extends ApiResponse {
                 .where('id', id)
                 .firstOrFail()
     
-                this.success(ctx, degree)
+                return this.success(ctx, degree)
     
             } else {
     
@@ -37,7 +37,7 @@ export default class DegreesController extends ApiResponse {
                     )
                     .paginate(page, limit ? limit : Env.get('PAGINATION_LIMIT'))
                     
-                    this.success(ctx, degrees)
+                    return this.success(ctx, degrees)
                     
                 } else {
                     const degrees = await Degree
@@ -52,13 +52,13 @@ export default class DegreesController extends ApiResponse {
                         }
                     )
     
-                    this.success(ctx, degrees)
+                    return this.success(ctx, degrees)
                 }
             }
 
         } catch(error) {
             console.log(error)
-            this.error(ctx, error)
+            return this.error(ctx, error)
         }
         
     }

@@ -1,6 +1,6 @@
 import { FC } from "react";
 import { Route, Routes } from "react-router-dom";
-import { PortectedRoute, AdminRoute } from "./components";
+import { ProtectedRoute, AdminRoute } from "./components";
 import { ADMIN_ROUTES, PROTECTED_ROUTES, PUBLIC_ROUTES } from "./data/routes";
 
 export const Router: FC = () => {
@@ -12,7 +12,7 @@ export const Router: FC = () => {
       ))}
 
       {/* PROTECTED ROUTES */}
-      <Route path="/" element={<PortectedRoute />}>
+      <Route path="/" element={<ProtectedRoute />}>
         {PROTECTED_ROUTES.map((route) => (
           <Route key={route.path} path={route.path} element={route.element} />
         ))}

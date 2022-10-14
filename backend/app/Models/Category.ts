@@ -1,15 +1,16 @@
 import { DateTime } from 'luxon'
-import { BaseModel, column } from '@ioc:Adonis/Lucid/Orm'
+import { BaseModel, column, manyToMany, ManyToMany } from '@ioc:Adonis/Lucid/Orm'
+import Role from './Role'
 
 export default class Category extends BaseModel {
 
 	public static CATEGORY = {
-		AU: 1,
-		CC: 2,
-		ED: 3,
-		FD: 4,
-		HL: 5,
-		HC: 6
+		PATIENT: 1,
+		CLINIC: 2,
+		EMERGENCY_DEPARTMENT: 3,
+		FREE_STANDING_EMERGENCY_DEPARTMENT: 4,
+		HOSPITAL: 5,
+		HEALTHCARE_CENTER: 6
 	}
 
 	@column({ isPrimary: true })
@@ -26,4 +27,13 @@ export default class Category extends BaseModel {
 
 	@column.dateTime({ autoCreate: true, autoUpdate: true })
 	public updatedAt: DateTime
+
+	@manyToMany(() => Role, {
+		localKey: 'id',
+		pivotForeignKey: 'categoryId',
+		relatedKey: 'id',
+		pivotRelatedForeignKey: 'roleId',
+		pivotTable: 'category_roles',
+	})
+	public roles: ManyToMany<typeof Role>
 }

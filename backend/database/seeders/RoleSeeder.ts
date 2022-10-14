@@ -1,5 +1,4 @@
 import BaseSeeder from '@ioc:Adonis/Lucid/Seeder'
-import Category from 'App/Models/Category'
 import Role from 'App/Models/Role'
 
 export default class extends BaseSeeder {
@@ -10,83 +9,47 @@ export default class extends BaseSeeder {
 		await Role.createMany([
 			{
 				name: 'Administrator',
-				code: 'AR',
-				categoryId: Category.CATEGORY.AU
+				code: 'AR'
 			},
 			{
 				name: 'Admission Desk User',
-				code: 'AK',
-				categoryId: Category.CATEGORY.HL
-			},
-			{
-				name: 'Administrator',
-				code: 'AR',
-				categoryId: Category.CATEGORY.CC
-			},
-			{
-				name: 'Administrator',
-				code: 'AR',
-				categoryId: Category.CATEGORY.ED
-			},
-			{
-				name: 'Administrator',
-				code: 'AR',
-				categoryId: Category.CATEGORY.FD
-			},
-			{
-				name: 'Administrator',
-				code: 'AR',
-				categoryId: Category.CATEGORY.HL
-			},
-			{
-				name: 'Administrator',
-				code: 'AR',
-				categoryId: Category.CATEGORY.HC
+				code: 'AK'
 			},
 			{
 				name: 'Bed Flow Coordinator',
-				code: 'BR',
-				categoryId: Category.CATEGORY.HL
+				code: 'BR'
 			},
 			{
 				name: 'Physician',
-				code: 'PN',
-				categoryId: Category.CATEGORY.HL
+				code: 'PN'
 			},
 			{
 				name: 'Physician Assistant',
-				code: 'PA',
-				categoryId: Category.CATEGORY.HL
+				code: 'PA'
 			},
 			{
-				name: 'Quicare Support',
-				code: 'QT',
-				categoryId: Category.CATEGORY.HL
+				name: 'OneBeat Support',
+				code: 'OS'
 			},
 			{
 				name: 'Registered Nurse',
-				code: 'RE',
-				categoryId: Category.CATEGORY.HL
+				code: 'RE'
 			},
 			{
 				name: 'Staff',
-				code: 'SF',
-				categoryId: Category.CATEGORY.HL
+				code: 'SF'
 			},
 			{
 				name: 'Self-accepting Physician',
-				code: 'SN',
-				categoryId: Category.CATEGORY.HL
+				code: 'SN'
 			},
 			{
 				name: 'Sub administrator',
-				code: 'SR',
-				categoryId: Category.CATEGORY.HL
+				code: 'SR'
 			},
 			{
 				name: 'User',
-				code: 'UR',
-				categoryId: Category.CATEGORY.HL
+				code: 'UR'
 			},
 		])
 	}

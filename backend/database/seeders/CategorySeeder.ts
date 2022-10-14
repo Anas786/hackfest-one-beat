@@ -8,8 +8,8 @@ export default class extends BaseSeeder {
 
 		await Category.createMany([
 			{
-				name: 'App User',
-				code: 'AU'
+				name: 'Patient',
+				code: 'PT'
 			},
 			{
 				name: 'Clinic',

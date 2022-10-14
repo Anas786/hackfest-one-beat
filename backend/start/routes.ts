@@ -47,6 +47,8 @@ Route.get('/', async () => {
 
 	/** CATEGORIES ROUTES */
 	Route.get('/categories', 'CategoriesController.index')
+	Route.get('/categories/:id', 'CategoriesController.index')
+	Route.get('/categories/:id/roles', 'CategoriesController.roles')
 
 	/** DEGREES ROUTES */
 	Route.get('/degrees', 'DegreesController.index')

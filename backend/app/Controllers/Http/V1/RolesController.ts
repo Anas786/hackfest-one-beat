@@ -7,7 +7,7 @@ export default class RolesController extends ApiResponse {
 
     public async index(ctx: HttpContextContract) {  
         
-        const { paginate, page, limit, sort, order, category_id } = ctx.request.qs()
+        const { paginate, page, limit, sort, order } = ctx.request.qs()
         const id = ctx.request.param('id')
 
         try {
@@ -27,15 +27,6 @@ export default class RolesController extends ApiResponse {
                     const roles = await Role
                     .query()
                     .if(
-                        category_id != null, 
-                        (query) => {
-                            query.where('category_id', category_id)
-                        },
-                        () => {
-        
-                        }
-                    )
-                    .if(
                         sort != null,
                         (query) => {
                             query.orderBy(sort, order)
@@ -51,15 +42,6 @@ export default class RolesController extends ApiResponse {
                 } else {
                     const roles = await Role
                     .query()
-                    .if(
-                        category_id != null, 
-                        (query) => {
-                            query.where('category_id', category_id)
-                        },
-                        () => {
-        
-                        }
-                    )
                     .if(
                         sort != null,
                         (query) => {

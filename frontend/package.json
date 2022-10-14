@@ -3,11 +3,11 @@
   "version": "0.1.0",
   "private": true,
   "resolutions": {
-      "@mui/styled-engine": "npm:@mui/styled-engine-sc@latest"
-    },
+    "@mui/styled-engine": "npm:@mui/styled-engine-sc@latest"
+  },
   "dependencies": {
-    "@mui/styled-engine": "npm:@mui/styled-engine-sc@latest",
     "@mui/material": "^5.10.9",
+    "@mui/styled-engine": "npm:@mui/styled-engine-sc@latest",
     "@mui/styled-engine-sc": "^5.10.6",
     "@testing-library/jest-dom": "^5.14.1",
     "@testing-library/react": "^13.0.0",
@@ -22,6 +22,7 @@
     "react-dom": "^18.2.0",
     "react-router-dom": "^6.4.2",
     "react-scripts": "5.0.1",
+    "react-toastify": "^9.0.8",
     "styled-components": "^5.3.6",
     "typescript": "^4.4.2",
     "web-vitals": "^2.1.0"

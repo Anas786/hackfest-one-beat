@@ -1,9 +1,9 @@
 import type { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
 import Env from '@ioc:Adonis/Core/Env'
 import ApiResponse from 'App/Traits/ApiResponse'
-import Role from 'App/Models/Role'
+import FacilityType from 'App/Models/FacilityType'
 
-export default class RolesController extends ApiResponse {
+export default class FacilityTypesController extends ApiResponse {
 
     public async index(ctx: HttpContextContract) {  
         
@@ -14,17 +14,17 @@ export default class RolesController extends ApiResponse {
 
             if( id ) {
 
-                const role = await Role
-                .query()
-                .where('id', id)
-                .firstOrFail()
+                const facilityType = await FacilityType
+                    .query()
+                    .where('id', id)
+                    .firstOrFail()
     
-                return this.success(ctx, role)
+                return this.success(ctx, facilityType)
     
             } else {
     
                 if( paginate != null && paginate == '1' || paginate == 1 ) {
-                    const roles = await Role
+                    const facilityTypes = await FacilityType
                     .query()
                     .if(
                         sort != null,
@@ -37,10 +37,10 @@ export default class RolesController extends ApiResponse {
                     )
                     .paginate(page, limit ? limit : Env.get('PAGINATION_LIMIT'))
                     
-                    return this.success(ctx, roles)
+                    return this.success(ctx, facilityTypes)
                     
                 } else {
-                    const roles = await Role
+                    const facilityTypes = await FacilityType
                     .query()
                     .if(
                         sort != null,
@@ -52,7 +52,7 @@ export default class RolesController extends ApiResponse {
                         }
                     )
     
-                    return this.success(ctx, roles)
+                    return this.success(ctx, facilityTypes)
                 }
             }
 

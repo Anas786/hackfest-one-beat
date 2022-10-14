@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 
-import '../../data/models/entities/user.dart';
 import '../../data/models/ui/page_arguments.dart';
-import '../../ui/pages/auth/auth_page.dart';
+import '../../ui/pages/auth/login_page.dart';
 import '../../ui/pages/home/home_page.dart';
 import '../../ui/pages/splash/splash_page.dart';
 import '../constants/route_constants.dart';
@@ -21,27 +20,19 @@ class RouteUtils {
     LogUtils.debug('Route[name=$route, Args=${args?.toJson()}]');
 
     if (route == RouteConstants.index) {
-      // Initial route doesn't requires transition
-      return MaterialPageRoute(
-        builder: (ctx) => const SplashPage(),
-      );
+      return _getPageRoute(const SplashPage());
     } else if (route == RouteConstants.auth) {
-      return _getPageRoute(
-        const AuthPage(),
-      );
+      return _getPageRoute(const LoginPage());
     } else if (route == RouteConstants.home) {
-      final user = args?.data as User?;
-      return _getPageRoute(
-        const HomePage(),
-      );
+      return _getPageRoute(const HomePage());
     }
     return null;
   }
 
   static MaterialPageRoute _getPageRoute(
-      Widget page, {
-        RouteSettings? settings,
-      }) {
+    Widget page, {
+    RouteSettings? settings,
+  }) {
     return MaterialPageRoute(
       builder: (ctx) => page,
       settings: settings,

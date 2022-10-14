@@ -19,15 +19,21 @@ class AppTheme {
   //     FontWeight.w900: 'Black',
   // }
 
-  static const Color primaryColor = Color(0xE60188C0);
-  static const Color errorColor = Color(0xFFFF3333);
+  static const Color primaryColor = Color(0xFF853BEF);
+  static const Color secondaryColor = Color(0xFFf35b9c);
   static const Color dividerColor = Color(0xFFE6E8E7);
+  static const Color successColor = Color(0xFF049f55);
+  static const Color errorColor = Color(0xFFe63950);
+  static const Color descriptionColor = Color(0xFF969aa8);
+  static const Color grayColor = Color(0xFFadadad);
+  static const Color primaryTextColor = Colors.black;
   static const Color backgroundColor = Colors.white;
 
   static final ThemeData appTheme = ThemeData(
     brightness: Brightness.light,
     colorScheme: const ColorScheme.light(
       primary: primaryColor,
+      secondary: secondaryColor,
       error: errorColor,
     ),
     dividerColor: dividerColor,
@@ -36,19 +42,18 @@ class AppTheme {
     ),
     buttonTheme: ButtonThemeData(
       textTheme: ButtonTextTheme.primary,
-      height: 48,
+      height: 54,
       shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(32),
+        borderRadius: BorderRadius.circular(16),
       ),
       buttonColor: primaryColor,
     ),
-    textTheme: GoogleFonts.latoTextTheme(),
+    textTheme: GoogleFonts.poppinsTextTheme(),
     iconTheme: const IconThemeData(color: primaryColor),
     snackBarTheme: const SnackBarThemeData(behavior: SnackBarBehavior.floating),
+    disabledColor: grayColor,
     backgroundColor: backgroundColor,
     scaffoldBackgroundColor: backgroundColor,
-    drawerTheme: const DrawerThemeData(
-      backgroundColor: backgroundColor,
-    ),
+    drawerTheme: const DrawerThemeData(backgroundColor: backgroundColor),
   );
 }

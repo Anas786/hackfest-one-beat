@@ -1,2 +1,2 @@
 export * from "./AdminRoute";
-export * from "./PortectedRoute";
+export * from "./ProtectedRoute";

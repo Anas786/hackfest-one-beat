@@ -53,10 +53,13 @@ Route.get('/', async () => {
 	/** DEGREES ROUTES */
 	Route.get('/degrees', 'DegreesController.index')
 
+	/** SPECIALTIES ROUTES */
+	Route.get('/specialties', 'SpecialtiesController.index')
+
 	/** FACILITY TYPES ROUTES */
 	Route.get('/facility_types', 'FacilityTypesController.index')
 
-	/** SPECIALTIES ROUTES */
-	Route.get('/specialties', 'SpecialtiesController.index')
+	/** FACILITIES ROUTES */
+	Route.get('/facilities', 'FacilitiesController.index')
 	
 }).namespace('App/Controllers/Http/V1').prefix('/api/v1').middleware(['auth:api'])

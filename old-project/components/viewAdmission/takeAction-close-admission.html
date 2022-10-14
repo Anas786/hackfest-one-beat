@@ -1,0 +1,31 @@
+ <div class="panel panel-default">
+    <div class="panel-heading"><strong>Close Admission</strong></div>
+        <div class="panel-body">
+        <div class="media">
+            <div class="media-body col-md-6">
+                <div class="list-unstyled">
+                   <!--div class="media"-->
+                    <div class="media-body">
+                        <ul class="list-unstyled list-info list-admission">
+                            <li style="border:none">
+                               <select ng-change="viewAdmissionPageData.checkCloseAdmissionReason()" 
+                                       ng-model="viewAdmissionPageData.selectedCloseAdmissionReason" class="form-control">
+                                    <option value="0">Select Reason for Close Admission</option>
+                                    <option value="1">Test 1</option>
+                                    <option value="2">Test 2</option>
+                                    <option value="3">Test 3</option>
+                                </select>
+                            </li>
+                            
+                            <div class="form-group">
+                                <button type="button" class="btn btn-primary" ng-click="viewAdmissionPageData.updateStatus(9)">Close Admission</button>
+                            </div>
+                        </ul>
+                    </div>
+                <!--/div-->                
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,193 @@
+<section id="content">
+
+        <div class="container">
+            <div class="block-header">
+                <h2>Dashboard</h2>
+
+                <ul class="actions">
+                    <li>
+                        <a href="">
+                            <i class="zmdi zmdi-trending-up"></i>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="">
+                            <i class="zmdi zmdi-check-all"></i>
+                        </a>
+                    </li>
+                    <li class="dropdown" dropdown>
+                        <a href="" dropdown-toggle>
+                            <i class="zmdi zmdi-more-vert"></i>
+                        </a>
+
+                        <ul class="dropdown-menu dropdown-menu-right">
+                            <li>
+                                <a href="">Refresh</a>
+                            </li>
+                            <li>
+                                <a href="">Manage Widgets</a>
+                            </li>
+                            <li>
+                                <a href="">Widgets Settings</a>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+
+            </div>
+
+            <div class="card">
+                <div class="card-header">
+                    <h2>Admisisons Statistics <small>Dummy Graphs</small></h2>
+
+                    <ul class="actions">
+                        <li>
+                            <a href="">
+                                <i class="zmdi zmdi-refresh-alt"></i>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="">
+                                <i class="zmdi zmdi-download"></i>
+                            </a>
+                        </li>
+                        <li class="dropdown" dropdown>
+                            <a href="" dropdown-toggle>
+                                <i class="zmdi zmdi-more-vert"></i>
+                            </a>
+
+                            <ul class="dropdown-menu dropdown-menu-right">
+                                <li>
+                                    <a href="">Change Date Range</a>
+                                </li>
+                                <li>
+                                    <a href="">Change Graph Type</a>
+                                </li>
+                                <li>
+                                    <a href="">Other Settings</a>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="card-body">
+                    <div class="chart-edge">
+                        <div class="flot-chart" data-curvedline-chart></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="mini-charts">
+                <div class="row">
+                    <div class="col-sm-6 col-md-3">
+                        <div class="mini-charts-item bgm-cyan">
+                            <div class="clearfix">
+                                <div class="chart stats-bar" data-sparkline-bar></div>
+                                <div class="count">
+                                    <small>Total Users</small>
+                                    <h2>987,459</h2>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-sm-6 col-md-3">
+                        <div class="mini-charts-item bgm-lightgreen">
+                            <div class="clearfix">
+                                <div class="chart stats-bar-2" data-sparkline-bar></div>
+                                <div class="count">
+                                    <small>Total Admissions</small>
+                                    <h2>356,785K</h2>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-sm-6 col-md-3">
+                        <div class="mini-charts-item bgm-orange">
+                            <div class="clearfix">
+                                <div class="chart stats-line" data-sparkline-line></div>
+                                <div class="count">
+                                    <small>Total Sales</small>
+                                    <h2>$ 458,778</h2>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-sm-6 col-md-3">
+                        <div class="mini-charts-item bgm-bluegray">
+                            <div class="clearfix">
+                                <div class="chart stats-line-2" data-sparkline-line></div>
+                                <div class="count">
+                                    <small>Support Tickets</small>
+                                    <h2>23,856</h2>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="dash-widgets">
+                <div class="row">
+                    <div class="col-md-6 col-sm-6">
+                        <div id="site-visits" class="dash-widget-item bgm-teal">
+                            <div class="p-20">
+
+                                <small>Page Views</small>
+                                <h3 class="m-0 f-400">47,896,536</h3>
+
+                                <br/>
+
+                                <small>Site Visitors</small>
+                                <h3 class="m-0 f-400">24,456,799</h3>
+
+                                <br/>
+
+                                <small>Total Clicks</small>
+                                <h3 class="m-0 f-400">13,965</h3>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6 col-sm-6">
+                        <div id="pie-charts" class="dash-widget-item">
+                            <div class="bgm-pink">
+                                <div class="dash-widget-header">
+                                    <div class="dash-widget-title">Admissions Statistics</div>
+                                </div>
+
+                                <div class="clearfix"></div>
+
+                                <div class="text-center p-20 m-t-25">
+                                    <div class="easy-pie main-pie" data-percent="100" data-easypie-chart>
+                                        <div class="percent">100</div>
+                                        <div class="pie-title">Admissions Sent</div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="p-t-20 p-b-20 text-center">
+                                <div class="easy-pie sub-pie-1" data-percent="95" data-easypie-chart>
+                                    <div class="percent">95</div>
+                                    <div class="pie-title">Accepted</div>
+                                </div>
+                                <div class="easy-pie sub-pie-2" data-percent="05" data-easypie-chart>
+                                    <div class="percent">05</div>
+                                    <div class="pie-title">Denied</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+					<!--div class="col-sm-6">
+						<div id="calendar-widget" data-full-calendar></div>
+					</div-->
+                    
+                </div>
+            </div>
+
+        </div>
+    </section>

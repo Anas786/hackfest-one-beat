@@ -1,0 +1,135 @@
+<div class="container" data-ng-controller="admissionsCtrl as admCtrl">
+    <div class="card">
+
+    <div class="row" style="background: rgb(128, 169, 221); margin:0px; border-radius:15px 15px 0 0;border-bottom:8px solid rgba(0, 43, 255, 0.63);">
+        <div class="card-body card-padding">
+            <form class="row ng-pristine ng-valid" role="form">
+                <div class="col-sm-3">
+                    <div class="form-group fg-line">
+                        <label style="color:white">Search by Hospital</label>
+                        <select ng-model="selectedFaclity" ng-options="obj.id as obj.name for obj in userFacilities | orderBy:'name'" class="form-control" ng-change="searchAdmission()">
+                        </select>
+                    </div>
+                </div>
+
+                <div class="col-sm-3">
+                    <div class="form-group fg-line">
+                        <label style="color:white">Transaction Number</label>
+                        <input ng-model="searchText" class="form-control input-sm" type="text" placeholder="Transaction #">
+                    </div>
+                </div>
+
+                <div class="col-sm-3">
+                   <button ng-click="searchAdmission()" class="btn bgm-lime btn-icon waves-effect waves-circle" style="margin-top:22px;"><i class="zmdi zmdi-search"></i></button>
+                </div>
+                <div class="col-sm-3">
+                    <div class="form-group fg-line text-right">
+                    <button class="btn bgm-teal btn-icon waves-effect waves-circle" style="margin-top:22px;" ng-click="reloadAdmissions()"><i class="zmdi zmdi-refresh"></i></button>
+                    <span export-to-csv class="btn bgm-orange waves-effect" style="margin-top:22px;">Export CSV</span>
+                    <table style="display:none" id="exportCSV">
+                        <thead>
+                            <tr>
+                                <th>Status</th>
+                                <th>Transaction#</th>
+                                <th>First Name</th>
+                                <th>Last Name</th>
+                                <th>Age</th>
+                                <th>Gender</th>
+                                <th>Diagnosis</th>
+                                <th>Patient Status</th>
+                                <th>Bed Type</th>
+                                <th>Referring Facility</th>
+                                <th>Admitting Facility</th>
+                                <th>Initiated</th>
+                                <th>Last Updated</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="admission in admissions">
+                                <td>{{admission.status_text}}</td>
+                                <td>{{admission.transaction_number}}</td>
+                                <td>{{admission.patient_first_name | limitTo : 1}}***</td>
+                                <td>{{admission.patient_last_name | limitTo : 1}}***</td>
+                                <td>***</td>
+                                <td>{{admission.patient_gender == 'M' ? 'Male' : 'Female'}}</td>
+                                <td>{{admission.diagnosis| limitTo : 25}} {{admission.diagnosis.length > 25 ? "...." : ""}}</td>
+                                <td>{{admission.code_status.name}}</td>
+                                <td>{{admission.bed_type.name}}</td>
+                                <td>{{admission.sent_to_facility.name | limitTo : 25}} {{admission.sent_to_facility.name.length  > 25 ? "...." : ""}}</td>
+                                <td>{{admission.sent_by_facility.name | limitTo : 25}} {{admission.sent_by_facility.name.length  > 25 ? "...." : ""}}</td>
+                                <td>{{admission.intiated_on}}</td>
+                                <td>{{admission.updated_on}}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    </div>
+                </div>
+
+            </form>
+        </div>
+		
+	</div>
+   
+    <section class="card-body table-responsive">
+         
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>Status</th>
+                            <th>Transaction#</th>
+                            <th>First Name</th>
+                            <th>Last Name</th>
+                            <th>Age</th>
+                            <th>Gender</th>
+                            <th>Diagnosis</th>
+                            <th>Patient Status</th>
+                            <th>Bed Type</th>
+                            <th>Referring Facility</th>
+                            <th>Admitting Facility</th>
+                            <th>Initiated</th>
+                            <th>Last Updated</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="admission in admissions">
+                            <td>
+                                <a data-ui-sref="app.admission-detail({id:'{{admission.transaction_number}}'})" class="pull-left status-img">
+                                    <img alt="" src="img/icons/{{admission.status_icon}}" class="img-circle img40_40" 
+                                         title="{{admission.status_text}}">
+                                    <label>{{admission.status_text}}</label>
+                                </a> 
+                            </td>
+                            <td><a data-ui-sref="app.admission-detail({id:'{{admission.transaction_number}}'})">{{admission.transaction_number}} </a></td>
+                            <td>{{admission.patient_first_name | limitTo : 1}}***</td>
+                            <td>{{admission.patient_last_name | limitTo : 1}}***</td>
+                            <td>***</td>
+                            <td>{{admission.patient_gender == 'M' ? 'Male' : 'Female'}}</td>
+                            <td>{{admission.diagnosis| limitTo : 25}} {{admission.diagnosis.length > 25 ? "...." : ""}}</td>
+                            <td>{{admission.code_status.name}}</td>
+                            <td>{{admission.bed_type.name}}</td>
+                            <td>{{admission.sent_to_facility.name | limitTo : 25}} {{admission.sent_to_facility.name.length  > 25 ? "...." : ""}}</td>
+                            <td>{{admission.sent_by_facility.name | limitTo : 25}} {{admission.sent_by_facility.name.length  > 25 ? "...." : ""}}</td>
+                            <td>{{admission.intiated_on}}</td>
+                            <td>{{admission.updated_on}}</td>
+
+                        </tr>
+                    </tbody>
+                </table>
+                <footer class="table-footer">
+
+					<pagination ng-change="pageChanged()" items-per-page="recordsPerPage" total-items="totalItems" ng-model="currentPage" max-size="pagesToShow"  boundary-links="true" rotate="false" num-pages="numPages"></pagination>
+					<div class="pull-right select-page-size">
+						Show 
+						<select ng-model="recordsPerPage" ng-change="pageChanged()">
+							<option value="10">10</option>
+							<option value="15">15</option>
+							<option value="20">20</option>
+						</select> Results Per Page 
+					</div>						
+                </footer>       
+            </section>
+
+    </div>    
+</div>
+
+

@@ -1,0 +1,107 @@
+<div class="container" data-ng-controller="admissionsCtrl as admCtrl">
+<div class="row">
+    <div class="col-md-12">
+    <section class="panel panel-default table-dynamic">
+        <div class="panel-heading">
+        	<strong><span class="fa fa-ticket"></span> Admissions</strong>
+        </div>
+		<section class="panel panel-default">
+            <div class="panel-body">
+                <form class="form" name="searchForm" novalidate>
+                 
+				 
+					<div class="row">
+						<div class="col-sm-4">
+							<div class="input-group fg-float">
+								<span class="input-group-addon"><i class="zmdi zmdi-account"></i></span>
+								<div class="fg-line">
+									<select chosen ng-model="selectedFaclity" name="facilities" ng-change="setPageToInitial()"
+											ng-options="obj.id as obj.name for obj in userFacilities | orderBy:'created'">									
+									</select>
+									<label class="fg-label">Search By Facilities</label>
+								</div>
+							</div>
+						</div>
+
+						<div class="col-sm-4">
+							<div class="input-group fg-float">
+								<div class="fg-line">
+									<input ng-model="searchText" class="form-control" type="text">
+									<label class="fg-label">Search By Transfer Number</label>
+								</div>
+								<span class="input-group-addon last"><i class="zmdi zmdi-my-location"></i></span>
+							</div>
+						</div>
+
+						<div class="col-sm-4">
+							<button ng-click="setPageToInitial()" ng-show="showSearchBtn" type="button" class="btn btn-primary ">Search</button>
+						</div>
+					</div>
+				</form>
+			</div>
+		</section>
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Status</th>
+                            <th>Transaction#</th>
+                            <th>First Name</th>
+                            <th>Last Name</th>
+                            <th>Age</th>
+                            <th>Gender</th>
+                            <th>Diagnosis</th>
+                            <th>Patient Status</th>
+                            <th>Bed Type</th>
+                            <th>Referring Facility</th>
+                            <th>Admitting Facility</th>
+                            <th>Initiated</th>
+                            <th>Last Updated</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="admission in admissions">
+                            <td>
+                                <a href="#/viewadmission/{{admission.transaction_number}}" class="pull-left status-img">
+                                    <img alt="" src="images/assets/{{admission.status_icon}}" class="img-circle img40_40" 
+                                         title="{{admission.status_text}}">
+                                    <label>{{admission.status_text}}</label>
+                                </a> 
+                            </td>
+                            <td><a href="#/viewadmission/{{admission.transaction_number}}">{{admission.transaction_number}} </a></td>
+                            <td>{{admission.patient_first_name | limitTo : 1}}***</td>
+                            <td>{{admission.patient_last_name | limitTo : 1}}***</td>
+                            <td>***</td>
+                            <td>{{admission.patient_gender == 'M' ? 'Male' : 'Female'}}</td>
+                            <td>{{admission.diagnosis| limitTo : 25}} {{admission.diagnosis.length > 25 ? "...." : ""}}</td>
+                            <td>{{admission.code_status.name}}</td>
+                            <td>{{admission.bed_type.name}}</td>
+                            <td>{{admission.sent_to_facility.name | limitTo : 25}} {{admission.sent_to_facility.name.length  > 25 ? "...." : ""}}</td>
+                            <td>{{admission.sent_by_facility.name | limitTo : 25}} {{admission.sent_by_facility.name.length  > 25 ? "...." : ""}}</td>
+                            <td>{{admission.intiated_on}}</td>
+                            <td>{{admission.updated_on}}</td>
+
+                        </tr>
+                    </tbody>
+                </table>
+                <footer class="table-footer">
+                    <div class="row">
+                        <div class="col-md-6 pagination-container">
+                           <pagination ng-change="pageChanged()" items-per-page="recordsPerPage" total-items="totalItems" ng-model="currentPage" max-size="pagesToShow"  boundary-links="true" rotate="false" num-pages="numPages"></pagination>
+                        </div>
+                        <div class="col-md-6 page-num-info text-right">
+                            <span>
+                            Show 
+                                <select ng-model="recordsPerPage" ng-change="pageChanged()">
+                                    <option value="10">10</option>
+                                    <option value="15">15</option>
+                                    <option value="20">20</option>
+                                </select> Results per page 
+                            </span>
+                        </div>
+                  
+                    </div>
+                </footer>       
+            </section>
+        </div>
+    </div>
+</div>

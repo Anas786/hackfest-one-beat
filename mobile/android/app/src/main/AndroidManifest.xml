@@ -18,7 +18,7 @@
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher"
         android:roundIcon="@mipmap/ic_launcher"
-        android:label="One Beat"
+        android:label="OneBeat"
         android:usesCleartextTraffic="true">
         <activity
             android:name="com.onebeat.MainActivity"

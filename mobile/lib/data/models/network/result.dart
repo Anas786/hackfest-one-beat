@@ -49,7 +49,7 @@ class Result<T> implements BaseModel {
     }
     return Result<T>._internal(
       code: code,
-      status: json['success'],
+      status: json['status'],
       message: json['message'],
       data: callback(json['data']),
     );
@@ -79,7 +79,7 @@ class Result<T> implements BaseModel {
   Map<String, dynamic> toJson() {
     return {
       'code': code,
-      'success': status,
+      'status': status,
       'message': message,
       'data': data,
     };

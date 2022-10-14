@@ -1,12 +1,12 @@
 import '../../base_model.dart';
 
 class AuthRequest implements BaseModel {
-  final String? email;
-  final String? password;
+  String? email;
+  String? password;
 
   AuthRequest({
-    required this.email,
-    required this.password,
+    this.email,
+    this.password,
   });
 
   @override
@@ -26,9 +26,9 @@ class RegisterRequest extends AuthRequest {
   final String? password;
 
   RegisterRequest({
-    required this.name,
-    required this.email,
-    required this.password,
+    this.name,
+    this.email,
+    this.password,
   }) : super(email: email, password: password);
 
   @override

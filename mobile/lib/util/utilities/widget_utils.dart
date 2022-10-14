@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
+import 'image_utils.dart';
+import '../../ui/resources/app_assets.dart';
+
 class WidgetUtils {
   const WidgetUtils._internal();
 
@@ -16,28 +19,16 @@ class WidgetUtils {
       onPressed: onPressed,
       child: Text(
         text.toUpperCase(),
-        style: GoogleFonts.lato(),
+        style: GoogleFonts.poppins(),
       ),
     );
   }
 
-  static Widget getRaisedButton(
-    String text, {
-    Color? color,
-    Color? textColor,
-    VoidCallback? onPressed,
-  }) {
-    return RaisedButton(
-      onPressed: onPressed,
-      color: color,
-      textColor: textColor,
-      child: Text(
-        text,
-        style: GoogleFonts.lato(
-          fontSize: 16,
-          fontWeight: FontWeight.w600,
-        ),
-      ),
+  static Widget getAppLogo() {
+    return ImageUtils.getLocalImage(
+      AppAssets.imgLogo,
+      width: 300,
+      height: 175,
     );
   }
 }

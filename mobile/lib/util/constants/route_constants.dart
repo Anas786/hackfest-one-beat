@@ -2,6 +2,7 @@ class RouteConstants {
   const RouteConstants._internal();
 
   static const String index = '/';
-  static const String auth = '/authentication';
+  static const String login = '/login';
+  static const String register = '/register';
   static const String home = '/home';
 }

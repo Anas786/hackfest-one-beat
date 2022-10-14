@@ -114,7 +114,7 @@ class DialogUtils {
     if (title != null) {
       return Text(
         title,
-        style: GoogleFonts.lato(
+        style: GoogleFonts.poppins(
           fontWeight: FontWeight.w600,
         ),
       );
@@ -127,7 +127,7 @@ class DialogUtils {
       return SingleChildScrollView(
         child: Text(
           message,
-          style: GoogleFonts.lato(),
+          style: GoogleFonts.poppins(),
         ),
       );
     }

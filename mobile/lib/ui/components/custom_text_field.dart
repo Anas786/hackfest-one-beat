@@ -92,7 +92,7 @@ class _CustomTextFieldState extends State<CustomTextField> {
           ).copyWith(
             contentPadding: EdgeInsets.fromLTRB(
               prefix == null ? 16 : 0,
-              24,
+              20,
               suffix == null ? 16 : 0,
               12,
             ),

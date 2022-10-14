@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../../data/models/ui/page_arguments.dart';
 import '../../ui/pages/auth/login_page.dart';
+import '../../ui/pages/auth/registration_page.dart';
 import '../../ui/pages/home/home_page.dart';
 import '../../ui/pages/splash/splash_page.dart';
 import '../constants/route_constants.dart';
@@ -21,8 +22,10 @@ class RouteUtils {
 
     if (route == RouteConstants.index) {
       return _getPageRoute(const SplashPage());
-    } else if (route == RouteConstants.auth) {
+    } else if (route == RouteConstants.login) {
       return _getPageRoute(const LoginPage());
+    } else if (route == RouteConstants.register) {
+      return _getPageRoute(const RegistrationPage());
     } else if (route == RouteConstants.home) {
       return _getPageRoute(const HomePage());
     }

@@ -92,7 +92,7 @@ class ProgressDialog extends StatelessWidget {
         child: Text(
           message ?? '',
           overflow: TextOverflow.ellipsis,
-          style: GoogleFonts.lato(fontSize: 16),
+          style: GoogleFonts.poppins(fontSize: 16),
         ),
       ),
     );

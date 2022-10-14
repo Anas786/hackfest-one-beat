@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
+import '../resources/app_styles.dart';
+
 class CustomRaisedButton extends StatelessWidget {
   final String text;
   final Color? color;
   final double? width;
+  final double? height;
   final Color? textColor;
   final VoidCallback? onPressed;
 
@@ -12,6 +15,7 @@ class CustomRaisedButton extends StatelessWidget {
     this.text, {
     Key? key,
     this.width,
+    this.height,
     this.color,
     this.textColor,
     this.onPressed,
@@ -20,7 +24,8 @@ class CustomRaisedButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      width: width ?? MediaQuery.of(context).size.width,
+      width: width,
+      height: height,
       child: RaisedButton(
         onPressed: onPressed,
         elevation: 0,
@@ -28,11 +33,7 @@ class CustomRaisedButton extends StatelessWidget {
         textColor: textColor,
         child: Text(
           text,
-          style: GoogleFonts.poppins(
-            fontSize: 16,
-            fontWeight: FontWeight.w600,
-            letterSpacing: 0.32,
-          ),
+          style: Texts.button,
         ),
       ),
     );

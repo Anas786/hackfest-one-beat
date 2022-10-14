@@ -22,6 +22,14 @@ class AppStrings {
   static const emailHint = 'Enter $email';
   static const password = 'Password';
   static const passwordHint = 'Enter $password';
+  static const firstName = 'First Name';
+  static const firstNameHint = 'Enter $firstName';
+  static const lastName = 'Last Name';
+  static const lastNameHint = 'Enter $lastName';
+  static const dob = 'Date of Birth';
+  static const gender = 'Gender';
+  static const cnic = 'CNIC';
+  static const select = 'Select';
   static const invalidEmail = 'Please enter a valid email address.';
   static const invalidPassword = 'Password must be at least 8 characters long.';
   static const passwordsNotMatch = 'Passwords do not match.';
@@ -32,7 +40,6 @@ class AppStrings {
   static const exit = 'Exit';
   static const exitMessage = 'Are you sure you want to exit the application?';
   static const loadingText = 'Please wait...';
-  static const signIn = 'Sign In';
   static const login = 'Login';
   static const createAccount = 'Create Account';
   static const logout = 'Logout';
@@ -40,6 +47,15 @@ class AppStrings {
   static const reset = 'Reset';
   static const newToApp = 'New to $appName?';
   static const signUp = 'Sign up';
+  static const haveAnAccount = 'Have an account?';
+  static const signIn = 'Sign in';
+  static const submit = 'Submit';
+  static const next = 'Next';
+  static const previous = 'Previous';
+  static const personalInfo = 'Personal Info';
+  static const contactInfo = 'Contact Info';
+  static const status = 'Status';
+  static const diagnostics = 'Diagnostics';
 
   static String required(String hint) {
     return '$hint is required.';

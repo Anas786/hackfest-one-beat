@@ -29,7 +29,7 @@ class _SplashPageState extends State<SplashPage> with TickerProviderStateMixin {
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       controller?.repeat(
         min: 0,
-        max: 56,
+        max: 53,
         period: Duration(milliseconds: millis),
       );
       _authVM = Provider.of<AuthViewModel>(context, listen: false);
@@ -69,7 +69,7 @@ class _SplashPageState extends State<SplashPage> with TickerProviderStateMixin {
     Future.delayed(Duration(milliseconds: millis)).then((value) {
       NavigationUtils.replace(
         context,
-        user != null ? RouteConstants.home : RouteConstants.auth,
+        user != null ? RouteConstants.home : RouteConstants.login,
       );
     });
   }

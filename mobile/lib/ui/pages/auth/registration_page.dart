@@ -18,18 +18,19 @@ import '../../resources/app_styles.dart';
 import '../../resources/app_theme.dart';
 import '../../view_models/auth/auth_view_model.dart';
 
-class LoginPage extends StatefulWidget {
-  const LoginPage({Key? key}) : super(key: key);
+class RegistrationPage extends StatefulWidget {
+  const RegistrationPage({Key? key}) : super(key: key);
 
   @override
-  State<LoginPage> createState() => _LoginPageState();
+  State<RegistrationPage> createState() => _RegistrationPageState();
 }
 
-class _LoginPageState extends State<LoginPage> {
+class _RegistrationPageState extends State<RegistrationPage> {
   final _formKey = GlobalKey<FormBuilderState>();
   final _uiState = ValueNotifier(UiState.none);
   final _obsecurePassword = ValueNotifier(true);
-  final _request = AuthRequest();
+  final _request = RegisterRequest();
+  int _currentStep = 0;
   AuthViewModel? _authVM;
 
   @override
@@ -58,11 +59,11 @@ class _LoginPageState extends State<LoginPage> {
     return Stack(
       children: [
         Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 24),
+          padding: const EdgeInsets.symmetric(horizontal: 0),
           child: Column(
             children: [
               _buildContent(),
-              _buildSignUpWidget(),
+              _buildLoginWidget(),
             ],
           ),
         ),
@@ -85,19 +86,7 @@ class _LoginPageState extends State<LoginPage> {
             child: Column(
               children: [
                 WidgetUtils.getAppLogo(),
-                Insets.gapH24,
-                _buildEmail(),
-                Insets.gapH16,
-                _buildPassword(),
-                Insets.gapH24,
-                CustomRaisedButton(
-                  AppStrings.login,
-                  width: MediaQuery.of(context).size.width,
-                  onPressed: _submit,
-                ),
-                Insets.gapH20,
-                _buildForgotPassword(),
-                Insets.gapH40,
+                _buildStepper(),
               ],
             ),
           ),
@@ -106,86 +95,109 @@ class _LoginPageState extends State<LoginPage> {
     );
   }
 
-  Widget _buildEmail() {
-    return ValueListenableBuilder(
-      valueListenable: _uiState,
-      builder: (context, value, child) {
-        return CustomTextField(
-          labelText: AppStrings.email,
-          hint: AppStrings.emailHint,
-          prefixIcon: Icons.email_outlined,
-          keyboardType: TextInputType.emailAddress,
-          textInputAction: TextInputAction.next,
-          validator: FormBuilderValidators.compose([
-            FormBuilderValidators.required(
-              errorText: AppStrings.required(AppStrings.email),
-            ),
-            FormBuilderValidators.email(errorText: AppStrings.invalidEmail),
-          ]),
-          onSaved: (newValue) {
-            _request.email = newValue?.trim();
-          },
-        );
-      },
-    );
-  }
-
-  Widget _buildPassword() {
-    return ValueListenableBuilder(
-      valueListenable: _uiState,
-      builder: (context, value, child) {
-        return ValueListenableBuilder<bool>(
-          valueListenable: _obsecurePassword,
-          builder: (context, value, child) {
-            return CustomTextField(
-              labelText: AppStrings.password,
-              hint: AppStrings.passwordHint,
-              obscureText: value,
-              prefixIcon: Icons.lock_outline,
-              suffixIcon: value
-                  ? Icons.visibility_outlined
-                  : Icons.visibility_off_outlined,
-              onSuffixIconPressed: () {
-                _obsecurePassword.value = !value;
-              },
-              textInputAction: TextInputAction.done,
-              validator: FormBuilderValidators.required(
-                errorText: AppStrings.required(AppStrings.password),
-              ),
-              onSaved: (newValue) {
-                _request.password = newValue?.trim();
-              },
-            );
-          },
-        );
-      },
-    );
-  }
-
-  Widget _buildForgotPassword() {
-    return Row(
-      crossAxisAlignment: CrossAxisAlignment.center,
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        Text(
-          AppStrings.forgotPassword,
-          style: Texts.paragraph1.copyWith(color: AppTheme.darkGrayColor),
-        ),
-        Insets.gapW4,
-        InkWell(
-          onTap: () {},
-          child: Text(
-            AppStrings.reset,
-            style: Texts.paragraph1.copyWith(
-              color: Theme.of(context).colorScheme.primary,
-            ),
-          ),
-        ),
+  Widget _buildStepper() {
+    return Stepper(
+      physics: const ScrollPhysics(),
+      currentStep: _currentStep,
+      onStepTapped: onTapped,
+      onStepContinue: onContinued,
+      onStepCancel: onCancel,
+      steps: [
+        _personalInfoStep(),
+        _contactInfoStep(),
+        _statusStep(),
+        _diagnosticsStep(),
       ],
+      controlsBuilder: (context, details) {
+        if (details.currentStep <= 0) {
+          return Row(
+            children: [
+              CustomRaisedButton(
+                AppStrings.next,
+                onPressed: details.onStepContinue,
+              ),
+            ],
+          );
+        } else if (details.currentStep >= 3) {
+          return Row(
+            children: [
+              CustomRaisedButton(
+                AppStrings.submit,
+                onPressed: _submit,
+              ),
+            ],
+          );
+        } else {
+          return Row(
+            children: [
+              CustomRaisedButton(
+                AppStrings.next,
+                onPressed: details.onStepContinue,
+              ),
+              Insets.gapW8,
+              TextButton(
+                onPressed: details.onStepCancel,
+                child: Text(
+                  AppStrings.previous,
+                  style: Texts.button.copyWith(color: AppTheme.darkGrayColor),
+                ),
+              ),
+            ],
+          );
+        }
+      },
     );
   }
 
-  Widget _buildSignUpWidget() {
+  Step _personalInfoStep() {
+    return Step(
+      title: Text(
+        AppStrings.personalInfo,
+        style: Texts.heading3,
+      ),
+      isActive: _currentStep >= 0,
+      state: _currentStep >= 0 ? StepState.complete : StepState.disabled,
+      content: Container(),
+    );
+  }
+
+  Step _contactInfoStep() {
+    return Step(
+      title: Text(
+        AppStrings.contactInfo,
+        style: Texts.heading3,
+      ),
+      isActive: _currentStep >= 0,
+      state: _currentStep >= 1 ? StepState.complete : StepState.disabled,
+      content: Container(),
+    );
+  }
+
+  Step _statusStep() {
+    return Step(
+      title: Text(
+        AppStrings.status,
+        style: Texts.heading3,
+      ),
+      isActive: _currentStep >= 0,
+      state: _currentStep >= 2 ? StepState.complete : StepState.disabled,
+      content: Container(),
+    );
+  }
+
+  Step _diagnosticsStep() {
+    return Step(
+      title: Text(
+        AppStrings.diagnostics,
+        style: Texts.heading3,
+      ),
+      isActive: _currentStep >= 0,
+      state: _currentStep >= 3 ? StepState.complete : StepState.disabled,
+      content: Container(),
+    );
+  }
+
+  Widget _buildLoginWidget() {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 24),
       child: Row(
@@ -193,16 +205,14 @@ class _LoginPageState extends State<LoginPage> {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Text(
-            AppStrings.newToApp,
+            AppStrings.haveAnAccount,
             style: Texts.paragraph1.copyWith(color: AppTheme.darkGrayColor),
           ),
           Insets.gapW4,
           InkWell(
-            onTap: () {
-              NavigationUtils.push(context, RouteConstants.register);
-            },
+            onTap: _onBackPressed,
             child: Text(
-              AppStrings.signUp,
+              AppStrings.signIn,
               style: Texts.paragraph1.copyWith(
                 color: Theme.of(context).colorScheme.primary,
               ),
@@ -220,18 +230,30 @@ class _LoginPageState extends State<LoginPage> {
     );
   }
 
+  onTapped(int step) {
+    setState(() => _currentStep = step);
+  }
+
+  onContinued() {
+    _currentStep < 3 ? setState(() => _currentStep += 1) : null;
+  }
+
+  onCancel() {
+    _currentStep > 0 ? setState(() => _currentStep -= 1) : null;
+  }
+
   void _submit() async {
     bool isValid = _formKey.currentState?.validate() ?? false;
     if (isValid) {
       CommonUtils.removeCurrentFocus(context);
       _formKey.currentState?.save();
 
-      // final result = await _authVM?.login(_request);
+      // final result = await _authVM?.register(_request);
       // if (!mounted) {
       //   return;
       // }
       // if (result?.isSuccess ?? false) {
-      //   NavigationUtils.replace(context, RouteConstants.home);
+      //   _onBackPressed();
       // } else {
       //   DialogUtils.showErrorDialog(context, message: result?.message);
       // }

@@ -78,9 +78,9 @@ class _CustomDropdownState<T> extends State<CustomDropdown> {
             ).copyWith(
               contentPadding: EdgeInsets.fromLTRB(
                 prefix == null ? 16 : 0,
-                4,
+                2,
                 suffix == null ? 16 : 16,
-                4,
+                2,
               ),
             ),
             onChanged: (value) {

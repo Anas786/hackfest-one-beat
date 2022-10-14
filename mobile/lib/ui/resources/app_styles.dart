@@ -9,31 +9,17 @@ import 'app_theme.dart';
 class Insets {
   const Insets._internal();
 
-  /// [SizedBox] of height **4**.
-  static const gapH4 = SizedBox(height: 4);
-
   /// [SizedBox] of width **4**.
   static const gapW4 = SizedBox(width: 4);
+  static const gapW8 = SizedBox(width: 8);
+  static const gapW16 = SizedBox(width: 16);
 
-  /// [SizedBox] of height **10**.
-  static const gapH10 = SizedBox(height: 10);
-
-  /// [SizedBox] of width **10**
-  static const gapW10 = SizedBox(width: 10);
-
-  /// [SizedBox] of width **15**
-  static const gapW15 = SizedBox(width: 15);
-
-  /// [SizedBox] of height **15**
-  static const gapH15 = SizedBox(height: 15);
-
-  /// [SizedBox] of height **20**
+  /// [SizedBox] of height **4**.
+  static const gapH4 = SizedBox(height: 4);
+  static const gapH8 = SizedBox(height: 8);
+  static const gapH16 = SizedBox(height: 16);
   static const gapH20 = SizedBox(height: 20);
-
-  /// [SizedBox] of height **25**
-  static const gapH25 = SizedBox(height: 25);
-
-  /// [SizedBox] of height **40**
+  static const gapH24 = SizedBox(height: 24);
   static const gapH40 = SizedBox(height: 40);
 
   /// [Spacer] for adding infinite gaps, as much as the constraints
@@ -73,6 +59,12 @@ class Texts {
     color: AppTheme.primaryTextColor,
   );
 
+  static final TextStyle heading3 = GoogleFonts.poppins(
+    fontSize: 16,
+    fontWeight: FontWeight.w500,
+    color: AppTheme.primaryTextColor,
+  );
+
   static final TextStyle paragraph1 = GoogleFonts.poppins(
     fontSize: 14,
     fontWeight: FontWeight.w500,
@@ -88,5 +80,11 @@ class Texts {
     fontSize: 16,
     fontWeight: FontWeight.w600,
     color: Colors.black,
+  );
+
+  static final TextStyle button = GoogleFonts.poppins(
+    fontSize: 16,
+    fontWeight: FontWeight.w600,
+    letterSpacing: 0.32,
   );
 }

@@ -24,7 +24,7 @@ class AppTheme {
   static const Color dividerColor = Color(0xFFE6E8E7);
   static const Color successColor = Color(0xFF049f55);
   static const Color errorColor = Color(0xFFe63950);
-  static const Color descriptionColor = Color(0xFF969aa8);
+  static const Color darkGrayColor = Color(0xFF969aa8);
   static const Color grayColor = Color(0xFFadadad);
   static const Color primaryTextColor = Colors.black;
   static const Color backgroundColor = Colors.white;
@@ -42,7 +42,7 @@ class AppTheme {
     ),
     buttonTheme: ButtonThemeData(
       textTheme: ButtonTextTheme.primary,
-      height: 54,
+      height: 48,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(16),
       ),

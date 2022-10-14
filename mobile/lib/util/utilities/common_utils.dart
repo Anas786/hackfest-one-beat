@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+
 import '../../ui/resources/app_strings.dart';
 import 'navigation_utils.dart';
 
@@ -37,15 +38,14 @@ class CommonUtils {
   }
 
   static Future<bool> onBackPressed(
-      BuildContext context,
-      bool? isLoading, {
-        Object? result,
-      }) async {
+    BuildContext context,
+    bool? isLoading, {
+    Object? result,
+  }) async {
     if (isLoading == true) {
       return false;
     }
     NavigationUtils.pop(context, result: result);
     return true;
   }
-
 }

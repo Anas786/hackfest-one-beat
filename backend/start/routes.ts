@@ -23,3 +23,35 @@ import Route from '@ioc:Adonis/Core/Route'
 Route.get('/', async () => {
   return { hello: 'world' }
 })
+
+/**
+ * Open Routes
+ */
+ Route.group(() => {
+
+	Route.post('/auth/login', 'AuthController.login')
+
+}).namespace('App/Controllers/Http/V1').prefix('/api/v1')
+
+/**
+ * Restricted Routes
+ */
+ Route.group(() => {
+
+	/** USER ROUTES */
+	Route.get('/users', 'UsersController.index')
+	Route.get('/users/:id', 'UsersController.index')
+
+	/** ROLES ROUTES */
+	Route.get('/roles', 'RolesController.index')
+
+	/** CATEGORIES ROUTES */
+	Route.get('/categories', 'CategoriesController.index')
+
+	/** DEGREES ROUTES */
+	Route.get('/degrees', 'DegreesController.index')
+
+	/** SPECIALTIES ROUTES */
+	Route.get('/specialties', 'SpecialtiesController.index')
+	
+}).namespace('App/Controllers/Http/V1').prefix('/api/v1').middleware(['auth:api'])

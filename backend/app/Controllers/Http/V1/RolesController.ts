@@ -19,7 +19,7 @@ export default class RolesController extends ApiResponse {
                 .where('id', id)
                 .firstOrFail()
     
-                this.success(ctx, role)
+                return this.success(ctx, role)
     
             } else {
     
@@ -46,7 +46,7 @@ export default class RolesController extends ApiResponse {
                     )
                     .paginate(page, limit ? limit : Env.get('PAGINATION_LIMIT'))
                     
-                    this.success(ctx, roles)
+                    return this.success(ctx, roles)
                     
                 } else {
                     const roles = await Role
@@ -70,13 +70,13 @@ export default class RolesController extends ApiResponse {
                         }
                     )
     
-                    this.success(ctx, roles)
+                    return this.success(ctx, roles)
                 }
             }
 
         } catch(error) {
             console.log(error)
-            this.error(ctx, error)
+            return this.error(ctx, error)
         }
         
     }

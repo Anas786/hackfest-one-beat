@@ -19,7 +19,7 @@ export default class SpecialtiesController extends ApiResponse {
                 .where('id', id)
                 .firstOrFail()
     
-                this.success(ctx, specialty)
+                return this.success(ctx, specialty)
     
             } else {
     
@@ -37,7 +37,7 @@ export default class SpecialtiesController extends ApiResponse {
                     )
                     .paginate(page, limit ? limit : Env.get('PAGINATION_LIMIT'))
                     
-                    this.success(ctx, specialties)
+                    return this.success(ctx, specialties)
                     
                 } else {
                     const specialties = await Specialty
@@ -52,13 +52,13 @@ export default class SpecialtiesController extends ApiResponse {
                         }
                     )
     
-                    this.success(ctx, specialties)
+                    return this.success(ctx, specialties)
                 }
             }
 
         } catch(error) {
             console.log(error)
-            this.error(ctx, error)
+            return this.error(ctx, error)
         }
         
     }

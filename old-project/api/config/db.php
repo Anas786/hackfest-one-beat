@@ -2,8 +2,8 @@
 
 return [
     'class' => 'yii\db\Connection',
-    'dsn' => 'mysql:host=localhost;dbname=synapp_beta',
-    'username' => 'root',
-    'password' => 'aamir786',
+    'dsn' => 'mysql:host=mysql-91444-0.cloudclusters.net;port=19009;dbname=synapp',
+    'username' => 'admin',
+    'password' => 'xCvwZZA9',
     'charset' => 'utf8',
 ];

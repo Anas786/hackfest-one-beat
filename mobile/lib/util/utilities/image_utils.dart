@@ -66,12 +66,14 @@ class ImageUtils {
 
   static Widget getLocalSvgImage(
     String imagePath, {
+    Color? color,
     double? width,
     double? height,
     BoxFit? fit,
   }) {
     return SvgPicture.asset(
       imagePath,
+      color: color,
       width: width,
       height: height,
       fit: fit ?? BoxFit.contain,

@@ -2,7 +2,11 @@
   "name": "frontend",
   "version": "0.1.0",
   "private": true,
+  "resolutions": {
+      "@mui/styled-engine": "npm:@mui/styled-engine-sc@latest"
+    },
   "dependencies": {
+    "@mui/styled-engine": "npm:@mui/styled-engine-sc@latest",
     "@mui/material": "^5.10.9",
     "@mui/styled-engine-sc": "^5.10.6",
     "@testing-library/jest-dom": "^5.14.1",

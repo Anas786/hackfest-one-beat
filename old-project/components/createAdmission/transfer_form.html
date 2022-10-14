@@ -1,0 +1,612 @@
+<div class="container panel panel-default" data-ng-controller="createAdmissionController as tFCtrl">
+	<div class="row">
+		<section class="col-sm-5" style="background:rgba(248, 248, 248, .9)">
+
+			<h4 class="title" style="border-bottom:1px solid #eee; padding:10px 0 10px 0;">Patient Transfer Form</h4>
+			<div class="row">
+				<div class="form-group col-sm-6 has-error">
+
+					<label for="firstName">Patient name*</label>
+					<input ng-model="tForm.patient_first_name" placeholder="First Name" name="firstName" type="text" class="form-control" focus-me="fnameError">
+					<strong ng-show="fnameError" class="help-block">Patient first name required</strong>
+				</div>
+				<div class="form-group col-sm-6">
+					 <label for="lastName">&nbsp; </label>
+					<input ng-model="tForm.patient_last_name" placeholder="Last Name" name="lastName" type="text" class="form-control" focus-me="lnameError">
+					<strong ng-show="lnameError" class="help-block">Patient last name required</strong>
+				</div>
+			</div>
+			<div class="row">
+				<div class="form-group col-sm-6">
+					<label>Date of Birth*</label>
+					<select ng-model="month" class="form-control" name="month" focus-me="dobError">
+						<option value='0'>Select Month</option>
+						<option value="01">January</option>
+						<option value="02">February</option>
+						<option value="03">March</option>
+						<option value="04">April</option>
+						<option value="05">May</option>
+						<option value="06">June</option>
+						<option value="07">July</option>
+						<option value="08">August</option>
+						<option value="09">September</option>
+						<option value="10">October</option>
+						<option value="11">November</option>
+						<option value="12">December</option>
+					</select>
+					<strong ng-show="dobError" class="help-block">Select Month, valid date and year</strong>
+				</div>
+				<div class="form-group col-sm-3">
+					 <label>&nbsp;</label>
+					<input ng-model="date" placeholder="Date" name="date" type="text" class="form-control" data-input-mask="{mask: '00'}" maxlength="2" autocomplete="off">
+				</div>
+				<div class="form-group col-sm-3">
+					<label>&nbsp;</label>
+					<input ng-model="year" placeholder="Year" name="year" type="text" class="form-control" data-input-mask="{mask: '0000'}" maxlength="4" autocomplete="off">
+				</div>
+
+			</div>
+			<div class="row">
+				<div class="form-group col-sm-6">
+					<label for="ssn">Social Security Number</label>
+					<input ng-model="tForm.patient_ssn" data-input-mask="{mask: '000-00-0000'}" maxlength="11" autocomplete="off" placeholder="123-45-6789" name="ssn" type="text" class="form-control">
+				</div>
+				<div class="form-group col-sm-6">
+					<label for="gender">Gender*</label>
+					<div class="clearfix"></div>
+					<div class="radio m-b-1">
+						<label class="radio radio-inline m-r-20" >
+							<input name="radio-inline" ng-model="tForm.patient_gender" name="sex" type="radio" value="m" focus-me="sexError">
+							<i class="input-helper"></i> <i class="fa fa-male fa-2x"></i></br>Male
+						</label>
+
+						<label class="radio radio-inline m-r-20 m-l-0">
+							<input name="radio-inline" ng-model="tForm.patient_gender" name="sex" type="radio" value="f">
+							<i class="input-helper"></i> <i class="fa fa-female fa-2x"></i></br>Female
+						</label>
+					</div>
+					<strong ng-show="sexError" class="help-block">Select gender</strong>
+				</div>
+			</div>
+			<h4 class="title" style="border-bottom:1px solid #eee; padding:10px 0 10px 0;">Patient Contact Info</h4>
+			<div class="row">
+                <div class="form-group col-sm-6">
+                    <label for="patientEmailAddress">Patient Email Address</label>
+                    <input ng-model="tForm.patient_email" placeholder="Username@domain.com" id="patientEmailAddress" name="patientEmailAddress" type="text" class="form-control" >
+                </div>
+                <div class="form-group col-sm-6">
+                    <label for="patientCellNumber">Patient Cell Number*</label>
+                    <input ng-model="tForm.patient_cell_number" data-input-mask="{mask: '(000) 000-0000'}" placeholder="eg: (000) 000-0000" maxlength="14" autocomplete="off" id="patientCellNumber" name="patientCellNumber" type="text" class="form-control" focus-me="cellError">
+                    <strong ng-show="cellError" class="help-block">Patient cell number required</strong>
+                </div>
+            </div>
+			<h4 class="title" style="border-bottom:1px solid #eee; padding:10px 0 10px 0;">Patient Status</h4>
+			
+			<div class="row">
+				<div class="form-group col-sm-6">
+					<label>Mode of Transportation*</label>
+					<select name="mode_of_tranportation" ng-model="tForm.mode_of_tranportation" class="form-control" focus-me="motError">
+						<option value="0">Select Transportation</option>
+						<option value="1">Ambulance</option>
+						<option value="2">Personal Transportaion</option>
+						<option value="4">Air Medical Transport</option>
+						<option value="5">Helicopter</option>
+						<option value="3">Unknown</option>
+					</select>
+					<strong ng-show="motError" class="help-block">Select mode of transportation</strong>
+				</div>
+				<div class="form-group col-sm-6">
+					<label>Code Status*</label>
+					<select ng-model="tForm.code_status" name="code_status" class="form-control" focus-me="cstatusError">
+						<option value="0">Select Code Status</option>
+						<option value="1">Full Code</option>
+						<option value="2">Do NOT Resuscitate</option>
+						<option value="3">Comfort Measures Only</option>
+					</select>
+					<strong ng-show="cstatusError" class="help-block">Select code status</strong>
+				</div>
+				<div class="form-group col-sm-12">
+					<label>Bed Type*</label>
+					<select ng-model="tForm.bed_type" name="bed_type" class="form-control" focus-me="btypeError">
+						<option value="0">Select Bed</option>
+						<option value="1">Outpatient/ Observation 24H w Telemetry</option>
+						<option value="2">Outpatient/ Observation 24H w/o Telemetry</option>
+						<option value="3">Med/Surg  w Telemetry</option>
+						<option value="4">Med/Surg w/o Telemetry</option>
+						<option value="5">Intermediate Medical Unit</option>
+						<option value="6">Intensive Care Unit</option>
+						<option value="7">Pediatrics Bed</option>
+					</select>
+					<strong ng-show="btypeError" class="help-block">Select bed type</strong>
+				</div>
+				
+			</div>
+			<h4 class="title" style="border-bottom:1px solid #eee; padding:10px 0 10px 0;">Patient Diagnostics</h4>
+			<span>Search By ICD-9 Diagnostic Code Or Name</span>
+
+			<div class="row">
+				<div class="form-group col-sm-6">           
+					<select ng-change="resetFilterOptions()" ng-model="icdDd" class="form-control">
+						<option value="icd9">ICD-9</option>
+						<option value="icd10">ICD-10</option>
+					</select>
+				</div>
+				<div class="form-group col-sm-6">
+					<select name="icdOptionsFilter" class="form-control" ng-change="showFilterOptions()" ng-model="icdOptionsDd">
+						<option value="description">ICD Diagnosis Description</option>
+						<option value="code">ICD Code</option>
+					</select>
+				</div>
+			</div>
+			<div class="row">
+				<div class="form-group col-sm-11 p-r-0">
+					<div>
+						<input type="text" ng-model="icdDescText" placeholder="Search ICD Diagnosis" 
+							   typeahead="code.long_desc for code in getIcdCodes($viewValue)" 
+							   typeahead-loading="loadingLocations" class="form-control" focus-me="icdError"> 
+					</div>
+					<strong ng-show="icdError" class="help-block">Select diagnostic icd</strong>                               
+				</div>
+				<div class="col-sm-1 p-0">
+					<div class="form-group">
+						<button type="button" class="btn btn-primary waves-effect br-0 " ng-click="addDiagnosis()">
+							<i class="zmdi zmdi-plus-circle-o f-24"></i>
+						</button>
+					</div>
+				</div>
+
+			</div>
+			<div class="row">
+				<div class="form-group col-sm-12" ng-show="selectedDiagnosisArray.length">
+					 <table class="table table-bordered table-striped table-responsive icd_codes">
+						<thead>
+							<th>Code</th>
+							<th class="col-sm-12">Description</th>
+							<th>&nbsp;</th>
+						</thead>
+						<tbody>
+							<tr data-ng-repeat="diagnosis in selectedDiagnosisArray">
+								<td> {{diagnosis.code}}</td>
+								<td class="col-sm-12"> {{diagnosis.desc}}</td>
+								<td> <i ng-click="removeDiagnosis($index)" class="fa fa-trash-o"></i></td> 
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			</div>
+			<div class="row">
+				<div class="form-group col-sm-12">       
+					<label>Other Diagnostics Info</label>
+					<input ng-model="tForm.otherDiagnostics" type="text" class="form-control" >
+				</div>
+			</div>
+			<h4 class="title" style="border-bottom:1px solid #eee; padding:10px 0 10px 0;">Admission Preferences</h4>
+			<div class="row">
+				<div class="form-group col-sm-12">
+					<label>Preferred Admitting Hospital *</label>
+
+					<select ng-model="facility.selected" ng-options="obj as obj.name for obj in facilities" class="form-control"  ng-change="onClinicSelect(facility.selected)" focus-me="hlError">
+					</select>
+					<strong ng-show="hlError" class="help-block">Select preferred admitting hospital</strong>
+				</div>
+				<div class="form-group col-sm-12">
+					<label>Preferred Admitting Group *</label>
+					<select chosen ng-model="group.selected" ng-options="obj.name for obj in groups" class="form-control" ng-change="onGroupSelect(group.selected)" focus-me="grpError">
+					</select>
+					<strong ng-show="grpError" class="help-block">Select preferred admitting group</strong>
+				</div>
+				<div class="form-group col-sm-12">
+					<label>Preferred Admitting Physician</label>
+
+					<select ng-model="admittingPhysician.selected" ng-options="obj.id as (obj.first_name + ' ' + obj.last_name + ' --- ' + obj.specialty) for obj in physicians" class="form-control" focus-me="phyError">
+					</select>
+					<strong ng-show="phyError" class="help-block">Select preferred admitting physician</strong>
+				</div>
+				<div class="form-group col-sm-12">
+					<div class="row">
+						<div class="col-sm-6">
+							<label>Doc to Doc</label>
+							<select ng-model="tForm.doc_to_doc" class="form-control" name="doc_to_doc">
+								<option value="0">No</option>
+								<option value="1">Yes</option>
+							</select>
+							
+						</div>
+						<div class="col-sm-6">
+							<label>Patient ETA *</label>
+							<select ng-model="tForm.patient_eta" class="form-control" name="patient_eta" focus-me="etaError">
+								<option value="0">Select ETA</option>
+								<option value="1">1 Hr</option>
+								<option value="3">3 Hrs</option>
+								<option value="6">6 Hrs</option>
+								<option value="9">9 Hrs</option>
+							</select>
+							<strong ng-show="etaError" class="help-block"> Select patient eta</strong>
+						</div>
+					</div>
+				</div>
+			</div>
+		</section>
+		<section class="col-sm-7">
+			<tabset>
+				<tab heading="Insurance" active="tab.active">
+				<h4 class="title">Insurance Information</h4>
+				  <div class="row">
+                    <div class="form-group col-sm-12">
+                        <label>Insurance</label>
+                        <select chosen ng-model="insurance.insuranceDd" ng-change="changeInsurance()" class="form-control" ng-options="obj.name as obj.name for obj in insuranceDd" >
+                        </select>
+                    </div>
+                    <div class="form-group col-md-12" ng-show="showOtherInsurance" >                      
+                        <label>Other Insurance</label>
+                        <input ng-model="insurance.otherInsuranceText" 
+                               placeholder="Other Insurance" type="text" class="">
+                    </div> 
+				  </div>
+                  <div class="row">
+                    <div class="form-group col-sm-3">    
+						<label>Card Holder's Name</label>
+						<input  placeholder="First name" ng-model="insurance.firstName" type="text" class="form-control">
+					</div>
+					<div class="form-group col-sm-3">    
+						<label>&nbsp;</label>
+						<input placeholder="Last name" ng-model="insurance.lastName" type="text" class="form-control">
+					</div>
+					<div class="form-group col-sm-6">                      
+                        <label>Primary Card Holder's SSN</label>
+                        <input ng-model="insurance.ssn" type="text" class="form-control">
+                    </div>
+                  </div>
+                  
+				  <div class="row">  
+					<div class="form-group col-sm-6">  
+						<label>Primary Group ID</label>
+						<input  ng-model="insurance.pgId" type="text" class="form-control">
+					</div>
+					<div class="form-group  col-sm-6">  
+						<label>Patient Member ID</label>
+						<input  ng-model="insurance.pmId" type="text" class="form-control">
+					</div>
+				  </div>
+				  <div class="row"> 
+					<div class="form-group col-sm-12">  
+						<label>Additional Insurance Info</label>
+						<input  ng-model="insurance.addlInsInfo" type="text" class="form-control">
+					</div>
+				  </div>
+				</tab>
+				<tab heading="Medical History" disable="tab.disabled">
+				  <section>
+				  <h4 class="title">Vital Signs</h4>
+					<div class="row">
+						<div class="col-sm-12">
+								<div class="row">
+									<div class="col-md-6">
+										<div class="form-group">   
+											<label>Temperature (&#8457;)</label>
+											<input placeholder="Fahrenheit" ng-model="medicalHistory.Temperature" type="text" class="form-control">
+										</div>
+									</div>
+									<div class="col-md-6">
+										<div class="form-group">   
+											<label>Glucose</label>
+											<input placeholder="mg/dl"  ng-model="medicalHistory.Glucose" type="text" class="form-control">
+										</div>
+									</div>
+									<div class="col-md-6">
+										<div class="form-group">
+										 <label>Blood Pressure</label>
+										<input placeholder="Systolic" ng-model="medicalHistory.Blood_Pressure" type="text" class="form-control">
+										</div>
+									</div>
+									<div class="col-md-6">
+										<div class="form-group">
+										<label for="diastolic">&nbsp;&nbsp;</label>  
+										<input placeholder="Diastolic" ng-model="medicalHistory.Diastolic" type="text" class="form-control">
+										</div>
+									</div>
+								</div>
+						   
+								 <div class="row">
+									<div class="col-md-6">
+										<div class="form-group">  
+											<label>Pulse</label>
+											<input placeholder="BPM" ng-model="medicalHistory.Pulse" type="text" class="form-control">
+										</div>
+									</div>
+									<div class="col-md-6">
+										<div class="form-group">      
+											<label>O2 Level</label>
+											<input placeholder="%" ng-model="medicalHistory.Oxygen_Level" type="text" class="form-control">
+										</div>
+									</div>
+								</div>
+								<div class="row">
+								<div class="col-sm-6">
+									<label>Comorbidity</label>
+									<div class="form-group comorbidity">
+										<label class="checkbox checkbox-inline m-r-20 m-l-0 m-b-10">
+											<input type="checkbox" ng-model="medicalHistory.Comorbidity.HTN">
+											<i class="input-helper"></i>HTN
+										</label>
+										<label class="checkbox checkbox-inline m-r-20 m-l-0 m-b-10">
+											<input type="checkbox" ng-model="medicalHistory.Comorbidity.DM1">
+											<i class="input-helper"></i>DM1
+										</label>
+										<label class="checkbox checkbox-inline m-r-20 m-l-0 m-b-10">
+											<input type="checkbox" ng-model="medicalHistory.Comorbidity.DM2">
+											<i class="input-helper"></i>DM2
+										</label>
+										<label class="checkbox checkbox-inline m-r-20 m-l-0 m-b-10">
+											<input type="checkbox" ng-model="medicalHistory.Comorbidity.COPD">
+											<i class="input-helper"></i>COP
+										</label>
+										<label class="checkbox checkbox-inline m-r-20 m-l-0 m-b-10">
+											<input type="checkbox" ng-model="medicalHistory.Comorbidity.ESRD">
+											<i class="input-helper"></i>ESR
+										</label>
+										<label class="checkbox checkbox-inline m-r-20 m-l-0 m-b-10">
+											<input type="checkbox" ng-model="medicalHistory.Comorbidity.CHF">
+											<i class="input-helper"></i>CHF
+										</label>
+										<label class="checkbox checkbox-inline m-r-20 m-l-0 m-b-10">
+											<input type="checkbox" ng-model="medicalHistory.Comorbidity.CAD">
+											<i class="input-helper"></i>CAD
+										</label>
+									</div>
+								</div>  
+								<div class="col-sm-6">
+									<label>Allergies</label>
+									<div class="form-group">
+										<label class="checkbox checkbox-inline m-r-20 m-l-0 m-b-10">
+											<input type="checkbox" ng-model="medicalHistory.Allergies.PCN">
+											<i class="input-helper"></i>PCN
+										</label>
+										<label class="checkbox checkbox-inline m-r-20 m-l-0 m-b-10">
+											<input type="checkbox" ng-model="medicalHistory.Allergies.Codeine">
+											<i class="input-helper"></i>Codein
+										</label>
+										<label class="checkbox checkbox-inline m-r-20 m-l-0 m-b-10">
+											<input type="checkbox" ng-model="medicalHistory.Allergies.Iodine">
+											<i class="input-helper"></i>Iodine
+										</label>
+									</div>
+								</div>
+							</div>	
+							<div class="row">
+								<div class="col-sm-6">
+									<div class="form-group">  
+										<label>Other Allergies</label>
+										<textarea  ng-model="medicalHistory.Other_Allergies" type="text" class="form-control"></textarea>
+									</div>
+								</div>
+								<div class="col-sm-6">
+									<div class="form-group">  
+										<label>Brief Pertinent Medical Information</label>
+										<textarea ng-model="medicalHistory.Parient_Brief_Medical_Information" type="text" class="form-control"></textarea>
+									</div>
+								</div>
+							</div>
+						</div>
+						
+
+						
+					</div>
+				  </section>
+				</tab>
+				<tab heading="Medication Orders" disable="tab.disabled">
+				  <section>
+					   <div class="row">
+						<div class="col-sm-12">
+						<h4 class="title">Medication Orders</h4>
+						 <div class="row">
+								<div class="col-md-6">
+									<div class="form-group">  
+										<label>Diet</label>
+										<select class="form-control" ng-model="medicationOrders.Diet">
+											<option value="" disabled selected>Select</option>
+											<option value="NPO">NPO</option>
+											<option value="Clear Liquids">Clear Liquids</option>
+											<option value="Ice Chips Only">Ice Chips Only</option>
+											<option value="Regular">Regular</option>
+											<option value="Low Salt">Low Salt</option>
+											<option value="ADA 1800">ADA 1800</option>
+											<option value="AHA Heart Healthy">AHA Heart Healthy</option>
+											<option value="Renal Diet (ESRD Patients)">Renal Diet (ESRD Patients)</option>
+											<option value="Needs a Swallow Evaluation">Needs a Swallow Evaluation</option>
+											<option value="Let Hospital Physician Decide">Let Hospital Physician Decide</option>
+										</select>
+									</div>
+								</div>
+							 <div class="col-md-6">
+								 <div class="form-group">  
+									<label>IV Fluids</label>
+									<select class="form-control" ng-model="medicationOrders.IV_Fluids">
+										<option value="" disabled selected>Select</option>
+										<option value="Heplock">Heplock</option>
+										<option value="KVO">KVO</option>
+										<option value="NS Bolus 500 X 1">NS Bolus 500 X 1</option>
+										<option value="NS @ 125 cc/hr">NS @ 125 cc/hr</option>
+										<option value="NS @ 250 cc/hr">NS @ 250 cc/hr</option>
+										<option value="Hospital Physician To Order">Hospital Physician To Order</option>
+									</select>
+								</div>
+							</div>
+						</div>
+						
+						<div class="row">
+							<div class="form-group col-sm-6">
+								<label for="gender">Order Medications</label></br>
+								<label class="checkbox checkbox-inline m-r-20 m-l-0 m-b-10">
+									<input type="checkbox" ng-model="medicationOrders.Resume_All_Home_Medications">
+									<i class="input-helper"></i>Resume All Home Medications
+								</label>
+							</div>
+							<div class="form-group col-sm-6">  
+								<label class="fg-label">PRN Meds</label>
+								<select chosen ng-model="medicationOrders.PRN_Meds" placeholder="Select PRN Meds" 
+										ng-options="obj.id as obj.name for obj in prnMedsMulti" class="form-control" multiple>
+								</select>				
+							</div>
+						</div>
+						<div class="row">
+							<div class="form-group col-sm-6">  
+								<label>Other PRN Meds</label>
+								<input ng-model="medicationOrders.Other_PRN_Meds" type="text" class="form-control">
+							</div>
+							<div class="form-group col-sm-6">  
+								<label>Other Scheduled Meds</label>
+								<input ng-model="medicationOrders.Other_Scheduled_Meds" type="text" class="form-control">
+							</div>
+						</div>
+					</div>
+						<div class="col-md-12 submit-btn">
+							<a class="circle-btn" ng-click="submitTransferForm()"></a>
+						</div>
+					</div>
+					</section>
+				</tab>
+				<tab heading="Diagnostic Orders" disable="tab.disabled">
+				  <section>
+				  	<h4 class="title"> Diagnostic Orders </h4>
+						<div class="row">
+						<div class="form-group col-sm-6">
+							<label class="fg-label">Blood Tests</label>
+							<select chosen multiple ng-model="diagnosicOrders.multipleBloodTests" 
+									ng-options="obj.name as obj.name for obj in bloodTestsMulti">
+							</select>
+									
+						</div>
+						<div class="form-group col-sm-6">
+							<label for="gender">Urine Tests</label>
+							<div class="clearfix"></div>
+							<label class="checkbox checkbox-inline m-r-20 m-l-0 m-b-10">
+								 <input type="checkbox" value="UA" ng-model="diagnosicOrders.urineTest.UA">
+								<i class="input-helper"></i>UA
+							</label>
+
+							<label class="checkbox checkbox-inline m-r-20 m-l-0 m-b-10">
+								 <input type="checkbox" value="UA" ng-model="diagnosicOrders.urineTest.UnS">
+								<i class="input-helper"></i>U&S
+							</label>
+						</div>
+
+
+					</div>
+					<div class="row">
+						<div class="form-group col-sm-6">
+							<label>Imaging/Tests</label></br>
+							<label class="checkbox checkbox-inline m-r-20 m-l-0 m-b-10">
+								 <input type="checkbox" ng-model="diagnosicOrders.imagingTest.XRays">
+								<i class="input-helper"></i>X-Rays
+							</label>
+
+							<label class="checkbox checkbox-inline m-r-20 m-l-0 m-b-10">
+								 <input type="checkbox" ng-model="diagnosicOrders.imagingTest.US">
+								<i class="input-helper"></i>US
+							</label>
+
+							<label class="checkbox checkbox-inline m-r-20 m-l-0 m-b-10">
+								 <input type="checkbox" ng-model="diagnosicOrders.imagingTest.CT">
+								<i class="input-helper"></i>CT
+							</label>
+
+							<label class="checkbox checkbox-inline m-r-20 m-l-0 m-b-10">
+								 <input type="checkbox" ng-model="diagnosicOrders.imagingTest.MRI">
+								<i class="input-helper"></i>MRI
+							</label>
+
+							<label class="checkbox checkbox-inline m-r-20 m-l-0 m-b-10">
+								 <input type="checkbox" ng-model="diagnosicOrders.imagingTest.EKG">
+								<i class="input-helper"></i>EKG
+							</label>
+						</div>
+						<div class="form-group col-sm-6">                  
+							<label>Other Tests</label>
+							<input  id="otherTest" ng-model="diagnosicOrders.imagingTest.other" type="text" class="form-control" >
+						</div>
+					</div>
+				</section>
+				</tab>
+				<tab heading="Specialty Consult" disable="tab.disabled">
+				  <section>
+				   <h4 class="title"> Specialty Consult </h4>
+						<label>Consults</label>
+						<div class="row">
+							<div class="col-sm-12">
+								<div class="form-group consults">
+									<label class="checkbox checkbox-inline m-r-20 m-l-0 m-b-10">
+										<input type="checkbox" ng-model="specialtyConsult.Consults.Cardiology">
+										<i class="input-helper"></i>Cardiology
+									</label>
+									<label class="checkbox checkbox-inline m-r-20 m-l-0 m-b-10">
+										<input type="checkbox" ng-model="specialtyConsult.Consults.Pulmonology">
+										<i class="input-helper"></i>Pulmonology
+									</label>
+									<label class="checkbox checkbox-inline m-r-20 m-l-0 m-b-10">
+										<input type="checkbox" ng-model="specialtyConsult.Consults.Nephrology">
+										<i class="input-helper"></i>Nephrology
+									</label>
+									<label class="checkbox checkbox-inline m-r-20 m-l-0 m-b-10">
+										<input type="checkbox" ng-model="specialtyConsult.Consults.Neurology">
+										<i class="input-helper"></i>Neurology
+									</label>
+									 <label class="checkbox checkbox-inline m-r-20 m-l-0 m-b-10">
+										<input type="checkbox" ng-model="specialtyConsult.Consults.Neurosurgery">
+										<i class="input-helper"></i>Neurosurgery
+									</label>
+									<label class="checkbox checkbox-inline m-r-20 m-l-0 m-b-10">
+										<input type="checkbox" ng-model="specialtyConsult.Consults.GI">
+										<i class="input-helper"></i>GI
+									</label>
+									<label class="checkbox checkbox-inline m-r-20 m-l-0 m-b-10">
+										<input type="checkbox" ng-model="specialtyConsult.Consults.Surgery">
+										<i class="input-helper"></i>Surgery
+									</label>
+									<label class="checkbox checkbox-inline m-r-20 m-l-0 m-b-10">
+										<input type="checkbox" ng-model="specialtyConsult.Consults.ID">
+										<i class="input-helper"></i>ID
+									</label>
+									<label class="checkbox checkbox-inline m-r-20 m-l-0 m-b-10">
+										<input type="checkbox" ng-model="specialtyConsult.Consults.Padiatry">
+										<i class="input-helper"></i>Podiatry
+									</label>
+									<label class="checkbox checkbox-inline m-r-20 m-l-0 m-b-10">
+										<input type="checkbox" ng-model="specialtyConsult.Consults.ENT">
+										<i class="input-helper"></i>ENT
+									</label>
+									<label class="checkbox checkbox-inline m-r-20 m-l-0 m-b-10">
+										<input type="checkbox" ng-model="specialtyConsult.Consults.Orthopedics">
+										<i class="input-helper"></i>Orthopedics
+									</label>
+								</div>
+							</div>
+						</div>
+						<div class="row">
+							<div class="form-group col-sm-6">
+								<label>Preferred Consultant</label>
+								<input placeholder="Preferred Consultant" ng-model="specialtyConsult.Preferred_Consultant" type="text" class="form-control">
+							</div>
+							<div class="form-group col-sm-6">
+								<label>Additional Consults</label>
+								<input placeholder="Additional Consults" ng-model="specialtyConsult.Additional_Consults" type="text" class="form-control">
+								
+							</div>
+						</div>
+						<div class="row">
+							<div class="form-group col-sm-6">
+								<label class="checkbox checkbox-inline m-r-20 m-l-0 m-b-10">
+									<input type="checkbox" ng-model="specialtyConsult.Specialist_Consult_required_for_transfer">
+									<i class="input-helper"></i>Specialist consult required for transfer
+								</label>
+							</div>
+						</div>
+
+					</section>
+				</tab>
+			</tabset>
+		</section>
+		<a  class="admiticon" ng-click="submitTransferForm()"></a>
+	</div>
+</div>
+<div class="transfer_button"></div>

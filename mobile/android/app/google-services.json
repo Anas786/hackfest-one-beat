@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "358049301246",
+    "project_id": "onebeat-6aa1a",
+    "storage_bucket": "onebeat-6aa1a.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:358049301246:android:c8aeb48bf6130c2ff59baf",
+        "android_client_info": {
+          "package_name": "com.onebeat"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "358049301246-b0m4e534930kpkbr2bt70bedohen7i69.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBtWq2ZxsP3tNGREzJW6JRp0kvKoFhrI78"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "358049301246-b0m4e534930kpkbr2bt70bedohen7i69.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

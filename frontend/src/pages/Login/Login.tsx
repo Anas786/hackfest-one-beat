@@ -6,6 +6,7 @@ import { ReactComponent as Logo } from "images/logo.svg";
 import { toast } from "react-toastify";
 import { ILoginUser } from "types/user";
 import { loginUser } from "services/auth/auth";
+import { PRIMARY_GRADIENT } from "constants/colors";
 
 export const Login = () => {
   const theme = useTheme();
@@ -16,8 +17,8 @@ export const Login = () => {
   const handleLogin = async () => {
     setIsLoading(true);
     try {
-      await loginUser(user);
-      navigate("/admissions");
+      // await loginUser(user);
+      navigate("/patients");
       toast.success("Logged In Successfully");
     } catch (e) {
       toast.error("Login failed");
@@ -40,7 +41,7 @@ export const Login = () => {
         justifyContent: "center",
         alignItems: "center",
         gap: "12px",
-        background: "linear-gradient(90deg, #853BEF 0%, #f35b9c 35%, #f59d62 100%)",
+        background: PRIMARY_GRADIENT,
       }}
     >
       <Card

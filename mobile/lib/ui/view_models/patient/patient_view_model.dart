@@ -1,7 +1,7 @@
 import '../../../data/models/entities/patient.dart';
 import '../../../data/models/network/requests/patient_request.dart';
 import '../../../data/models/network/result.dart';
-import '../../../data/repositories/entities/patient/patient_repository.dart';
+import '../../../data/repositories/entities/patient_repository.dart';
 import '../../../di/injector.dart';
 import '../base_view_model.dart';
 

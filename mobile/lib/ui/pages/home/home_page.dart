@@ -4,9 +4,11 @@ import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 
+import '../../../util/constants/route_constants.dart';
 import '../../../util/utilities/common_utils.dart';
 import '../../../util/utilities/dialog_utils.dart';
 import '../../../util/utilities/image_utils.dart';
+import '../../../util/utilities/navigation_utils.dart';
 import '../../dialogs/progress_dialog.dart';
 import '../../helpers/custom_field_helper.dart';
 import '../../resources/app_assets.dart';
@@ -142,7 +144,8 @@ class _HomePageState extends State<HomePage> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              'Hi, ${authVM.user?.firstName}',
+              // 'Hi, ${authVM.user?.firstName}',
+              'Hi, Mohsin',
               style: Texts.heading1.copyWith(color: Colors.white),
               maxLines: 1,
               overflow: TextOverflow.fade,
@@ -285,7 +288,7 @@ class _HomePageState extends State<HomePage> {
                     );
                   },
                   separatorBuilder: (context, index) {
-                    return const SizedBox(width: 16);
+                    return Insets.gapW16;
                   },
                 ),
               );
@@ -319,7 +322,9 @@ class _HomePageState extends State<HomePage> {
           foregroundColor: Colors.white,
           label: AppStrings.bookAppointment,
           labelStyle: Texts.hint,
-          onTap: () {},
+          onTap: () {
+            NavigationUtils.push(context, RouteConstants.chooseFacility);
+          },
         ),
         SpeedDialChild(
           child: const Icon(Icons.history_outlined),

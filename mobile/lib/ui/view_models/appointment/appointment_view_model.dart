@@ -1,6 +1,6 @@
 import '../../../data/models/entities/appointment.dart';
 import '../../../data/models/network/result.dart';
-import '../../../data/repositories/entities/appointment/appointment_repository.dart';
+import '../../../data/repositories/entities/appointment_repository.dart';
 import '../../../di/injector.dart';
 import '../base_view_model.dart';
 

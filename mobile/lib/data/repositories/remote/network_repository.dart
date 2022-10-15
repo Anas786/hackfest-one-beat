@@ -2,6 +2,7 @@ import '../../../util/constants/endpoints.dart';
 import '../../../util/extensions/http_ext.dart';
 import '../../enums/request_type.dart';
 import '../../models/entities/appointment.dart';
+import '../../models/entities/facility.dart';
 import '../../models/entities/patient.dart';
 import '../../models/network/requests/auth_request.dart';
 import '../../models/network/requests/patient_request.dart';
@@ -16,6 +17,8 @@ abstract class NetworkRepository {
   Future<Result<Patient>> createPatient(PatientRequest? request);
 
   Future<Result<List<Appointment>>> getAppointments(int? patientId);
+
+  Future<Result<List<Facility>>> getFacilities();
 }
 
 class NetworkRepositoryImpl extends BaseRepositoryImpl
@@ -63,6 +66,22 @@ class NetworkRepositoryImpl extends BaseRepositoryImpl
       );
       return response.parse<List<Appointment>>((data) {
         return Appointment.fromJsonAsList(data);
+      });
+    } catch (e) {
+      return Result.fromError(e);
+    }
+  }
+
+  @override
+  Future<Result<List<Facility>>> getFacilities() async {
+    try {
+      final response = await NetworkClient.instance.request(
+        RequestType.get,
+        endpoint: Endpoints.facilities,
+        token: await getAuthToken(),
+      );
+      return response.parse<List<Facility>>((data) {
+        return Facility.fromJsonAsList(data);
       });
     } catch (e) {
       return Result.fromError(e);

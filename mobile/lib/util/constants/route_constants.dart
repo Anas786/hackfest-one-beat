@@ -5,4 +5,5 @@ class RouteConstants {
   static const String login = '/login';
   static const String register = '/register';
   static const String home = '/dashboard';
+  static const String chooseFacility = '/choose-facility';
 }

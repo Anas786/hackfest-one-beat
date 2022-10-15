@@ -38,6 +38,13 @@ class Facility extends BaseEntity {
     this.representativeEmail,
   }) : super(id: id);
 
+  static List<Facility>? fromJsonAsList(dynamic data) {
+    if (data == null) {
+      return null;
+    }
+    return List<Facility>.from(data.map((x) => Facility.fromJson(x)));
+  }
+
   Facility.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     name = json['name'];

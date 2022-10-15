@@ -10,8 +10,9 @@ import 'package:provider/provider.dart';
 import 'di/injector.dart';
 import 'ui/resources/app_strings.dart';
 import 'ui/resources/app_theme.dart';
-import 'ui/view_models/auth/auth_view_model.dart';
 import 'ui/view_models/appointment/appointment_view_model.dart';
+import 'ui/view_models/auth/auth_view_model.dart';
+import 'ui/view_models/facility/facility_view_model.dart';
 import 'ui/view_models/patient/patient_view_model.dart';
 import 'util/constants/route_constants.dart';
 import 'util/utilities/log_utils.dart';
@@ -63,6 +64,7 @@ class Application extends StatelessWidget {
       ChangeNotifierProvider(create: (ctx) => AuthViewModel()),
       ChangeNotifierProvider(create: (ctx) => PatientViewModel()),
       ChangeNotifierProvider(create: (ctx) => AppointmentViewModel()),
+      ChangeNotifierProvider(create: (ctx) => FacilityViewModel()),
     ];
   }
 }

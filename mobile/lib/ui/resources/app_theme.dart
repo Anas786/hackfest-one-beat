@@ -28,6 +28,11 @@ class AppTheme {
   static const Color errorColor = Color(0xFFe63950);
   static const Color darkGrayColor = Color(0xFF969aa8);
   static const Color grayColor = Color(0xFFadadad);
+  static const Color selectedDateColor = Color(0xFF11AD34);
+  static const Color bookedDateColor = Color(0xFFC80000);
+  static const Color vacantDateColor = Color(0xFFECF3FD);
+  static const Color disabledDateTextColor = Color(0x80555555);
+  static const Color calendarDowHeaderColor = Color(0x80E6E8E7);
   static const Color primaryTextColor = Colors.black;
   static const Color backgroundColor = Colors.white;
 

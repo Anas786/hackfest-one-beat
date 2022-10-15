@@ -77,4 +77,17 @@ class CommonUtils {
       onDateSelected(value);
     });
   }
+
+  static void openTimePicker(
+    BuildContext context, {
+    required Function(TimeOfDay?) onTimeSelected,
+  }) async {
+    showTimePicker(
+      context: context,
+      initialTime: TimeOfDay.now(),
+    ).then((value) {
+      LogUtils.info('Selected TimePicker: $value');
+      onTimeSelected(value);
+    });
+  }
 }

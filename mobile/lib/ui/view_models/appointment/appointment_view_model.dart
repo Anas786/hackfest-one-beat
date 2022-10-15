@@ -1,4 +1,5 @@
 import '../../../data/models/entities/appointment.dart';
+import '../../../data/models/network/requests/appointment_request.dart';
 import '../../../data/models/network/result.dart';
 import '../../../data/repositories/entities/appointment_repository.dart';
 import '../../../di/injector.dart';
@@ -20,6 +21,13 @@ class AppointmentViewModel extends BaseViewModel {
     _appointments = result.data;
     toggleLoading(false);
     notifyListeners();
+    return result;
+  }
+
+  Future<Result<Appointment>> create(AppointmentRequest? request) async {
+    toggleLoading(true);
+    final result = await _repository.create(request);
+    toggleLoading(false);
     return result;
   }
 }

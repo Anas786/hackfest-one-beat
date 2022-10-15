@@ -5,5 +5,3 @@ export interface INavItem {
   path: string;
   icon: JSX.Element;
 }
-
-export interface IAppointments {}

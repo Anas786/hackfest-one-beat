@@ -1,5 +1,6 @@
 import { ProtectedPage } from "pages";
 import { AppointmentList } from "pages/AppointmentList";
+import { AppointmentDetail } from "pages/AppointmentDetail";
 import { Dashboard } from "pages/Dashboard";
 import { Login } from "pages/Login";
 import { PatientsList } from "pages/PatientList";
@@ -15,4 +16,5 @@ export const ADMIN_ROUTES: Array<IRoute> = [
   { path: "patients", element: <PatientsList /> },
   { path: "appointments", element: <AppointmentList /> },
   { path: "transfer-forms", element: <TransferForms /> },
+  { path: "appointments/:id", element: <AppointmentDetail /> },
 ];

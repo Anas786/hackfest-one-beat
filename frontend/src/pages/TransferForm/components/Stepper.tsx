@@ -1,4 +1,4 @@
-import { Divider, Steps } from "antd";
+import { Steps } from "antd";
 import React, { SetStateAction } from "react";
 
 const { Step } = Steps;
@@ -12,22 +12,27 @@ const STEPS = [
   {
     key: 0,
     title: "Register Patient",
-    description: "Description",
+    description: "",
   },
   {
     key: 1,
     title: "Patient Status",
-    description: "Description",
+    description: "",
   },
   {
     key: 2,
     title: "Patient Diagnostics",
-    description: "Description",
+    description: "",
   },
   {
     key: 3,
     title: "Admission Preferences",
-    description: "Description",
+    description: "",
+  },
+  {
+    key: 4,
+    title: "Submit",
+    description: "",
   },
 ];
 
@@ -36,8 +41,11 @@ export const Stepper: React.FC<StepperProps> = ({ currentStep, setStep }) => (
     <Steps progressDot current={currentStep}>
       {STEPS.map((step) => (
         <Step
+          key={step.key}
           style={{ cursor: "pointer" }}
-          onClick={() => setStep(step.key)}
+          onClick={() => {
+            if (true) setStep(step.key);
+          }}
           title={step.title}
           description={step.description}
         />

@@ -8,7 +8,7 @@ import { theme } from "ui/theme";
 import "antd/dist/antd.min.css";
 
 import "react-toastify/dist/ReactToastify.css";
-import "./App.css";
+import "./Global.css";
 
 const App: FC = () => {
   return (

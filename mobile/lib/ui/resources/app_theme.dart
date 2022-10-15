@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 
+import 'app_styles.dart';
+
 class AppTheme {
   const AppTheme._internal();
 
@@ -40,11 +42,11 @@ class AppTheme {
     appBarTheme: const AppBarTheme(
       systemOverlayStyle: SystemUiOverlayStyle.light,
     ),
-    buttonTheme: ButtonThemeData(
+    buttonTheme: const ButtonThemeData(
       textTheme: ButtonTextTheme.primary,
-      height: 48,
+      height: 54,
       shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(16),
+        borderRadius: Corners.rounded8,
       ),
       buttonColor: primaryColor,
     ),

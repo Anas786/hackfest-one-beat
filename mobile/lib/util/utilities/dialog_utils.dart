@@ -98,6 +98,21 @@ class DialogUtils {
     );
   }
 
+  static void showInfoDialog(
+    BuildContext context, {
+    String? title,
+    required String? message,
+    VoidCallback? callback,
+  }) {
+    showAlertDialog(
+      context,
+      dismissible: false,
+      title: title ?? AppStrings.success,
+      message: message,
+      primaryButtonCallback: callback,
+    );
+  }
+
   static void showErrorDialog(
     BuildContext context, {
     String? title,

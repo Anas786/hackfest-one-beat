@@ -1,27 +1,27 @@
 import '../../base_model.dart';
+import '../../entities/token.dart';
 import '../../entities/user.dart';
 
 class AuthResponse implements BaseModel {
   User? user;
-  String? token;
+  Token? token;
 
-  AuthResponse({
-    required this.user,
-    required this.token,
-  });
+  AuthResponse({this.user, this.token});
 
-  factory AuthResponse.fromJson(Map<String, dynamic> json) {
-    return AuthResponse(
-      user: json['user'] == null ? null : User.fromJson(json['user']),
-      token: json['token'],
-    );
+  AuthResponse.fromJson(Map<String, dynamic> json) {
+    user = json['user'] != null ? User.fromJson(json['user']) : null;
+    token = json['token'] != null ? Token.fromJson(json['token']) : null;
   }
 
   @override
   Map<String, dynamic> toJson() {
-    return {
-      'user': user?.toJson(),
-      'token': token,
-    };
+    final data = <String, dynamic>{};
+    if (user != null) {
+      data['user'] = user!.toJson();
+    }
+    if (token != null) {
+      data['token'] = token!.toJson();
+    }
+    return data;
   }
 }

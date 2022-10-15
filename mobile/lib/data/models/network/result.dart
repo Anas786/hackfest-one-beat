@@ -39,7 +39,7 @@ class Result<T> implements BaseModel {
   String get errorMessage => message ?? AppStrings.errorGeneral;
 
   factory Result.parse(
-    String body,
+    String? body,
     int? code,
     Function(dynamic data) callback,
   ) {

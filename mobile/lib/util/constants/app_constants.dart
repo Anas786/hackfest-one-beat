@@ -11,6 +11,5 @@ class AppConstants {
   static const String prefAuthUser = 'pref_user';
 
   // Date formats
-  static const String dayFormat = 'd MMM, yyyy';
-  static const String timeFormat = 'h:mm a';
+  static const String dateRequestFormat = 'yyy-MM-dd';
 }

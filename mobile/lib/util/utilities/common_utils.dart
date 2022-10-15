@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../ui/resources/app_strings.dart';
+import 'log_utils.dart';
 import 'navigation_utils.dart';
 
 class CommonUtils {
@@ -47,5 +48,20 @@ class CommonUtils {
     }
     NavigationUtils.pop(context, result: result);
     return true;
+  }
+
+  static void openDatePicker(
+    BuildContext context, {
+    required Function(DateTime?) onDateSelected,
+  }) async {
+    showDatePicker(
+      context: context,
+      initialDate: DateTime.now(),
+      firstDate: DateTime(1900),
+      lastDate: DateTime.now(),
+    ).then((value) {
+      LogUtils.info('Selected Date: $value');
+      onDateSelected(value);
+    });
   }
 }

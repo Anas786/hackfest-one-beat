@@ -10,6 +10,7 @@ import '../../../util/extensions/numeric_ext.dart';
 import '../../../util/utilities/json_utils.dart';
 import '../../../util/utilities/log_utils.dart';
 import '../../enums/request_type.dart';
+import '../../models/entities/token.dart';
 
 class NetworkClient {
   const NetworkClient._internal();
@@ -21,7 +22,7 @@ class NetworkClient {
   Future<http.Response?> request(
     RequestType requestType, {
     required String endpoint,
-    String? token,
+    Token? token,
     Map<String, dynamic>? params,
     dynamic body,
   }) async {
@@ -84,13 +85,13 @@ class NetworkClient {
     return Uri.parse(requestUrl).replace(queryParameters: params);
   }
 
-  Map<String, String> _getHeaders(String? token) {
+  Map<String, String> _getHeaders(Token? token) {
     final headers = {
       'Content-Type': 'application/json',
       'Accept': 'application/json',
     };
-    if (token?.isNotEmpty ?? false) {
-      headers['Authorization'] = 'Bearer $token';
+    if (token != null) {
+      headers['Authorization'] = '${token.type} ${token.token}';
     }
     return headers;
   }
@@ -98,7 +99,7 @@ class NetworkClient {
   void _logRequest(
     String requestType,
     Uri uri, {
-    String? token,
+    Token? token,
     dynamic body,
   }) {
     final requestMap = <String, dynamic>{};

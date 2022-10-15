@@ -70,7 +70,7 @@ class CustomFieldHelper {
   static OutlineInputBorder inputBorder(
     Color color) {
     return OutlineInputBorder(
-      borderRadius: Corners.rounded16,
+      borderRadius: Corners.rounded8,
       borderSide: BorderSide(
         color: color,
         width: 1,

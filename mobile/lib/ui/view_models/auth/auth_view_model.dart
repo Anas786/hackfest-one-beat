@@ -16,16 +16,14 @@ class AuthViewModel extends BaseViewModel {
   User? _user;
   User? get user => _user;
 
-  Future<Result<User>> register(RegisterRequest? request) async {
-    toggleLoading(true);
-    final result = await _repository.register(request);
-    return _handleAuthResult(result);
-  }
-
-  Future<Result<User>> login(AuthRequest? request) async {
+  Future<Result<AuthResponse>> login(AuthRequest? request) async {
     toggleLoading(true);
     final result = await _repository.login(request);
-    return _handleAuthResult(result);
+    toggleLoading(false);
+    if (result.isSuccess) {
+      await _updateAuthInfo(result.data);
+    }
+    return result;
   }
 
   Future<User?> getAuthUser() async {
@@ -33,15 +31,6 @@ class AuthViewModel extends BaseViewModel {
     _user = await _repository.getAuthUser();
     toggleLoading(false);
     return _user;
-  }
-
-  Future<Result<User>> _handleAuthResult(Result<AuthResponse> result) async {
-    toggleLoading(false);
-    await _updateAuthInfo(result.data);
-    if (result.isSuccess) {
-      return Result.success(result.data!.user);
-    }
-    return Result.error(result.errorMessage);
   }
 
   Future<void> logout() async {

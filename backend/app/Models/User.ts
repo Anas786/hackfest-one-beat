@@ -39,13 +39,16 @@ export default class User extends BaseModel {
 	public categoryId: number
 
 	@column()
+	public gender: string
+
+	@column()
+	public dob: Date
+
+	@column()
 	public roleId: number
 
 	@column()
 	public degreeId?: number
-
-	@column()
-	public npi?: string
 
 	@column()
 	public specialtyId?: number
@@ -61,9 +64,6 @@ export default class User extends BaseModel {
 
 	@column()
 	public isActive?: boolean
-
-	@column()
-	public isReal?: boolean
 
 	@column()
 	public rememberMeToken?: string

@@ -7,7 +7,6 @@ import 'package:provider/provider.dart';
 import '../../../util/utilities/common_utils.dart';
 import '../../../util/utilities/dialog_utils.dart';
 import '../../../util/utilities/image_utils.dart';
-import '../../../util/utilities/log_utils.dart';
 import '../../dialogs/progress_dialog.dart';
 import '../../helpers/custom_field_helper.dart';
 import '../../resources/app_assets.dart';
@@ -17,6 +16,7 @@ import '../../resources/app_theme.dart';
 import '../../view_models/appointment/appointment_view_model.dart';
 import '../../view_models/auth/auth_view_model.dart';
 import '../../widgets/app_drawer.dart';
+import '../../widgets/recent_appointment_item.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -270,16 +270,19 @@ class _HomePageState extends State<HomePage> {
           Insets.gapH8,
           Consumer<AppointmentViewModel>(
             builder: (context, value, child) {
+              final list = value.appointments?.take(5);
               return SizedBox(
                 height: 150,
                 child: ListView.separated(
                   shrinkWrap: true,
                   scrollDirection: Axis.horizontal,
-                  itemCount: value.appointments?.length ?? 0,
+                  itemCount: list?.length ?? 0,
                   itemBuilder: (context, index) {
-                    final item = value.appointments?.elementAt(index);
-                    LogUtils.info('Appointment: ${item?.code}');
-                    return Container();
+                    final item = list?.elementAt(index);
+                    return RecentAppointmentItem(
+                      appointment: item,
+                      callback: (item) {},
+                    );
                   },
                   separatorBuilder: (context, index) {
                     return const SizedBox(width: 16);

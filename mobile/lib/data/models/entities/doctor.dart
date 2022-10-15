@@ -34,6 +34,13 @@ class Doctor extends BaseEntity {
     this.facilityId,
   }) : super(id: id);
 
+  String get fullName {
+    if (middleName?.isNotEmpty == true) {
+      return '$firstName $middleName $lastName';
+    }
+    return '$firstName $lastName';
+  }
+
   Doctor.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     mrNumber = json['mr_number'];

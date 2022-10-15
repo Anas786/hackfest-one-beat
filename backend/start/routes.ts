@@ -85,6 +85,9 @@ Route.get('/', async () => {
 	Route.get('/patients/:id/medication_orders', 'PatientMedicationOrdersController.index')
 	Route.post('/patients/:id/medication_orders', 'PatientMedicationOrdersController.create')
 
+	Route.get('/patients/:id/diagnostic_orders', 'PatientDiagnosticOrdersController.index')
+	Route.post('/patients/:id/diagnostic_orders', 'PatientDiagnosticOrdersController.create')
+
 	/** DOCTORS ROUTES */
 	Route.get('/doctors', 'DoctorsController.index')
 	Route.get('/doctors/:id', 'DoctorsController.index')

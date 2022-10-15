@@ -1,66 +1,69 @@
+import { Table } from "antd";
+import type { ColumnsType, TableProps } from "antd/es/table";
 import React from "react";
-import { Box, useTheme } from "@mui/material";
-import Table from "@mui/material/Table";
-import TableBody from "@mui/material/TableBody";
-import TableCell from "@mui/material/TableCell";
-import TableContainer from "@mui/material/TableContainer";
-import TableHead from "@mui/material/TableHead";
-import TableRow from "@mui/material/TableRow";
-import Paper from "@mui/material/Paper";
-import TablePagination from "@mui/material/TablePagination";
 
-function createData(name: string, calories: number, fat: number, carbs: number, protein: number) {
-  return { name, calories, fat, carbs, protein };
+interface DataType {
+  key: React.Key;
+  name: string;
+  chinese: number;
+  math: number;
+  english: number;
 }
 
-const rows = [
-  createData("Frozen yoghurt", 159, 6.0, 24, 4.0),
-  createData("Ice cream sandwich", 237, 9.0, 37, 4.3),
-  createData("Eclair", 262, 16.0, 24, 6.0),
-  createData("Cupcake", 305, 3.7, 67, 4.3),
-  createData("Gingerbread", 356, 16.0, 49, 3.9),
+const columns: ColumnsType<DataType> = [
+  {
+    title: "Name",
+    dataIndex: "name",
+  },
+  {
+    title: "Chinese Score",
+    dataIndex: "chinese",
+  },
+  {
+    title: "Math Score",
+    dataIndex: "math",
+  },
+  {
+    title: "English Score",
+    dataIndex: "english",
+  },
 ];
 
-const headers = ["STATUS", "FIRST NAME", "LAST NAME", "AGE", "GENDER"];
+const data: DataType[] = [
+  {
+    key: "1",
+    name: "John Brown",
+    chinese: 98,
+    math: 60,
+    english: 70,
+  },
+  {
+    key: "2",
+    name: "Jim Green",
+    chinese: 98,
+    math: 66,
+    english: 89,
+  },
+  {
+    key: "3",
+    name: "Joe Black",
+    chinese: 98,
+    math: 90,
+    english: 70,
+  },
+  {
+    key: "4",
+    name: "Jim Red",
+    chinese: 88,
+    math: 99,
+    english: 89,
+  },
+];
 
-export const AppointmentList = () => {
-  const theme = useTheme();
-  return (
-    <Box sx={{ backgroundColor: theme.palette.grey["100"], height: "100%" }}>
-      <TableContainer component={Paper}>
-        <Table sx={{ minWidth: 650 }} aria-label="simple table">
-          <TableHead sx={{ backgroundColor: theme.palette.grey["500"] }}>
-            <TableRow>
-              {headers.map((header) => (
-                <TableCell key={header} sx={{ color: "white" }} align="center">
-                  {header}
-                </TableCell>
-              ))}
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {rows.map((row) => (
-              <TableRow key={row.name} sx={{ "&:last-child td, &:last-child th": { border: 0 } }}>
-                <TableCell component="th" scope="row" align="center">
-                  {row.name}
-                </TableCell>
-                <TableCell align="center">{row.calories}</TableCell>
-                <TableCell align="center">{row.fat}</TableCell>
-                <TableCell align="center">{row.carbs}</TableCell>
-                <TableCell align="center">{row.protein}</TableCell>
-              </TableRow>
-            ))}
-          </TableBody>
-        </Table>
-        <TablePagination
-          rowsPerPageOptions={[10, 25, 100]}
-          component="div"
-          count={rows.length}
-          rowsPerPage={10}
-          page={1}
-          onPageChange={() => {}}
-        />
-      </TableContainer>
-    </Box>
-  );
+const onChange: TableProps<DataType>["onChange"] = (pagination, filters, sorter, extra) => {
+  console.log("params", pagination, filters, sorter, extra);
 };
+
+export const AppointmentList: React.FC = () => (
+  <Table columns={columns} dataSource={data} onChange={onChange} />
+);

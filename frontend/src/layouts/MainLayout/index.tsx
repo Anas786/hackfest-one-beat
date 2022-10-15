@@ -1,6 +1,6 @@
 import { Layout, Menu } from "antd";
 import React, { ReactNode, useState } from "react";
-import { ReactComponent as Logo } from "images/logo.svg";
+import { ReactComponent as Logo } from "images/logo-light.svg";
 import "./styles.css";
 import { INavItem } from "types";
 import { GiHospitalCross } from "react-icons/gi";

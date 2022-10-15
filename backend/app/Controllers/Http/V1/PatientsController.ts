@@ -24,6 +24,19 @@ export default class PatientsController extends ApiResponse {
                     .preload('role')
                     .preload('category')
                     .preload('timezone')
+                    .preload('medical_histories')
+                    .preload('medication_orders')
+                    .preload('diagnostic_orders', (diagnosticOrdersQuery) => {
+                        diagnosticOrdersQuery
+                            .preload('blood_tests')
+                            .preload('urine_tests')
+                            .preload('imaging_tests')
+                    })
+                    .preload('specialty_consults', (specialtyConsultsQuery) => {
+                        specialtyConsultsQuery
+                            .preload('consults')
+                    })
+                    .preload('appointments')
                     .where('id', id)
                     .where('role_id', Role.ROLE.USER)
                     .where('category_id', Category.CATEGORY.PATIENT)

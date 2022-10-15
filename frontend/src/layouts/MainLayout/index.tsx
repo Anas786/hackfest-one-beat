@@ -67,12 +67,9 @@ export const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
           <h2>{NAV_ITEMS.find((item) => item.path === pathname)?.label}</h2>
         </Header>
         <Content
-          className="site-layout-background"
           style={{
             margin: "24px 16px",
-            minHeight: 280,
-            borderRadius: "16px",
-            padding: "20px",
+            height: "100%",
           }}
         >
           {children}

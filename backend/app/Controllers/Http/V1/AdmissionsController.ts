@@ -9,7 +9,7 @@ export default class AdmissionsController extends ApiResponse {
 
     public async index(ctx: HttpContextContract) {  
         
-        const { paginate, page, limit, sort, order, status, code, facility_id, referral_facility_id } = ctx.request.qs()
+        const { paginate, page, limit, sort, order, status, code, facility_id, referral_facility_id, mr_number } = ctx.request.qs()
         const id = ctx.request.param('id')
 
         try {
@@ -47,6 +47,14 @@ export default class AdmissionsController extends ApiResponse {
                             },
                             () => {
             
+                            }
+                        )
+                        .if(
+                            mr_number != null, 
+                            (query) => {
+                                query.whereHas('patient', (patientsQuery) => {
+                                    patientsQuery.where('mr_number', mr_number)
+                                })
                             }
                         )
                         .if(
@@ -206,6 +214,42 @@ export default class AdmissionsController extends ApiResponse {
                 .createMany(diagnosticsIds)
 
             return this.success(ctx, admission.toJSON(), 'Admission has been created')
+
+        } catch (error) {
+            console.log(error)
+            return this.error(ctx, error.messages)
+        }
+    }
+
+    public async update(ctx: HttpContextContract) {
+        const { 
+            transportation_id,
+            bed_type_id,
+            status,
+            notes,
+        } = ctx.request.all()
+        const admission_id = ctx.request.param('id')
+
+        try {
+
+            const admission = await Admission.findOrFail(admission_id)
+
+            if( transportation_id ) {
+                admission.transportationId = transportation_id
+            }
+            if( bed_type_id ) {
+                admission.bedTypeId = bed_type_id
+            }
+            if( notes ) {
+                admission.notes = notes
+            }
+            if( status ) {
+                admission.status = status != null ? status : Admission.STATUS.INITIATED
+            }
+
+            await admission.save()
+
+            return this.success(ctx, admission.toJSON(), 'Admission has been updated')
 
         } catch (error) {
             console.log(error)

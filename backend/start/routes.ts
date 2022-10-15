@@ -105,5 +105,6 @@ Route.get('/', async () => {
 	Route.get('/admissions', 'AdmissionsController.index')
 	Route.get('/admissions/:id', 'AdmissionsController.index')
 	Route.post('/admissions', 'AdmissionsController.create')
+	Route.put('/admissions/:id', 'AdmissionsController.update')
 	
 }).namespace('App/Controllers/Http/V1').prefix('/api/v1').middleware(['auth:api'])

@@ -79,10 +79,24 @@ export default class User extends BaseModel {
 	@column()
 	public facilityId?: number
 
-	@column()
+	@column({ 
+		serialize: (value) => {
+			if( value != null ) {
+				return `${ new Array(value.length+1).join('*') }`
+			}
+			return value
+		} 
+	})
 	public gender: string
 
-	@column()
+	@column({ 
+		serialize: (value) => {
+			if( value != null ) {
+				return `${ new Array(6).join('*') }`
+			}
+			return value
+		} 
+	})
 	public dob: Date
 
 	@column()

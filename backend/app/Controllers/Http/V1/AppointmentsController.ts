@@ -9,7 +9,7 @@ export default class AppointmentsController extends ApiResponse {
 
     public async index(ctx: HttpContextContract) {  
         
-        const { paginate, page, limit, sort, order, code, status, facility_id, patient_id, doctor_id } = ctx.request.qs()
+        const { paginate, page, limit, sort, order, code, status, facility_id, patient_id, doctor_id, mr_number } = ctx.request.qs()
         const id = ctx.request.param('id')
 
         try {
@@ -41,6 +41,14 @@ export default class AppointmentsController extends ApiResponse {
                         },
                         () => {
         
+                        }
+                    )
+                    .if(
+                        mr_number != null, 
+                        (query) => {
+                            query.whereHas('patient', (patientsQuery) => {
+                                patientsQuery.where('mr_number', mr_number)
+                            })
                         }
                     )
                     .if(

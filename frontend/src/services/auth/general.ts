@@ -1,5 +1,6 @@
 import axios from "axios";
-import { IBedType, IResponse, ITransportationType } from "types";
+import { IResponse } from "types";
+import { IBedType, ITransportationType } from "pages/TransferForm/utils/types";
 
 export const getBedTypes = async () => {
   const response = await axios.get<IResponse<Array<IBedType>>>(

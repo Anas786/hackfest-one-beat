@@ -1,5 +1,5 @@
 import { Card, Table } from "antd";
-import type { ColumnsType, TableProps } from "antd/es/table";
+import type { ColumnsType } from "antd/es/table";
 import React, { useEffect, useState } from "react";
 import { fetchPatients } from "services/patients";
 import { IPatient } from "types";

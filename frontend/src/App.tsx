@@ -1,4 +1,4 @@
-import { FC } from "react";
+import { FC, useEffect } from "react";
 import { UserProvider } from "contexts/UserContext";
 import { BrowserRouter } from "react-router-dom";
 import { Router } from "router";
@@ -9,27 +9,33 @@ import "antd/dist/antd.min.css";
 
 import "react-toastify/dist/ReactToastify.css";
 import "./Global.css";
+import { AuthProvider } from "contexts/AuthContext";
+import Interceptors from "Interceptor";
 
 const App: FC = () => {
   return (
     <ThemeProvider theme={theme}>
-      <UserProvider>
-        <BrowserRouter>
-          <ToastContainer
-            position="top-right"
-            autoClose={3000}
-            hideProgressBar={false}
-            newestOnTop={false}
-            closeOnClick
-            rtl={false}
-            pauseOnFocusLoss
-            draggable
-            pauseOnHover
-            theme="light"
-          />
-          <Router />
-        </BrowserRouter>
-      </UserProvider>
+      <Interceptors>
+        <UserProvider>
+          <AuthProvider>
+            <BrowserRouter>
+              <ToastContainer
+                position="top-right"
+                autoClose={3000}
+                hideProgressBar={false}
+                newestOnTop={false}
+                closeOnClick
+                rtl={false}
+                pauseOnFocusLoss
+                draggable
+                pauseOnHover
+                theme="light"
+              />
+              <Router />
+            </BrowserRouter>
+          </AuthProvider>
+        </UserProvider>
+      </Interceptors>
     </ThemeProvider>
   );
 };

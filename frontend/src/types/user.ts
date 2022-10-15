@@ -1,11 +1,17 @@
 export interface ILoginUser {
-  username: string;
+  user_name: string;
   password: string;
 }
 
-export interface ILoginResponse {
-  result: string;
+export interface ISingleResponse<T> {
   message: string;
+  status: boolean;
+  data: T;
+}
+
+export interface ILoginResponse {
+  token: IToken;
+  user: IUser;
 }
 
 export interface ISignupUser {
@@ -16,33 +22,6 @@ export interface ISignupUser {
 export interface ISignupResponse {
   result: string;
   message: string;
-}
-
-export interface IPatient {
-  id: 2;
-  first_name: string;
-  middle_name: string;
-  last_name: string;
-  user_name: string;
-  email: string;
-  nic: string;
-  phone: string;
-  category_id: number;
-  gender: string;
-  dob: string;
-  role_id: number;
-  degree_id: string;
-  specialty_id: string;
-  timezone_id: string;
-  notify: number;
-  two_step_verification: string;
-  is_active: boolean;
-  remember_me_token: string;
-  created_at: string;
-  updated_at: string;
-  timezone: string;
-  role: IRole;
-  category: ICategory;
 }
 
 export interface ICategory {
@@ -60,6 +39,41 @@ export interface IRole {
   created_at: string;
   updated_at: string;
 }
+export interface IToken {
+  type: string;
+  token: string;
+  expires_at: string;
+}
+
+export interface IUser {
+  id: string;
+  mr_number: string;
+  first_name: string;
+  middle_name: string;
+  last_name: string;
+  user_name: string;
+  email: string;
+  nic: string;
+  phone: string;
+  category_id: string;
+  gender: string;
+  dob: string;
+  role_id: string;
+  facility_id: string;
+  degree_id: string;
+  specialty_id: string;
+  timezone_id: string;
+  notify: string;
+  two_step_verification: string;
+  is_active: boolean;
+  remember_me_token: string;
+  created_at: string;
+  updated_at: string;
+  role?: IRole;
+  category?: ICategory;
+}
+
+export interface IPatient extends Omit<IUser, "mr_number"> {}
 
 export interface IResponse<T> {
   status: boolean;

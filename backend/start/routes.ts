@@ -30,6 +30,7 @@ Route.get('/', async () => {
  Route.group(() => {
 
 	Route.post('/auth/login', 'AuthController.login')
+	Route.post('/patients', 'PatientsController.create')
 
 }).namespace('App/Controllers/Http/V1').prefix('/api/v1')
 
@@ -71,7 +72,6 @@ Route.get('/', async () => {
 	/** PATIENTS ROUTES */
 	Route.get('/patients', 'PatientsController.index')
 	Route.get('/patients/:id', 'PatientsController.index')
-	Route.post('/patients', 'PatientsController.create')
 
 	/** DOCTORS ROUTES */
 	Route.get('/doctors', 'DoctorsController.index')

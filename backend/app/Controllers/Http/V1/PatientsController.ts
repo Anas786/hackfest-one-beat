@@ -6,12 +6,13 @@ import ApiResponse from 'App/Traits/ApiResponse'
 import Role from 'App/Models/Role'
 import Category from 'App/Models/Category'
 import CreatePatientValidator from 'App/Validators/Patient/CreatePatientValidator'
+import GeneralHelper from 'App/Helpers/GeneralHelper'
 
 export default class PatientsController extends ApiResponse {
 
     public async index(ctx: HttpContextContract) {  
         
-        const { paginate, page, limit, sort, order, is_active, gender, nic } = ctx.request.qs()
+        const { paginate, page, limit, sort, order, is_active, gender, nic, mr_number } = ctx.request.qs()
         const id = ctx.request.param('id')
 
         try {
@@ -66,6 +67,15 @@ export default class PatientsController extends ApiResponse {
                         }
                     )
                     .if(
+                        mr_number != null, 
+                        (query) => {
+                            query.where('mr_number', mr_number)
+                        },
+                        () => {
+        
+                        }
+                    )
+                    .if(
                         sort != null,
                         (query) => {
                             query.orderBy(sort, order)
@@ -114,6 +124,15 @@ export default class PatientsController extends ApiResponse {
                         }
                     )
                     .if(
+                        mr_number != null, 
+                        (query) => {
+                            query.where('mr_number', mr_number)
+                        },
+                        () => {
+        
+                        }
+                    )
+                    .if(
                         sort != null,
                         (query) => {
                             query.orderBy(sort, order)
@@ -150,6 +169,8 @@ export default class PatientsController extends ApiResponse {
             first_name,
             middle_name,
             last_name,
+            user_name,
+            password,
             email,
             nic,
             dob,
@@ -161,16 +182,18 @@ export default class PatientsController extends ApiResponse {
             // Validate parameters
             await ctx.request.validate(CreatePatientValidator)
 
-            const userName = string.generateRandom(8)
-            const password = '12345678'
+            const userName = (user_name != null) ? user_name : string.generateRandom(8)
+            const passwordd = (password != null) ? password : '12345678'
+            const mr = GeneralHelper.generateMrNumber()
 
             const user = new User()
 
+            user.mrNumber = mr
             user.firstName = first_name
             user.middleName = middle_name
             user.lastName = last_name
             user.userName = userName
-            user.password = password
+            user.password = passwordd
             user.email = email
             user.phone = phone
             user.nic = nic
@@ -185,7 +208,7 @@ export default class PatientsController extends ApiResponse {
             return this.success(ctx, user.toJSON(), 'Patient has been created')
 
         } catch (error) {
-            console.log(error.messages)
+            console.log(error)
             return this.error(ctx, error.messages)
         }
     }

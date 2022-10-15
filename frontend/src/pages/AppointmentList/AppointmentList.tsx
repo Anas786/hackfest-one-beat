@@ -65,7 +65,7 @@ const onChange: TableProps<DataType>["onChange"] = (pagination, filters, sorter,
 };
 
 export const AppointmentList: React.FC = () => (
-  <Card style={{ borderRadius: "12px" }}>
+  <Card>
     <Table columns={columns} dataSource={data} onChange={onChange} />
   </Card>
 );

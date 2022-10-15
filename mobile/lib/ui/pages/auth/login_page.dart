@@ -30,13 +30,13 @@ class _LoginPageState extends State<LoginPage> {
   final _uiState = ValueNotifier(UiState.none);
   final _obsecurePassword = ValueNotifier(true);
   final _request = AuthRequest();
-  AuthViewModel? _authVM;
+  AuthViewModel? _viewModel;
 
   @override
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-      _authVM = Provider.of<AuthViewModel>(context, listen: false);
+      _viewModel = Provider.of<AuthViewModel>(context, listen: false);
     });
   }
 
@@ -86,7 +86,7 @@ class _LoginPageState extends State<LoginPage> {
               children: [
                 WidgetUtils.getAppLogo(),
                 Insets.gapH24,
-                _buildEmail(),
+                _buildUsername(),
                 Insets.gapH16,
                 _buildPassword(),
                 Insets.gapH24,
@@ -106,24 +106,20 @@ class _LoginPageState extends State<LoginPage> {
     );
   }
 
-  Widget _buildEmail() {
+  Widget _buildUsername() {
     return ValueListenableBuilder(
       valueListenable: _uiState,
       builder: (context, value, child) {
         return CustomTextField(
-          labelText: AppStrings.email,
-          hint: AppStrings.emailHint,
-          prefixIcon: Icons.email_outlined,
-          keyboardType: TextInputType.emailAddress,
+          labelText: AppStrings.username,
+          hint: AppStrings.usernameHint,
+          keyboardType: TextInputType.text,
           textInputAction: TextInputAction.next,
-          validator: FormBuilderValidators.compose([
-            FormBuilderValidators.required(
-              errorText: AppStrings.required(AppStrings.email),
-            ),
-            FormBuilderValidators.email(errorText: AppStrings.invalidEmail),
-          ]),
+          validator: FormBuilderValidators.required(
+            errorText: AppStrings.required(AppStrings.username),
+          ),
           onSaved: (newValue) {
-            _request.email = newValue?.trim();
+            _request.username = newValue?.trim();
           },
         );
       },
@@ -141,7 +137,6 @@ class _LoginPageState extends State<LoginPage> {
               labelText: AppStrings.password,
               hint: AppStrings.passwordHint,
               obscureText: value,
-              prefixIcon: Icons.lock_outline,
               suffixIcon: value
                   ? Icons.visibility_outlined
                   : Icons.visibility_off_outlined,
@@ -216,7 +211,7 @@ class _LoginPageState extends State<LoginPage> {
   Future<bool> _onBackPressed() async {
     return await CommonUtils.onBackPressed(
       context,
-      _authVM?.isLoading,
+      _viewModel?.isLoading,
     );
   }
 
@@ -226,15 +221,15 @@ class _LoginPageState extends State<LoginPage> {
       CommonUtils.removeCurrentFocus(context);
       _formKey.currentState?.save();
 
-      // final result = await _authVM?.login(_request);
-      // if (!mounted) {
-      //   return;
-      // }
-      // if (result?.isSuccess ?? false) {
-      //   NavigationUtils.replace(context, RouteConstants.home);
-      // } else {
-      //   DialogUtils.showErrorDialog(context, message: result?.message);
-      // }
+      final result = await _viewModel?.login(_request);
+      if (!mounted) {
+        return;
+      }
+      if (result?.isSuccess ?? false) {
+        NavigationUtils.replace(context, RouteConstants.home);
+      } else {
+        DialogUtils.showErrorDialog(context, message: result?.message);
+      }
     }
   }
 }

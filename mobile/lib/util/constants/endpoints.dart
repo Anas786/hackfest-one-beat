@@ -1,9 +1,9 @@
 class Endpoints {
   const Endpoints._internal();
 
-  static const String baseUrl = 'https://mohsinraza10p-task-manager.herokuapp.com/';
+  static const String baseUrl = 'http://api.getonebeat.com/api/v1/';
 
   // Endpoints
-  static const String register = 'users';
-  static const String login = 'users/login';
+  static const String login = 'auth/login';
+  static const String createPatient = 'patients';
 }

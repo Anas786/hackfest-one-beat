@@ -56,6 +56,7 @@ dependencies:
   form_builder_validators: ^8.3.0
   dropdown_button2: ^1.8.5
   flutter_gif: ^0.0.4
+  mask_text_input_formatter: ^2.4.0
 
 dev_dependencies:
   flutter_test:

@@ -1,6 +1,7 @@
 import '../../../util/constants/app_constants.dart';
 import '../../../util/extensions/storage_ext.dart';
 import '../../../util/utilities/json_utils.dart';
+import '../../models/entities/token.dart';
 import '../../models/entities/user.dart';
 
 class StorageClient {
@@ -23,11 +24,16 @@ class StorageClient {
     return User.fromJson(JsonUtils.fromJson(value));
   }
 
-  Future<bool> saveAuthToken(String? token) async {
-    return await set(AppConstants.prefAuthToken, token);
+  Future<bool> saveAuthToken(Token? token) async {
+    final value = JsonUtils.toJson(token?.toJson());
+    return await set(AppConstants.prefAuthToken, value);
   }
 
-  Future<String?> getAuthToken() async {
-    return await get(AppConstants.prefAuthToken) as String?;
+  Future<Token?> getAuthToken() async {
+    final value = await get(AppConstants.prefAuthToken) as String?;
+    if (value == null) {
+      return null;
+    }
+    return Token.fromJson(JsonUtils.fromJson(value));
   }
 }

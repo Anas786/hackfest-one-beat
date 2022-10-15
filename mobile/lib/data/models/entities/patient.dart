@@ -1,9 +1,6 @@
 import '../base_entity.dart';
-import 'user_category.dart';
-import 'user_role.dart';
 
-class User extends BaseEntity {
-  @override
+class Patient extends BaseEntity {
   int? id;
   String? firstName;
   String? middleName;
@@ -11,10 +8,14 @@ class User extends BaseEntity {
   String? userName;
   String? email;
   String? phone;
-  UserRole? role;
-  UserCategory? category;
+  String? nic;
+  String? gender;
+  String? dob;
+  String? mrNumber;
+  int? roleId;
+  int? categoryId;
 
-  User({
+  Patient({
     this.id,
     this.firstName,
     this.middleName,
@@ -22,11 +23,15 @@ class User extends BaseEntity {
     this.userName,
     this.email,
     this.phone,
-    this.role,
-    this.category,
+    this.nic,
+    this.gender,
+    this.dob,
+    this.mrNumber,
+    this.roleId,
+    this.categoryId,
   });
 
-  User.fromJson(Map<String, dynamic> json) {
+  Patient.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     firstName = json['first_name'];
     middleName = json['middle_name'];
@@ -34,12 +39,12 @@ class User extends BaseEntity {
     userName = json['user_name'];
     email = json['email'];
     phone = json['phone'];
-    role = json['role'] != null
-        ? UserRole.fromJson(json['role'])
-        : null;
-    category = json['category'] != null
-        ? UserCategory.fromJson(json['category'])
-        : null;
+    nic = json['nic'];
+    gender = json['gender'];
+    dob = json['dob'];
+    mrNumber = json['mr_number'];
+    roleId = json['role_id'];
+    categoryId = json['category_id'];
   }
 
   @override
@@ -51,12 +56,12 @@ class User extends BaseEntity {
     data['user_name'] = userName;
     data['email'] = email;
     data['phone'] = phone;
-    if (role != null) {
-      data['role'] = role!.toJson();
-    }
-    if (category != null) {
-      data['category'] = category!.toJson();
-    }
+    data['nic'] = nic;
+    data['gender'] = gender;
+    data['dob'] = dob;
+    data['mr_number'] = mrNumber;
+    data['role_id'] = roleId;
+    data['category_id'] = categoryId;
     return data;
   }
 }

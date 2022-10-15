@@ -1,4 +1,5 @@
 import '../../../util/extensions/storage_ext.dart';
+import '../../models/entities/token.dart';
 import '../../models/entities/user.dart';
 import 'storage_client.dart';
 
@@ -7,9 +8,9 @@ abstract class StorageRepository {
 
   Future<User?> getAuthUser();
 
-  Future<bool> saveAuthToken(String? token);
+  Future<bool> saveAuthToken(Token? token);
 
-  Future<String?> getAuthToken();
+  Future<Token?> getAuthToken();
 
   Future<bool> clearAll();
 }
@@ -26,12 +27,12 @@ class StorageRepositoryImpl implements StorageRepository {
   }
 
   @override
-  Future<bool> saveAuthToken(String? token) {
+  Future<bool> saveAuthToken(Token? token) {
     return StorageClient.instance.saveAuthToken(token);
   }
 
   @override
-  Future<String?> getAuthToken() {
+  Future<Token?> getAuthToken() {
     return StorageClient.instance.getAuthToken();
   }
 

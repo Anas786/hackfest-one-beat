@@ -35,6 +35,7 @@ class Corners {
   const Corners._internal();
 
   static const BorderRadius rounded4 = BorderRadius.all(Radius.circular(4));
+  static const BorderRadius rounded8 = BorderRadius.all(Radius.circular(8));
   static const BorderRadius rounded16 = BorderRadius.all(Radius.circular(16));
 }
 

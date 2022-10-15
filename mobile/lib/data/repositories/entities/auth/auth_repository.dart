@@ -9,8 +9,6 @@ import '../../local/storage_repository.dart';
 import '../../remote/network_repository.dart';
 
 abstract class AuthRepository {
-  Future<Result<AuthResponse>> register(RegisterRequest? request);
-
   Future<Result<AuthResponse>> login(AuthRequest? request);
 
   Future<User?> getAuthUser();
@@ -23,14 +21,6 @@ abstract class AuthRepository {
 class AuthRepositoryImpl extends BaseRepositoryImpl implements AuthRepository {
   final _networkRepository = injector<NetworkRepository>();
   final _storageRepository = injector<StorageRepository>();
-
-  @override
-  Future<Result<AuthResponse>> register(RegisterRequest? request) async {
-    if (!await hasInternet()) {
-      return Result.error(AppStrings.errorInternetUnavailable);
-    }
-    return await _networkRepository.register(request);
-  }
 
   @override
   Future<Result<AuthResponse>> login(AuthRequest? request) async {

@@ -1,22 +1,27 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
+import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 import 'package:provider/provider.dart';
 
 import '../../../data/enums/ui_state.dart';
-import '../../../data/models/network/requests/auth_request.dart';
+import '../../../data/models/network/requests/patient_request.dart';
+import '../../../util/constants/app_constants.dart';
 import '../../../util/constants/route_constants.dart';
 import '../../../util/utilities/common_utils.dart';
+import '../../../util/utilities/datetime_utils.dart';
 import '../../../util/utilities/dialog_utils.dart';
 import '../../../util/utilities/navigation_utils.dart';
 import '../../../util/utilities/widget_utils.dart';
+import '../../components/custom_dropdown.dart';
 import '../../components/custom_raised_button.dart';
 import '../../components/custom_text_field.dart';
 import '../../dialogs/progress_dialog.dart';
+import '../../helpers/custom_field_helper.dart';
 import '../../resources/app_strings.dart';
 import '../../resources/app_styles.dart';
 import '../../resources/app_theme.dart';
-import '../../view_models/auth/auth_view_model.dart';
+import '../../view_models/patient/patient_view_model.dart';
 
 class RegistrationPage extends StatefulWidget {
   const RegistrationPage({Key? key}) : super(key: key);
@@ -29,16 +34,30 @@ class _RegistrationPageState extends State<RegistrationPage> {
   final _formKey = GlobalKey<FormBuilderState>();
   final _uiState = ValueNotifier(UiState.none);
   final _obsecurePassword = ValueNotifier(true);
-  final _request = RegisterRequest();
-  int _currentStep = 0;
-  AuthViewModel? _authVM;
+  final _dobController = TextEditingController();
+  final _request = PatientRequest();
+  final _cnicMask = MaskTextInputFormatter(
+    mask: AppStrings.cnicMask,
+    filter: {"#": RegExp(r'[0-9]')},
+  );
+  final _phoneMask = MaskTextInputFormatter(
+    mask: AppStrings.mobileMask,
+    filter: {"#": RegExp(r'[0-9]')},
+  );
+  PatientViewModel? _viewModel;
 
   @override
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-      _authVM = Provider.of<AuthViewModel>(context, listen: false);
+      _viewModel = Provider.of<PatientViewModel>(context, listen: false);
     });
+  }
+
+  @override
+  void dispose() {
+    _dobController.dispose();
+    super.dispose();
   }
 
   @override
@@ -59,15 +78,10 @@ class _RegistrationPageState extends State<RegistrationPage> {
     return Stack(
       children: [
         Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 0),
-          child: Column(
-            children: [
-              _buildContent(),
-              _buildLoginWidget(),
-            ],
-          ),
+          padding: const EdgeInsets.symmetric(horizontal: 24),
+          child: _buildContent(),
         ),
-        Consumer<AuthViewModel>(
+        Consumer<PatientViewModel>(
           builder: (context, value, child) {
             return ProgressDialog(visible: value.isLoading);
           },
@@ -77,129 +91,280 @@ class _RegistrationPageState extends State<RegistrationPage> {
   }
 
   Widget _buildContent() {
-    return Expanded(
-      child: ScrollConfiguration(
-        behavior: const ScrollBehavior().copyWith(overscroll: false),
-        child: SingleChildScrollView(
-          child: FormBuilder(
-            key: _formKey,
-            child: Column(
-              children: [
-                WidgetUtils.getAppLogo(),
-                _buildStepper(),
-              ],
-            ),
+    return ScrollConfiguration(
+      behavior: const ScrollBehavior().copyWith(overscroll: false),
+      child: SingleChildScrollView(
+        child: FormBuilder(
+          key: _formKey,
+          child: Column(
+            children: [
+              WidgetUtils.getAppLogo(),
+              _buildUsername(),
+              Insets.gapH16,
+              CustomFieldHelper.labelText(context, AppStrings.name),
+              Row(
+                children: [
+                  Flexible(child: _buildFirstName()),
+                  Insets.gapW16,
+                  Flexible(child: _buildLastName()),
+                ],
+              ),
+              Insets.gapH16,
+              _buildEmail(),
+              Insets.gapH16,
+              _buildPassword(),
+              Insets.gapH16,
+              _buildCNIC(),
+              Insets.gapH16,
+              _buildPhone(),
+              Insets.gapH16,
+              _buildDateOfBirth(),
+              Insets.gapH16,
+              _buildGender(),
+              Insets.gapH24,
+              CustomRaisedButton(
+                AppStrings.createAccount,
+                width: MediaQuery.of(context).size.width,
+                onPressed: _submit,
+              ),
+              _buildLoginWidget(),
+            ],
           ),
         ),
       ),
     );
   }
 
-  Widget _buildStepper() {
-    return Stepper(
-      physics: const ScrollPhysics(),
-      currentStep: _currentStep,
-      onStepTapped: onTapped,
-      onStepContinue: onContinued,
-      onStepCancel: onCancel,
-      steps: [
-        _personalInfoStep(),
-        _contactInfoStep(),
-        _statusStep(),
-        _diagnosticsStep(),
-      ],
-      controlsBuilder: (context, details) {
-        if (details.currentStep <= 0) {
-          return Row(
-            children: [
-              CustomRaisedButton(
-                AppStrings.next,
-                onPressed: details.onStepContinue,
-              ),
-            ],
-          );
-        } else if (details.currentStep >= 3) {
-          return Row(
-            children: [
-              CustomRaisedButton(
-                AppStrings.submit,
-                onPressed: _submit,
-              ),
-            ],
-          );
-        } else {
-          return Row(
-            children: [
-              CustomRaisedButton(
-                AppStrings.next,
-                onPressed: details.onStepContinue,
-              ),
-              Insets.gapW8,
-              TextButton(
-                onPressed: details.onStepCancel,
-                child: Text(
-                  AppStrings.previous,
-                  style: Texts.button.copyWith(color: AppTheme.darkGrayColor),
-                ),
-              ),
-            ],
-          );
-        }
+  Widget _buildUsername() {
+    return ValueListenableBuilder(
+      valueListenable: _uiState,
+      builder: (context, value, child) {
+        return CustomTextField(
+          labelText: AppStrings.username,
+          hint: AppStrings.usernameHint,
+          keyboardType: TextInputType.text,
+          textInputAction: TextInputAction.next,
+          validator: FormBuilderValidators.required(
+            errorText: AppStrings.required(AppStrings.username),
+          ),
+          onSaved: (newValue) {
+            _request.username = newValue?.trim();
+          },
+        );
       },
     );
   }
 
-  Step _personalInfoStep() {
-    return Step(
-      title: Text(
-        AppStrings.personalInfo,
-        style: Texts.heading3,
-      ),
-      isActive: _currentStep >= 0,
-      state: _currentStep >= 0 ? StepState.complete : StepState.disabled,
-      content: Container(),
+  Widget _buildFirstName() {
+    return ValueListenableBuilder(
+      valueListenable: _uiState,
+      builder: (context, value, child) {
+        return CustomTextField(
+          labelText: null,
+          hint: AppStrings.firstNameHint,
+          keyboardType: TextInputType.name,
+          textInputAction: TextInputAction.next,
+          validator: FormBuilderValidators.required(
+            errorText: AppStrings.required(AppStrings.firstName),
+          ),
+          onSaved: (newValue) {
+            _request.firstName = newValue?.trim();
+          },
+        );
+      },
     );
   }
 
-  Step _contactInfoStep() {
-    return Step(
-      title: Text(
-        AppStrings.contactInfo,
-        style: Texts.heading3,
-      ),
-      isActive: _currentStep >= 0,
-      state: _currentStep >= 1 ? StepState.complete : StepState.disabled,
-      content: Container(),
+  Widget _buildLastName() {
+    return ValueListenableBuilder(
+      valueListenable: _uiState,
+      builder: (context, value, child) {
+        return CustomTextField(
+          labelText: null,
+          hint: AppStrings.lastNameHint,
+          keyboardType: TextInputType.name,
+          textInputAction: TextInputAction.next,
+          validator: FormBuilderValidators.required(
+            errorText: AppStrings.required(AppStrings.lastName),
+          ),
+          onSaved: (newValue) {
+            _request.lastName = newValue?.trim();
+          },
+        );
+      },
     );
   }
 
-  Step _statusStep() {
-    return Step(
-      title: Text(
-        AppStrings.status,
-        style: Texts.heading3,
-      ),
-      isActive: _currentStep >= 0,
-      state: _currentStep >= 2 ? StepState.complete : StepState.disabled,
-      content: Container(),
+  Widget _buildEmail() {
+    return ValueListenableBuilder(
+      valueListenable: _uiState,
+      builder: (context, value, child) {
+        return CustomTextField(
+          labelText: AppStrings.emailOptional,
+          hint: AppStrings.emailHint,
+          keyboardType: TextInputType.emailAddress,
+          textInputAction: TextInputAction.next,
+          validator: FormBuilderValidators.compose([
+            FormBuilderValidators.email(errorText: AppStrings.invalidEmail),
+          ]),
+          onSaved: (newValue) {
+            _request.email = newValue?.trim();
+          },
+        );
+      },
     );
   }
 
-  Step _diagnosticsStep() {
-    return Step(
-      title: Text(
-        AppStrings.diagnostics,
-        style: Texts.heading3,
-      ),
-      isActive: _currentStep >= 0,
-      state: _currentStep >= 3 ? StepState.complete : StepState.disabled,
-      content: Container(),
+  Widget _buildPassword() {
+    return ValueListenableBuilder(
+      valueListenable: _uiState,
+      builder: (context, value, child) {
+        return ValueListenableBuilder<bool>(
+          valueListenable: _obsecurePassword,
+          builder: (context, value, child) {
+            return CustomTextField(
+              labelText: AppStrings.password,
+              hint: AppStrings.passwordHint,
+              obscureText: value,
+              suffixIcon: value
+                  ? Icons.visibility_outlined
+                  : Icons.visibility_off_outlined,
+              onSuffixIconPressed: () {
+                _obsecurePassword.value = !value;
+              },
+              textInputAction: TextInputAction.done,
+              validator: FormBuilderValidators.compose([
+                FormBuilderValidators.required(
+                  errorText: AppStrings.required(AppStrings.password),
+                ),
+                FormBuilderValidators.minLength(
+                  8,
+                  errorText: AppStrings.invalidPassword,
+                )
+              ]),
+              onSaved: (newValue) {
+                _request.password = newValue?.trim();
+              },
+            );
+          },
+        );
+      },
+    );
+  }
+
+  Widget _buildCNIC() {
+    return ValueListenableBuilder(
+      valueListenable: _uiState,
+      builder: (context, value, child) {
+        return CustomTextField(
+          labelText: AppStrings.cnic,
+          hint: AppStrings.cnicMask,
+          keyboardType: TextInputType.number,
+          inputFormatters: [_cnicMask],
+          textInputAction: TextInputAction.next,
+          validator: FormBuilderValidators.compose([
+            FormBuilderValidators.required(
+              errorText: AppStrings.required(AppStrings.cnic),
+            ),
+            FormBuilderValidators.minLength(
+              15, // 13 + 2 for mask
+              errorText: AppStrings.invalidCNIC,
+            ),
+          ]),
+          onSaved: (newValue) {
+            _request.identityNumber = _cnicMask.getUnmaskedText();
+          },
+        );
+      },
+    );
+  }
+
+  Widget _buildPhone() {
+    return ValueListenableBuilder(
+      valueListenable: _uiState,
+      builder: (context, value, child) {
+        return CustomTextField(
+          labelText: AppStrings.mobile,
+          hint: AppStrings.mobileMask,
+          keyboardType: TextInputType.number,
+          inputFormatters: [_phoneMask],
+          textInputAction: TextInputAction.next,
+          validator: FormBuilderValidators.compose([
+            FormBuilderValidators.required(
+              errorText: AppStrings.required(AppStrings.mobile),
+            ),
+            FormBuilderValidators.minLength(
+              12, // 11 + 1 for mask
+              errorText: AppStrings.invalidMobileNumber,
+            ),
+          ]),
+          onSaved: (newValue) {
+            _request.phone = _phoneMask.getUnmaskedText();
+          },
+        );
+      },
+    );
+  }
+
+  Widget _buildDateOfBirth() {
+    return ValueListenableBuilder(
+      valueListenable: _uiState,
+      builder: (context, value, child) {
+        return CustomTextField(
+          readOnly: true,
+          labelText: AppStrings.dob,
+          hint: AppStrings.select,
+          controller: _dobController,
+          suffixIcon: Icons.keyboard_arrow_down_outlined,
+          onFieldTap: () {
+            CommonUtils.removeCurrentFocus(context);
+            CommonUtils.openDatePicker(
+              context,
+              onDateSelected: (date) {
+                final formattedDate = DateTimeUtils.format(
+                  AppConstants.dateRequestFormat,
+                  date,
+                );
+                if (formattedDate != null) {
+                  _dobController.text = formattedDate;
+                }
+              },
+            );
+          },
+          validator: FormBuilderValidators.required(
+            errorText: AppStrings.required(AppStrings.dob),
+          ),
+          onSaved: (newValue) {
+            _request.dateOfBirth = newValue?.trim();
+          },
+        );
+      },
+    );
+  }
+
+  Widget _buildGender() {
+    return ValueListenableBuilder(
+      valueListenable: _uiState,
+      builder: (context, value, child) {
+        return CustomDropdown(
+          labelText: AppStrings.gender,
+          hint: AppStrings.select,
+          options: const ['Male', 'Female'],
+          suffixIcon: Icons.keyboard_arrow_down_outlined,
+          validator: FormBuilderValidators.required(
+            errorText: AppStrings.required(AppStrings.gender),
+          ),
+          onSaved: (newValue) {
+            _request.gender = newValue?.trim().substring(0, 1);
+          },
+        );
+      },
     );
   }
 
   Widget _buildLoginWidget() {
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 24),
+      padding: const EdgeInsets.only(top: 20, bottom: 24),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.center,
         mainAxisAlignment: MainAxisAlignment.center,
@@ -226,20 +391,8 @@ class _RegistrationPageState extends State<RegistrationPage> {
   Future<bool> _onBackPressed() async {
     return await CommonUtils.onBackPressed(
       context,
-      _authVM?.isLoading,
+      _viewModel?.isLoading,
     );
-  }
-
-  onTapped(int step) {
-    setState(() => _currentStep = step);
-  }
-
-  onContinued() {
-    _currentStep < 3 ? setState(() => _currentStep += 1) : null;
-  }
-
-  onCancel() {
-    _currentStep > 0 ? setState(() => _currentStep -= 1) : null;
   }
 
   void _submit() async {
@@ -248,15 +401,24 @@ class _RegistrationPageState extends State<RegistrationPage> {
       CommonUtils.removeCurrentFocus(context);
       _formKey.currentState?.save();
 
-      // final result = await _authVM?.register(_request);
-      // if (!mounted) {
-      //   return;
-      // }
-      // if (result?.isSuccess ?? false) {
-      //   _onBackPressed();
-      // } else {
-      //   DialogUtils.showErrorDialog(context, message: result?.message);
-      // }
+      final result = await _viewModel?.create(_request);
+      if (!mounted) {
+        return;
+      }
+      if (result?.isSuccess ?? false) {
+        DialogUtils.showInfoDialog(
+          context,
+          message: result?.message,
+          callback: () {
+            NavigationUtils.clearStack(
+              context,
+              newRouteName: RouteConstants.login,
+            );
+          },
+        );
+      } else {
+        DialogUtils.showErrorDialog(context, message: result?.message);
+      }
     }
   }
 }

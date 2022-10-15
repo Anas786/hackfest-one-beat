@@ -1,7 +1,7 @@
 import 'base_model.dart';
 
 class BaseEntity implements BaseModel {
-  String? id;
+  int? id;
   DateTime? createdAt;
   DateTime? updatedAt;
 
@@ -15,13 +15,13 @@ class BaseEntity implements BaseModel {
   Map<String, dynamic> toJson() {
     final json = <String, dynamic>{};
     if (id != null) {
-      json['_id'] = id;
+      json['id'] = id;
     }
     if (createdAt != null) {
-      json['createdAt'] = createdAt?.toIso8601String();
+      json['created_at'] = createdAt!.toIso8601String();
     }
     if (updatedAt != null) {
-      json['updatedAt'] = updatedAt?.toIso8601String();
+      json['updated_at'] = updatedAt!.toIso8601String();
     }
     return json;
   }

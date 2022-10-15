@@ -60,6 +60,12 @@ class AppStrings {
   static const signIn = 'Sign in';
   static const submit = 'Submit';
   static const success = 'Success';
+  static const myAppointments = 'My Appointments';
+  static const editProfile = 'Edit Profile';
+  static const changePassword = 'Change Password';
+  static const rateUs = 'Rate Us';
+  static const support = 'Support';
+  static const app_version = 'App version';
   static const next = 'Next';
   static const previous = 'Previous';
   static const personalInfo = 'Personal Info';

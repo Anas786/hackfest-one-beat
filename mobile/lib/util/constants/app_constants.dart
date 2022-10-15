@@ -1,15 +1,16 @@
 class AppConstants {
   const AppConstants._internal();
 
-  static const int apiTimeout = 60; // Seconds
+  static const apiTimeout = 60; // Seconds
+  static const supportUrl = 'http://api.getonebeat.com/';
 
   // Argument keys
-  static const String argUser = 'arg_user';
+  static const argUser = 'arg_user';
 
   // Shared preferences
-  static const String prefAuthToken = 'pref_token';
-  static const String prefAuthUser = 'pref_user';
+  static const prefAuthToken = 'pref_token';
+  static const prefAuthUser = 'pref_user';
 
   // Date formats
-  static const String dateRequestFormat = 'yyy-MM-dd';
+  static const dateRequestFormat = 'yyy-MM-dd';
 }

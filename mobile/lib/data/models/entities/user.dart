@@ -26,6 +26,13 @@ class User extends BaseEntity {
     this.category,
   });
 
+  String get fullName {
+    if (middleName?.isNotEmpty == true) {
+      return '$firstName $middleName $lastName';
+    }
+    return '$firstName $lastName';
+  }
+
   User.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     firstName = json['first_name'];

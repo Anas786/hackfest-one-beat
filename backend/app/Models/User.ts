@@ -1,12 +1,13 @@
 import { DateTime } from 'luxon'
 import Hash from '@ioc:Adonis/Core/Hash'
-import { column, beforeSave, BaseModel, belongsTo, BelongsTo } from '@ioc:Adonis/Lucid/Orm'
+import { column, beforeSave, BaseModel, belongsTo, BelongsTo, hasMany, HasMany } from '@ioc:Adonis/Lucid/Orm'
 import Role from 'App/Models/Role'
 import Category from 'App/Models/Category'
 import Degree from 'App/Models/Degree'
 import Specialty from 'App/Models/Specialty'
 import Timezone from 'App/Models/Timezone'
 import Facility from 'App/Models/Facility'
+import PatientMedicalHistory from 'App/Models/PatientMedicalHistory'
 
 export default class User extends BaseModel {
 	@column({ isPrimary: true })
@@ -123,4 +124,10 @@ export default class User extends BaseModel {
 		foreignKey: 'timezoneId',
 	})
 	public timezone: BelongsTo<typeof Timezone>
+
+	@hasMany(() => PatientMedicalHistory, {
+		localKey: 'id',
+		foreignKey: 'patientId',
+	})
+	public medical_histories: HasMany<typeof PatientMedicalHistory>
 }

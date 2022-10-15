@@ -4,9 +4,8 @@ import { ReactComponent as Logo } from "images/logo-light.svg";
 import "./styles.css";
 import { INavItem } from "types";
 import { GiHospitalCross } from "react-icons/gi";
-import { BiArrowFromLeft, BiArrowToLeft } from "react-icons/bi";
 import { ImCalendar } from "react-icons/im";
-import { FaHandHoldingMedical, FaPlus } from "react-icons/fa";
+import { FaDashcube, FaHandHoldingMedical, FaPlus } from "react-icons/fa";
 import { useLocation, useNavigate } from "react-router-dom";
 import { MenuFoldOutlined, MenuUnfoldOutlined } from "@ant-design/icons";
 
@@ -17,8 +16,8 @@ interface MainLayoutProps {
 }
 
 export const NAV_ITEMS: INavItem[] = [
+  { label: "Dashboard", path: "/dashboard", icon: <FaDashcube /> },
   { label: "Patients", path: "/patients", icon: <GiHospitalCross /> },
-  { label: "Test", path: "/test", icon: <GiHospitalCross /> },
   { label: "Appointments", path: "/appointments", icon: <ImCalendar /> },
   { label: "Transfer Forms", path: "/transfer-forms", icon: <FaHandHoldingMedical /> },
 ];

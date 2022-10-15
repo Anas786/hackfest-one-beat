@@ -1,21 +1,19 @@
 import { useState } from "react";
-import { useTheme } from "@mui/material";
 import {
   Stepper,
   PatientInfo,
   PatientStatus,
-  PatientDiagnostics,
+  PatientDiagnoses,
   AdmissionPreferences,
 } from "./components";
 import { Button, Card, Divider } from "antd";
-import { IAdmissionPreferences, IPatientInfo, IPatientStatus } from "./utils/types";
+import { IAdmissionPreferences, IDiagonosis, IPatientInfo, IPatientStatus } from "./utils/types";
 
 export const TransferForms = () => {
-  const theme = useTheme();
   const [step, setStep] = useState(0);
   const [patientInfo, setPatientInfo] = useState<IPatientInfo>();
   const [patientStatus, setPatientStatus] = useState<IPatientStatus>();
-  const [patientDiagnostics, setPatientDiagnostics] = useState<Array<any>>();
+  const [patientDiagnoses, setPatientDiagnoses] = useState<Array<IDiagonosis>>();
   const [admissionPreferences, setAdmissionPreferences] = useState<IAdmissionPreferences>();
 
   const nextStep = () => setStep(step + 1);
@@ -30,8 +28,8 @@ export const TransferForms = () => {
     nextStep();
   };
 
-  const handleAddPatienDiagnostics = (data: Array<any>) => {
-    setPatientDiagnostics(data);
+  const handleAddPatientDiagnoses = (data: Array<any>) => {
+    setPatientDiagnoses(data);
     nextStep();
   };
 
@@ -43,7 +41,7 @@ export const TransferForms = () => {
   const handleSumbit = () => {
     console.log(patientInfo);
     console.log(patientStatus);
-    console.log(patientDiagnostics);
+    console.log(patientDiagnoses);
     console.log(admissionPreferences);
   };
 
@@ -53,9 +51,7 @@ export const TransferForms = () => {
         <div>
           {step === 0 && <PatientInfo handleAddPatientInfo={handleAddPatientInfo} />}
           {step === 1 && <PatientStatus handleAddPatienStatus={handleAddPatienStatus} />}
-          {step === 2 && (
-            <PatientDiagnostics handleAddPatienDiagnostics={handleAddPatienDiagnostics} />
-          )}
+          {step === 2 && <PatientDiagnoses handleAddPatientDiagnoses={handleAddPatientDiagnoses} />}
           {step === 3 && (
             <AdmissionPreferences handleAddAdmissionPreferences={handleAddAdmissionPreferences} />
           )}

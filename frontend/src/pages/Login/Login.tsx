@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Box, Card, Input, useTheme } from "@mui/material";
-import { toast } from "react-toastify";
 import { useAuth, useProfile } from "hooks";
 import { Button } from "ui";
 import { ILoginUser } from "types/user";
@@ -9,7 +8,7 @@ import { PRIMARY_GRADIENT } from "constants/colors";
 import { ReactComponent as Logo } from "images/logo.svg";
 
 export const Login = () => {
-  const [user, setUser] = useState<ILoginUser>({ username: "", password: "" });
+  const [user, setUser] = useState<ILoginUser>({ user_name: "", password: "" });
 
   const theme = useTheme();
   const navigate = useNavigate();
@@ -18,19 +17,13 @@ export const Login = () => {
 
   const { isLoading } = userState;
 
-  const handleLogin = async () => {
-    try {
-      const { result, message } = await login(user);
-      console.log(result, message);
-      navigate("/patients");
-      toast.success("Logged In Successfully");
-    } catch (e) {
-      toast.error("Login failed");
-    }
-  };
-
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) =>
     setUser({ ...user, [e.target.name]: e.target.value });
+
+  const handleLogin = async () => {
+    const response = await login(user);
+    if (response.user) navigate("/dashboard");
+  };
 
   return (
     <Box
@@ -57,8 +50,8 @@ export const Login = () => {
         <Logo />
         <Input
           placeholder="Enter username"
-          value={user.username}
-          name="username"
+          value={user.user_name}
+          name="user_name"
           onChange={handleChange}
         />
         <Input

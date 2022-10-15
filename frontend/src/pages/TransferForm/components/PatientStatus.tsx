@@ -1,7 +1,10 @@
 import { FC } from "react";
-import { Button, Form, Input } from "antd";
+import { Button, Form, Input, Select } from "antd";
 import { StyledLabel } from "./Label";
 import { IPatientStatus } from "../utils/types";
+import { bedTypes, transportationTypes } from "../utils/constants";
+
+const { Option } = Select;
 
 interface PatientStatusProps {
   handleAddPatienStatus: (data: IPatientStatus) => void;
@@ -39,18 +42,20 @@ export const PatientStatus: FC<PatientStatusProps> = ({ handleAddPatienStatus })
               },
             ]}
           >
-            <Input name="modeOfTransportaion" />
+            <Select
+              size="middle"
+              placeholder="Please select transportation type"
+              style={{ width: "100%" }}
+            >
+              {transportationTypes.map((transportationType) => (
+                <Option key={transportationType.id} value={transportationType.name}>
+                  {transportationType.name}
+                </Option>
+              ))}
+            </Select>
           </Form.Item>
-          <StyledLabel text="Code Status" required={true} />
-          <Form.Item
-            name="codeStatus"
-            rules={[
-              {
-                required: true,
-                message: "Please enter code status!",
-              },
-            ]}
-          >
+          <StyledLabel text="Code Status" />
+          <Form.Item name="codeStatus">
             <Input name="codeStatus" />
           </Form.Item>
           <StyledLabel text="Bed Type" required={true} />
@@ -63,7 +68,13 @@ export const PatientStatus: FC<PatientStatusProps> = ({ handleAddPatienStatus })
               },
             ]}
           >
-            <Input name="bedType" />
+            <Select size="middle" placeholder="Please select bed type" style={{ width: "100%" }}>
+              {bedTypes.map((bedType) => (
+                <Option key={bedType.id} value={bedType.name}>
+                  {bedType.name}
+                </Option>
+              ))}
+            </Select>
           </Form.Item>
         </div>
         <Button block type="primary" size="large" htmlType="submit">

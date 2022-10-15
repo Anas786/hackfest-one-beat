@@ -5,6 +5,7 @@ import { INITIAL_USER_STATE } from "contexts/UserContext/constants";
 import { loginUser, signupUser } from "services/auth/auth";
 import { IAuthState } from "./types";
 import { ILoginResponse, ILoginUser, ISignupResponse, ISignupUser } from "types";
+import { toast } from "react-toastify";
 
 export const AuthContext = createContext<IAuthState>(INITIAL_AUTH_STATE);
 
@@ -37,18 +38,22 @@ export const AuthProvider: FC<AuthProviderProps> = ({ children }) => {
   const login = async (payload: ILoginUser): Promise<ILoginResponse> => {
     try {
       setUserState({ ...userState, isLoading: true });
-      const loginResponse = await loginUser(payload);
-      const { result, message } = loginResponse;
-      console.log(message);
-      if (result === "failed") {
-        logout();
-        return loginResponse;
-      }
-      setUserState({ ...userState, isLoggedIn: true, isLoading: false });
-      return loginResponse;
+      const logInResponse = await loginUser(payload);
+
+      const { data, message, status } = logInResponse;
+
+      const { token, user } = data;
+
+      localStorage.setItem("token", token.token);
+      localStorage.setItem("user", JSON.stringify(user));
+
+      setUserState({ ...userState, user: user, isLoggedIn: true, isLoading: false });
+      toast.success("Logged in successfully");
+      return data;
     } catch (error) {
       // TODO handle error
       logout();
+      console.log(error);
       throw new Error("Login failed.");
     }
   };

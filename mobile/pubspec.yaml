@@ -59,6 +59,7 @@ dependencies:
   flutter_gif: ^0.0.4
   mask_text_input_formatter: ^2.4.0
   package_info_plus: ^1.0.6
+  flutter_speed_dial: ^6.2.0
 
 dev_dependencies:
   flutter_test:

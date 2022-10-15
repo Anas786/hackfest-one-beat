@@ -32,7 +32,7 @@ class ProgressDialog extends StatelessWidget {
         return Visibility(
           visible: visible,
           child: Container(
-            color: Colors.black54,
+            color: Colors.black.withOpacity(0.5),
             child: Center(
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(8),

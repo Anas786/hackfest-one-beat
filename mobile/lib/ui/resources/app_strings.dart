@@ -65,7 +65,9 @@ class AppStrings {
   static const changePassword = 'Change Password';
   static const rateUs = 'Rate Us';
   static const support = 'Support';
-  static const app_version = 'App version';
+  static const appVersion = 'App version';
+  static const bookAppointment = 'Book Appointment';
+  static const medicalHistory = 'Medical History';
   static const next = 'Next';
   static const previous = 'Previous';
   static const personalInfo = 'Personal Info';

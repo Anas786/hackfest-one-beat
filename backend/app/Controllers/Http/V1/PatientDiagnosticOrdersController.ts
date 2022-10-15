@@ -18,9 +18,18 @@ export default class PatientDiagnosticOrdersController extends ApiResponse {
                 if( paginate != null && paginate == '1' || paginate == 1 ) {
                     const diagnosticOrders = await PatientDiagnosticOrder
                         .query()
-                        .preload('blood_tests')
-                        .preload('urine_tests')
-                        .preload('imaging_tests')
+                        .preload('blood_tests', (bloodTestsQuery) => {
+                            bloodTestsQuery
+                                .preload('blood_test')
+                        })
+                        .preload('urine_tests', (urineTestsQuery) => {
+                            urineTestsQuery
+                                .preload('urine_test')
+                        })
+                        .preload('imaging_tests', (imagingTestsQuery) => {
+                            imagingTestsQuery
+                                .preload('imaging_test')
+                        })
                         .if(
                             patient_id != null,
                             (query) => {
@@ -55,9 +64,18 @@ export default class PatientDiagnosticOrdersController extends ApiResponse {
                 } else {
                     const diagnosticOrders = await PatientDiagnosticOrder
                         .query()
-                        .preload('blood_tests')
-                        .preload('urine_tests')
-                        .preload('imaging_tests')
+                        .preload('blood_tests', (bloodTestsQuery) => {
+                            bloodTestsQuery
+                                .preload('blood_test')
+                        })
+                        .preload('urine_tests', (urineTestsQuery) => {
+                            urineTestsQuery
+                                .preload('urine_test')
+                        })
+                        .preload('imaging_tests', (imagingTestsQuery) => {
+                            imagingTestsQuery
+                                .preload('imaging_test')
+                        })
                         .if(
                             patient_id != null,
                             (query) => {

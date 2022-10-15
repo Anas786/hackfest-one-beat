@@ -5,5 +5,7 @@ class Endpoints {
 
   // Endpoints
   static const String login = 'auth/login';
-  static const String createPatient = 'patients';
+  static const String patients = 'patients';
+  static const String appointments = 'appointments';
+  static const String facilities = 'facilities';
 }

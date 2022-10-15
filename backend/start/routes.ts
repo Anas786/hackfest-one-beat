@@ -88,6 +88,9 @@ Route.get('/', async () => {
 	Route.get('/patients/:id/diagnostic_orders', 'PatientDiagnosticOrdersController.index')
 	Route.post('/patients/:id/diagnostic_orders', 'PatientDiagnosticOrdersController.create')
 
+	Route.get('/patients/:id/specialty_consults', 'PatientSpecialtyConsultsController.index')
+	Route.post('/patients/:id/specialty_consults', 'PatientSpecialtyConsultsController.create')
+
 	/** DOCTORS ROUTES */
 	Route.get('/doctors', 'DoctorsController.index')
 	Route.get('/doctors/:id', 'DoctorsController.index')
@@ -102,5 +105,6 @@ Route.get('/', async () => {
 	Route.get('/admissions', 'AdmissionsController.index')
 	Route.get('/admissions/:id', 'AdmissionsController.index')
 	Route.post('/admissions', 'AdmissionsController.create')
+	Route.put('/admissions/:id', 'AdmissionsController.update')
 	
 }).namespace('App/Controllers/Http/V1').prefix('/api/v1').middleware(['auth:api'])

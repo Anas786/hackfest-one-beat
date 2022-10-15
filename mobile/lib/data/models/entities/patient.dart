@@ -31,6 +31,13 @@ class Patient extends BaseEntity {
     this.categoryId,
   });
 
+  String get fullName {
+    if (middleName?.isNotEmpty == true) {
+      return '$firstName $middleName $lastName';
+    }
+    return '$firstName $lastName';
+  }
+
   Patient.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     firstName = json['first_name'];

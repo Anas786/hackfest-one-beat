@@ -22,7 +22,7 @@ class AppTheme {
   // }
 
   static const Color primaryColor = Color(0xFF853BEF);
-  static const Color secondaryColor = Color(0xFFf35b9c);
+  // static const Color secondaryColor = Color(0xFFf35b9c);
   static const Color dividerColor = Color(0xFFE6E8E7);
   static const Color successColor = Color(0xFF049f55);
   static const Color errorColor = Color(0xFFe63950);
@@ -35,7 +35,7 @@ class AppTheme {
     brightness: Brightness.light,
     colorScheme: const ColorScheme.light(
       primary: primaryColor,
-      secondary: secondaryColor,
+      secondary: primaryColor,
       error: errorColor,
     ),
     dividerColor: dividerColor,

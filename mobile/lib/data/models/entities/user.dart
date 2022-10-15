@@ -27,6 +27,7 @@ class User extends BaseEntity {
   });
 
   String get fullName {
+    return 'Mohsin Raza';
     if (middleName?.isNotEmpty == true) {
       return '$firstName $middleName $lastName';
     }

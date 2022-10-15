@@ -9,7 +9,7 @@ export default class PatientMedicalHistoriesController extends ApiResponse {
 
     public async index(ctx: HttpContextContract) {  
         
-        const { paginate, page, limit, sort, order } = ctx.request.qs()
+        const { paginate, page, limit, sort, order, appointment_id } = ctx.request.qs()
         const patient_id = ctx.request.param('id')
 
         try {
@@ -23,6 +23,15 @@ export default class PatientMedicalHistoriesController extends ApiResponse {
                             patient_id != null,
                             (query) => {
                                 query.where('patient_id', patient_id)
+                            },
+                            () => {
+            
+                            }
+                        )
+                        .if(
+                            appointment_id != null,
+                            (query) => {
+                                query.where('appointment_id', appointment_id)
                             },
                             () => {
             
@@ -48,6 +57,15 @@ export default class PatientMedicalHistoriesController extends ApiResponse {
                             patient_id != null,
                             (query) => {
                                 query.where('patient_id', patient_id)
+                            },
+                            () => {
+            
+                            }
+                        )
+                        .if(
+                            appointment_id != null,
+                            (query) => {
+                                query.where('appointment_id', appointment_id)
                             },
                             () => {
             

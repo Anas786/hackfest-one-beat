@@ -32,7 +32,7 @@ export const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
 
   return (
     <Layout style={{ height: "100vh" }}>
-      <Sider trigger={null} collapsible collapsed={collapsed}>
+      <Sider width={"250"} collapsedWidth={80} trigger={null} collapsible collapsed={collapsed}>
         <Logo className="logo" height={80} width={"100%"} />
         <Menu
           theme="dark"

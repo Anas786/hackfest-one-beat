@@ -73,7 +73,24 @@ export interface IUser {
   category?: ICategory;
 }
 
-export interface IPatient extends Omit<IUser, "mr_number"> {}
+export interface IPatient extends IUser {}
+
+export interface IDoctor extends IUser {
+  specialty: {
+    id: string;
+    name: string;
+    created_at: string;
+    updated_at: string;
+  };
+  timezone: string;
+  degree: {
+    id: string;
+    name: string;
+    code: string;
+    created_at: string;
+    updated_at: string;
+  };
+}
 
 export interface IResponse<T> {
   status: boolean;

@@ -52,24 +52,27 @@ class _AppDrawerState extends State<AppDrawer> {
 
   Widget _buildNavWidget(BuildContext context) {
     return Expanded(
-      child: SingleChildScrollView(
-        child: Column(
-          children: [
-            Padding(
-              padding: const EdgeInsets.only(top: 16, bottom: 8),
-              child: ValueListenableBuilder<User?>(
-                valueListenable: _user,
-                builder: (context, value, child) {
-                  return _buildNavHeader(context, value);
-                },
+      child: ScrollConfiguration(
+        behavior: const ScrollBehavior().copyWith(overscroll: false),
+        child: SingleChildScrollView(
+          child: Column(
+            children: [
+              Padding(
+                padding: const EdgeInsets.only(top: 16, bottom: 8),
+                child: ValueListenableBuilder<User?>(
+                  valueListenable: _user,
+                  builder: (context, value, child) {
+                    return _buildNavHeader(context, value);
+                  },
+                ),
               ),
-            ),
-            const Padding(
-              padding: EdgeInsets.symmetric(horizontal: 16),
-              child: Divider(thickness: 1),
-            ),
-            ..._buildNavItems(context),
-          ],
+              const Padding(
+                padding: EdgeInsets.symmetric(horizontal: 16),
+                child: Divider(thickness: 1),
+              ),
+              ..._buildNavItems(context),
+            ],
+          ),
         ),
       ),
     );
@@ -211,7 +214,7 @@ class _AppDrawerState extends State<AppDrawer> {
                 Row(
                   children: [
                     Text(
-                      '${AppStrings.app_version}: ',
+                      '${AppStrings.appVersion}: ',
                       style: Texts.paragraph1
                           .copyWith(fontWeight: FontWeight.bold),
                     ),

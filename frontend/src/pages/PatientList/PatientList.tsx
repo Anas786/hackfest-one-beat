@@ -1,4 +1,4 @@
-import { Card, Table } from "antd";
+import { Card, Table, TableProps } from "antd";
 import type { ColumnsType } from "antd/es/table";
 import React, { useEffect, useState } from "react";
 import { fetchPatients } from "services/patients";
@@ -31,14 +31,16 @@ const columns: ColumnsType<IPatient> = [
   },
 ];
 
+const onChange: TableProps<IPatient>["onChange"] = (pagination, filters, sorter, extra) => {
+  console.log("params", pagination, filters, sorter, extra);
+};
+
 export const PatientsList: React.FC = () => {
   const [patients, setPatients] = useState<Array<IPatient>>([]);
 
   useEffect(() => {
     const fetchList = async () => {
-      console.log("FETCH LIST RAN");
       const data = await fetchPatients();
-
       setPatients(data);
     };
     fetchList();
@@ -46,7 +48,7 @@ export const PatientsList: React.FC = () => {
 
   return (
     <Card>
-      <Table columns={columns} dataSource={patients} />
+      <Table columns={columns} dataSource={patients} onChange={onChange} />
     </Card>
   );
 };

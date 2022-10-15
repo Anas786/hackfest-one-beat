@@ -6,7 +6,7 @@ import { INavItem } from "types";
 import { GiHospitalCross } from "react-icons/gi";
 import { BiArrowFromLeft, BiArrowToLeft } from "react-icons/bi";
 import { ImCalendar } from "react-icons/im";
-import { FaHandHoldingMedical, FaPlus } from "react-icons/fa";
+import { FaHandHoldingMedical } from "react-icons/fa";
 import { useLocation, useNavigate } from "react-router-dom";
 
 const { Header, Sider, Content } = Layout;

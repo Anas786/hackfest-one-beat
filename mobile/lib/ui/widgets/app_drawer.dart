@@ -106,13 +106,6 @@ class _AppDrawerState extends State<AppDrawer> {
         maxLines: 1,
         style: Texts.hint.copyWith(color: AppTheme.darkGrayColor),
       ),
-      // trailing: IconButton(
-      //   icon: const Icon(
-      //     Icons.clear,
-      //     color: AppTheme.darkGrayColor,
-      //   ),
-      //   onPressed: () => _closeDrawer(context),
-      // ),
     );
   }
 

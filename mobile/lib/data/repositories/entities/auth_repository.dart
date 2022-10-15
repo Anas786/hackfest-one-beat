@@ -1,12 +1,12 @@
-import '../../../../di/injector.dart';
-import '../../../../ui/resources/app_strings.dart';
-import '../../../models/entities/user.dart';
-import '../../../models/network/requests/auth_request.dart';
-import '../../../models/network/responses/auth_response.dart';
-import '../../../models/network/result.dart';
-import '../../base_repository.dart';
-import '../../local/storage_repository.dart';
-import '../../remote/network_repository.dart';
+import '../../../di/injector.dart';
+import '../../../ui/resources/app_strings.dart';
+import '../../models/entities/user.dart';
+import '../../models/network/requests/auth_request.dart';
+import '../../models/network/responses/auth_response.dart';
+import '../../models/network/result.dart';
+import '../base_repository.dart';
+import '../local/storage_repository.dart';
+import '../remote/network_repository.dart';
 
 abstract class AuthRepository {
   Future<Result<AuthResponse>> login(AuthRequest? request);

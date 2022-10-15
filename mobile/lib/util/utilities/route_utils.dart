@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import '../../data/models/ui/page_arguments.dart';
 import '../../ui/pages/auth/login_page.dart';
 import '../../ui/pages/auth/registration_page.dart';
+import '../../ui/pages/book_appointment/choose_facility_page.dart';
 import '../../ui/pages/home/home_page.dart';
 import '../../ui/pages/splash/splash_page.dart';
 import '../constants/route_constants.dart';
@@ -28,6 +29,8 @@ class RouteUtils {
       return _getPageRoute(const RegistrationPage());
     } else if (route == RouteConstants.home) {
       return _getPageRoute(const HomePage());
+    } else if (route == RouteConstants.chooseFacility) {
+      return _getPageRoute(const ChooseFacilityPage());
     }
     return null;
   }

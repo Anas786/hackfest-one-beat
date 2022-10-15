@@ -2,7 +2,7 @@ import '../../../data/models/entities/user.dart';
 import '../../../data/models/network/requests/auth_request.dart';
 import '../../../data/models/network/responses/auth_response.dart';
 import '../../../data/models/network/result.dart';
-import '../../../data/repositories/entities/auth/auth_repository.dart';
+import '../../../data/repositories/entities/auth_repository.dart';
 import '../../../di/injector.dart';
 import '../base_view_model.dart';
 

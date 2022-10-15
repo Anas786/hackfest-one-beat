@@ -10,6 +10,8 @@ import Facility from 'App/Models/Facility'
 import PatientMedicalHistory from 'App/Models/PatientMedicalHistory'
 import PatientMedicationOrder from 'App/Models/PatientMedicationOrder'
 import PatientDiagnosticOrder from 'App/Models/PatientDiagnosticOrder'
+import PatientSpecialtyConsult from 'App/Models/PatientSpecialtyConsult'
+import Appointment from 'App/Models/Appointment'
 
 export default class User extends BaseModel {
 	@column({ isPrimary: true })
@@ -18,16 +20,45 @@ export default class User extends BaseModel {
 	@column()
 	public mrNumber?: string
 
-	@column()
+	@column({ 
+		serialize: (value) => {
+			if( value != null ) {
+				return `${ value[0] }${ new Array(value.length).join('*') }`
+			}
+			return value
+		} 
+	})
 	public firstName: string
 
-	@column()
+	@column({ 
+		serialize: (value) => {
+			if( value != null ) {
+				return `${ value[0] }${ new Array(value.length).join('*') }`
+			}
+			return value
+		} 
+	})
 	public middleName?: string
 
-	@column()
+	@column({ 
+		serialize: (value) => {
+			if( value != null ) {
+				return `${ value[0] }${ new Array(value.length).join('*') }`
+			}
+			return value
+		} 
+	})
 	public lastName: string
 
-	@column()
+	@column({ 
+		serialize: (value) => {
+			if( value != null ) {
+				const [name, domain] = value.split('@');
+				return `${ name[0] }${ new Array(name.length).join('*') }@${ domain }`
+			}
+			return value
+		} 
+	})
 	public email: string
 
 	@column()
@@ -48,10 +79,24 @@ export default class User extends BaseModel {
 	@column()
 	public facilityId?: number
 
-	@column()
+	@column({ 
+		serialize: (value) => {
+			if( value != null ) {
+				return `${ new Array(value.length+1).join('*') }`
+			}
+			return value
+		} 
+	})
 	public gender: string
 
-	@column()
+	@column({ 
+		serialize: (value) => {
+			if( value != null ) {
+				return `${ new Array(6).join('*') }`
+			}
+			return value
+		} 
+	})
 	public dob: Date
 
 	@column()
@@ -144,4 +189,16 @@ export default class User extends BaseModel {
 		foreignKey: 'patientId',
 	})
 	public diagnostic_orders: HasMany<typeof PatientDiagnosticOrder>
+
+	@hasMany(() => PatientSpecialtyConsult, {
+		localKey: 'id',
+		foreignKey: 'patientId',
+	})
+	public specialty_consults: HasMany<typeof PatientSpecialtyConsult>
+
+	@hasMany(() => Appointment, {
+		localKey: 'id',
+		foreignKey: 'userId',
+	})
+	public appointments: HasMany<typeof Appointment>
 }

@@ -1,10 +1,10 @@
-import '../../../../di/injector.dart';
-import '../../../../ui/resources/app_strings.dart';
-import '../../../models/entities/patient.dart';
-import '../../../models/network/requests/patient_request.dart';
-import '../../../models/network/result.dart';
-import '../../base_repository.dart';
-import '../../remote/network_repository.dart';
+import '../../../di/injector.dart';
+import '../../../ui/resources/app_strings.dart';
+import '../../models/entities/patient.dart';
+import '../../models/network/requests/patient_request.dart';
+import '../../models/network/result.dart';
+import '../base_repository.dart';
+import '../remote/network_repository.dart';
 
 abstract class PatientRepository {
   Future<Result<Patient>> create(PatientRequest? request);

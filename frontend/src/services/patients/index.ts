@@ -1,7 +1,7 @@
-import axios from "axios";
+import { apiClient } from "constants/axiosUtils";
 import { IPatient } from "types";
 
-const VERSION = `${process.env.REACT_APP_BE}/api/v1`;
+const VERSION = `/api/v1`;
 const PATIENT_API = `${VERSION}/patients`;
 
 interface IPatientParams {
@@ -15,6 +15,6 @@ interface IPatientParams {
 }
 
 export const fetchPatients = async (params: IPatientParams = {}) => {
-  const response = await axios.get(`${PATIENT_API}`, { params });
+  const response = await apiClient.get(`${PATIENT_API}`, { params });
   return response?.data?.data;
 };

@@ -1,9 +1,19 @@
-import axios from "axios";
+import axios, { AxiosRequestConfig } from "axios";
 
-export const setAuthHeader = (token: string) => {
-  axios.defaults.headers.common.Authorization = `bearer ${token}`;
-};
+export const apiClient = axios.create({
+  baseURL: process.env.REACT_APP_BE,
+  timeout: 30000,
+});
 
-export const removeAuthHeader = () => {
-  axios.defaults.headers.common.Authorization = undefined;
-};
+apiClient.interceptors.request.use(
+  async (config: AxiosRequestConfig) => {
+    const token = localStorage.getItem("token");
+    if (config.headers) {
+      config.headers.Authorization = "bearer " + token;
+    }
+    return config;
+  },
+  (err: any) => {
+    return Promise.reject(err);
+  }
+);

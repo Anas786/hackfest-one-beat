@@ -36,6 +36,7 @@ export const PatientsList: React.FC = () => {
 
   useEffect(() => {
     const fetchList = async () => {
+      console.log("FETCH LIST RAN");
       const data = await fetchPatients();
 
       setPatients(data);

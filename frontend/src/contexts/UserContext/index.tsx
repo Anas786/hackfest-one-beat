@@ -1,4 +1,3 @@
-import { setAuthHeader } from "constants/axiosUtils";
 import { FC, ReactNode, createContext, useState, useRef, useEffect } from "react";
 import { IUser } from "types";
 import { INITIAL_USER_CONTEXT, INITIAL_USER_STATE } from "./constants";

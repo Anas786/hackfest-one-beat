@@ -6,7 +6,6 @@ import { loginUser, signupUser } from "services/auth/auth";
 import { IAuthState } from "./types";
 import { ILoginResponse, ILoginUser, ISignupResponse, ISignupUser } from "types";
 import { toast } from "react-toastify";
-import { setAuthHeader } from "constants/axiosUtils";
 
 export const AuthContext = createContext<IAuthState>(INITIAL_AUTH_STATE);
 
@@ -45,7 +44,6 @@ export const AuthProvider: FC<AuthProviderProps> = ({ children }) => {
 
       const { token, user } = data;
 
-      setAuthHeader(token.token);
       localStorage.setItem("token", token.token);
       localStorage.setItem("user", JSON.stringify(user));
 

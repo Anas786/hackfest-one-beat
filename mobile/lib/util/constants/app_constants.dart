@@ -2,7 +2,7 @@ class AppConstants {
   const AppConstants._internal();
 
   static const apiTimeout = 60; // Seconds
-  static const supportUrl = 'http://api.getonebeat.com/';
+  static const supportUrl = 'http://app.getonebeat.com/';
 
   // Argument keys
   static const argUser = 'arg_user';

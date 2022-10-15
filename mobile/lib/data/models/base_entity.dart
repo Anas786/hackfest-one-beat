@@ -2,8 +2,8 @@ import 'base_model.dart';
 
 class BaseEntity implements BaseModel {
   int? id;
-  DateTime? createdAt;
-  DateTime? updatedAt;
+  String? createdAt;
+  String? updatedAt;
 
   BaseEntity({
     this.id,
@@ -18,10 +18,10 @@ class BaseEntity implements BaseModel {
       json['id'] = id;
     }
     if (createdAt != null) {
-      json['created_at'] = createdAt!.toIso8601String();
+      json['created_at'] = createdAt;
     }
     if (updatedAt != null) {
-      json['updated_at'] = updatedAt!.toIso8601String();
+      json['updated_at'] = updatedAt;
     }
     return json;
   }

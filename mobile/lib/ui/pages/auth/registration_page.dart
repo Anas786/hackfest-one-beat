@@ -417,7 +417,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
           },
         );
       } else {
-        DialogUtils.showErrorDialog(context, message: result?.message);
+        DialogUtils.showErrorDialog(context, message: result?.errorMessage);
       }
     }
   }

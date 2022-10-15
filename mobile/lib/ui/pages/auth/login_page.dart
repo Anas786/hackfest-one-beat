@@ -228,7 +228,7 @@ class _LoginPageState extends State<LoginPage> {
       if (result?.isSuccess ?? false) {
         NavigationUtils.replace(context, RouteConstants.home);
       } else {
-        DialogUtils.showErrorDialog(context, message: result?.message);
+        DialogUtils.showErrorDialog(context, message: result?.errorMessage);
       }
     }
   }

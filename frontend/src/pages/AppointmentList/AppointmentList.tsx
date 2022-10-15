@@ -1,8 +1,10 @@
-import { Card, Table } from "antd";
+import { Button, Card, Drawer, Table, Tooltip } from "antd";
 import type { ColumnsType, TableProps } from "antd/es/table";
+import { CreateAppointment } from "pages/CreateAppointment";
 import React, { useEffect, useState } from "react";
 import { fetchAppointments } from "services";
-import { IAppointments } from "types";
+import { IAppointment } from "types";
+import { formatDate, SHORTENED_DATE_FORMAT } from "utils/date";
 
 interface DataType {
   key: React.Key;
@@ -12,31 +14,56 @@ interface DataType {
   english: number;
 }
 
-const columns: ColumnsType<IAppointments> = [
+const columns: ColumnsType<IAppointment> = [
   {
-    title: "Name",
-    dataIndex: "name",
+    title: "Appointment Code",
+    dataIndex: "code",
   },
   {
-    title: "Chinese Score",
-    dataIndex: "chinese",
+    title: "Appointment Date",
+    dataIndex: "appointment_date",
+    render: (value, record) => formatDate(record?.appointment_date, SHORTENED_DATE_FORMAT),
   },
   {
-    title: "Math Score",
-    dataIndex: "math",
+    title: "Appointment Time",
+    dataIndex: "appointment_time",
   },
   {
-    title: "English Score",
-    dataIndex: "english",
+    title: "Doctor Name",
+    render: (value, record) =>
+      (record?.doctor?.first_name || "") + " " + (record?.doctor?.last_name || ""),
   },
+  {
+    title: "MR Number",
+    dataIndex: "patient.mr_number",
+    render: (value, record) => record?.patient?.mr_number,
+  },
+  {
+    title: "Patient Name",
+    render: (value, record) =>
+      (record?.patient?.first_name || "") + " " + (record?.patient?.last_name || ""),
+  },
+  // {
+  //   title: "Actions",
+  //   render: (value, record) => (
+  //     <div className="actions">
+  //       <span className="update" onClick={() => handleUpdateModal(record)}>
+  //         <Tooltip title="Update Manufacturer">
+  //           <EditOutline />
+  //         </Tooltip>
+  //       </span>
+  //     </div>
+  //   ),
+  // },
 ];
 
-const onChange: TableProps<IAppointments>["onChange"] = (pagination, filters, sorter, extra) => {
+const onChange: TableProps<IAppointment>["onChange"] = (pagination, filters, sorter, extra) => {
   console.log("params", pagination, filters, sorter, extra);
 };
 
 export const AppointmentList: React.FC = () => {
-  const [appointments, setAppointments] = useState<Array<IAppointments>>([]);
+  const [appointments, setAppointments] = useState<Array<IAppointment>>([]);
+  const [showAddModal, setShowAddModal] = useState(false);
 
   useEffect(() => {
     const fetchList = async () => {
@@ -48,7 +75,15 @@ export const AppointmentList: React.FC = () => {
 
   return (
     <Card>
-      <Table columns={columns} dataSource={appointments} onChange={onChange} />
+      <div style={{ display: "flex", flexDirection: "column", gap: "16px" }}>
+        <div style={{ display: "flex", flexDirection: "row-reverse" }}>
+          <Button onClick={() => setShowAddModal(true)}>Create Appointment</Button>
+        </div>
+        <Table columns={columns} dataSource={appointments} onChange={onChange} />
+      </div>
+      <Drawer open={showAddModal} onClose={() => setShowAddModal(false)}>
+        <CreateAppointment closeDrawer={() => setShowAddModal(false)} />
+      </Drawer>
     </Card>
   );
 };

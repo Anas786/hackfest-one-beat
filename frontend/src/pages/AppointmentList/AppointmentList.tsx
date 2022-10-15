@@ -26,7 +26,7 @@ const headers = ["STATUS", "FIRST NAME", "LAST NAME", "AGE", "GENDER"];
 export const AppointmentList = () => {
   const theme = useTheme();
   return (
-    <Box sx={{ padding: "20px", backgroundColor: theme.palette.grey["100"], height: "100%" }}>
+    <Box sx={{ backgroundColor: theme.palette.grey["100"], height: "100%" }}>
       <TableContainer component={Paper}>
         <Table sx={{ minWidth: 650 }} aria-label="simple table">
           <TableHead sx={{ backgroundColor: theme.palette.grey["500"] }}>

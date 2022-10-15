@@ -2,7 +2,7 @@ import { apiClient } from "constants/axiosUtils";
 import { IAppointment } from "types";
 
 const VERSION = `/api/v1`;
-const PATIENT_API = `${VERSION}/appointments`;
+const APPOINTMENT_API = `${VERSION}/appointments`;
 
 interface IAppointmentListParams {
   paginate?: number;
@@ -16,12 +16,11 @@ interface IAppointmentListParams {
 }
 
 export const fetchAppointments = async (params: IAppointmentListParams = {}) => {
-  const response = await apiClient.get(`${PATIENT_API}`, { params });
+  const response = await apiClient.get(`${APPOINTMENT_API}`, { params });
   return response?.data?.data;
 };
 
 export const createAppointment = async (data: IAppointment) => {
-  const response = await apiClient.post(`${PATIENT_API}`, data);
-  console.log(response);
+  const response = await apiClient.post(`${APPOINTMENT_API}`, data);
   return response?.data?.data;
 };

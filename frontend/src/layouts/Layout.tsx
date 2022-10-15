@@ -36,6 +36,7 @@ export const Layout = ({ children }: ILayout) => {
       >
         {NAV_ITEMS.map(({ label, path, icon }) => (
           <Button
+            key={`${label}-${path}`}
             variant="contained"
             color={path === pathname ? "primary" : "secondary"}
             onClick={() => navigate(path)}

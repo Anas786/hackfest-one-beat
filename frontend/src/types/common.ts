@@ -1,7 +1,7 @@
 import { IconType } from "react-icons";
 
 export interface INavItem {
-  label: "Patients" | "Appointments" | "Transfer Forms";
+  label: string;
   path: string;
   icon: JSX.Element;
 }

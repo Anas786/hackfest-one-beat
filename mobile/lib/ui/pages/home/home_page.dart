@@ -1,12 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 
 import '../../../util/utilities/common_utils.dart';
 import '../../dialogs/progress_dialog.dart';
+import '../../helpers/custom_field_helper.dart';
 import '../../resources/app_strings.dart';
 import '../../resources/app_styles.dart';
+import '../../resources/app_theme.dart';
 import '../../view_models/auth/auth_view_model.dart';
 import '../../view_models/home/home_view_model.dart';
 import '../../widgets/app_drawer.dart';
@@ -46,6 +49,28 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
+  AppBar _buildAppBar() {
+    return AppBar(
+      leading: IconButton(
+        icon: const Icon(
+          Icons.menu_outlined,
+          color: Colors.white,
+        ),
+        onPressed: () => _scaffoldKey.currentState?.openDrawer(),
+      ),
+      elevation: 0,
+      actions: [
+        IconButton(
+          icon: const Icon(
+            Icons.notifications_none_outlined,
+            color: Colors.white,
+          ),
+          onPressed: () {},
+        )
+      ],
+    );
+  }
+
   Widget _buildBody() {
     return Stack(
       children: [
@@ -69,6 +94,7 @@ class _HomePageState extends State<HomePage> {
           children: [
             _buildCurveContainer(),
             _buildUserInfo(),
+            _buildSearchBar(),
           ],
         ),
         Expanded(
@@ -85,12 +111,25 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
+  Widget _buildCurveContainer() {
+    return Container(
+      height: 124,
+      decoration: BoxDecoration(
+        color: Theme.of(context).colorScheme.primary,
+        borderRadius: const BorderRadius.only(
+          bottomLeft: Radius.circular(32),
+          bottomRight: Radius.circular(32),
+        ),
+      ),
+    );
+  }
+
   Widget _buildUserInfo() {
     final authVM = Provider.of<AuthViewModel>(context);
     return Positioned(
-      top: 20,
+      top: 16,
       child: Padding(
-        padding: const EdgeInsets.all(20),
+        padding: const EdgeInsets.symmetric(horizontal: 20),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -100,7 +139,6 @@ class _HomePageState extends State<HomePage> {
               maxLines: 1,
               overflow: TextOverflow.fade,
             ),
-            Insets.gapH4,
             Text(
               'Welcome to ${AppStrings.appName}',
               style: GoogleFonts.poppins(
@@ -117,38 +155,36 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-  Widget _buildCurveContainer() {
+  Widget _buildSearchBar() {
     return Container(
-      height: 120,
-      decoration: BoxDecoration(
-        color: Theme.of(context).colorScheme.primary,
-        borderRadius: const BorderRadius.only(
-          bottomLeft: Radius.circular(32),
-          bottomRight: Radius.circular(32),
+      margin: const EdgeInsets.fromLTRB(20, 88, 20, 0),
+      child: Card(
+        elevation: 2,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(32),
         ),
-      ),
-    );
-  }
-
-  AppBar _buildAppBar() {
-    return AppBar(
-      leading: IconButton(
-        icon: const Icon(
-          Icons.menu_outlined,
-          color: Colors.white,
-        ),
-        onPressed: () => _scaffoldKey.currentState?.openDrawer(),
-      ),
-      elevation: 0,
-      actions: [
-        IconButton(
-          icon: const Icon(
-            Icons.notifications_none_outlined,
-            color: Colors.white,
+        child: FormBuilderTextField(
+          name: 'search',
+          style: CustomFieldHelper.textStyle(AppTheme.primaryTextColor),
+          textInputAction: TextInputAction.search,
+          decoration: InputDecoration(
+            hintText: 'Search',
+            prefixIcon: const Icon(
+              Icons.search_outlined,
+              color: AppTheme.grayColor,
+            ),
+            hintStyle: CustomFieldHelper.hintStyle(AppTheme.grayColor),
+            enabledBorder: const OutlineInputBorder(
+              borderSide: BorderSide(color: Colors.transparent),
+            ),
+            focusedBorder: const OutlineInputBorder(
+              borderSide: BorderSide(color: Colors.transparent),
+            ),
+          ).copyWith(
+            contentPadding: const EdgeInsets.all(16),
           ),
-          onPressed: () {},
-        )
-      ],
+        ),
+      ),
     );
   }
 

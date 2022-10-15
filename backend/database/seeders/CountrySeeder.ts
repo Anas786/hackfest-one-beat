@@ -24,9 +24,9 @@ export default class extends BaseSeeder {
 				country.currency = countriesObj[i].currency
 				country.currencyName = countriesObj[i].currency_name
 				country.currencySymbol = countriesObj[i].currency_symbol
-				country.native = countriesObj[i].native
-				country.emoji = countriesObj[i].emoji
-				country.emojiU = countriesObj[i].emoji_u
+				// country.native = countriesObj[i].native
+				// country.emoji = countriesObj[i].emoji
+				// country.emojiU = countriesObj[i].emoji_u
 
 				await country.save()
 			}

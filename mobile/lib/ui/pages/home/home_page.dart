@@ -244,7 +244,7 @@ class _HomePageState extends State<HomePage> {
 
   Widget _buildRecentAppointments() {
     return Padding(
-      padding: const EdgeInsets.only(left: 20, right: 20),
+      padding: const EdgeInsets.only(left: 20, right: 20, bottom: 88),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [

@@ -1,5 +1,5 @@
-import { Card, Table } from "antd";
-import type { ColumnsType, TableProps } from "antd/es/table";
+import { Card, Table, TableProps } from "antd";
+import type { ColumnsType } from "antd/es/table";
 import React, { useEffect, useState } from "react";
 import { fetchPatients } from "services/patients";
 import { IPatient } from "types";
@@ -7,21 +7,33 @@ import { IPatient } from "types";
 const columns: ColumnsType<IPatient> = [
   {
     title: "Name",
-    dataIndex: "name",
+    dataIndex: "first_name",
   },
   {
-    title: "Chinese Score",
-    dataIndex: "chinese",
+    title: "Email",
+    dataIndex: "email",
   },
   {
-    title: "Math Score",
-    dataIndex: "math",
+    title: "NIC",
+    dataIndex: "nic",
   },
   {
-    title: "English Score",
-    dataIndex: "english",
+    title: "Phone",
+    dataIndex: "phone",
+  },
+  {
+    title: "Gender",
+    dataIndex: "gender",
+  },
+  {
+    title: "DOB",
+    dataIndex: "dob",
   },
 ];
+
+const onChange: TableProps<IPatient>["onChange"] = (pagination, filters, sorter, extra) => {
+  console.log("params", pagination, filters, sorter, extra);
+};
 
 export const PatientsList: React.FC = () => {
   const [patients, setPatients] = useState<Array<IPatient>>([]);
@@ -36,7 +48,7 @@ export const PatientsList: React.FC = () => {
 
   return (
     <Card>
-      <Table columns={columns} dataSource={patients} />
+      <Table columns={columns} dataSource={patients} onChange={onChange} />
     </Card>
   );
 };

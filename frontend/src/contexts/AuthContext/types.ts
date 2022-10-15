@@ -1,8 +1,8 @@
 import { ISignupResponse, ILoginResponse, ISignupUser, ILoginUser } from "types";
 
 export interface IAuthState {
-  login: (payload: ISignupUser) => Promise<ISignupResponse>;
-  signup: (payload: ILoginUser) => Promise<ILoginResponse>;
+  login: (payload: ILoginUser) => Promise<ILoginResponse>;
+  signup: (payload: ISignupUser) => Promise<ISignupResponse>;
   logout: () => void;
 }
 

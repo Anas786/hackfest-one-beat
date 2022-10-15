@@ -9,26 +9,29 @@ import "antd/dist/antd.min.css";
 
 import "react-toastify/dist/ReactToastify.css";
 import "./Global.css";
+import { AuthProvider } from "contexts/AuthContext";
 
 const App: FC = () => {
   return (
     <ThemeProvider theme={theme}>
       <UserProvider>
-        <BrowserRouter>
-          <ToastContainer
-            position="top-right"
-            autoClose={3000}
-            hideProgressBar={false}
-            newestOnTop={false}
-            closeOnClick
-            rtl={false}
-            pauseOnFocusLoss
-            draggable
-            pauseOnHover
-            theme="light"
-          />
-          <Router />
-        </BrowserRouter>
+        <AuthProvider>
+          <BrowserRouter>
+            <ToastContainer
+              position="top-right"
+              autoClose={3000}
+              hideProgressBar={false}
+              newestOnTop={false}
+              closeOnClick
+              rtl={false}
+              pauseOnFocusLoss
+              draggable
+              pauseOnHover
+              theme="light"
+            />
+            <Router />
+          </BrowserRouter>
+        </AuthProvider>
       </UserProvider>
     </ThemeProvider>
   );

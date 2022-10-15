@@ -1,9 +1,15 @@
 import axios from "axios";
-import { ILoginResponse, ILoginUser, ISignupResponse, ISignupUser } from "types/user";
+import {
+  ILoginResponse,
+  ILoginUser,
+  ISignupResponse,
+  ISignupUser,
+  ISingleResponse,
+} from "types/user";
 import { AUTH_API } from "./api";
 
 export const loginUser = async (user: ILoginUser) => {
-  const response = await axios.post<ILoginResponse>(`${AUTH_API}/login`, user);
+  const response = await axios.post<ISingleResponse<ILoginResponse>>(`${AUTH_API}/login`, user);
   return response.data;
 };
 

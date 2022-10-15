@@ -1,4 +1,5 @@
-import { FC, ReactNode, createContext, useState, useRef } from "react";
+import { FC, ReactNode, createContext, useState, useRef, useEffect } from "react";
+import { IUser } from "types";
 import { INITIAL_USER_CONTEXT, INITIAL_USER_STATE } from "./constants";
 import { IUserContext, IUserState } from "./types";
 
@@ -11,6 +12,15 @@ type UserProviderProps = {
 export const UserProvider: FC<UserProviderProps> = ({ children }) => {
   const [value, setValue] = useState<IUserState>(INITIAL_USER_STATE);
   const userLoaded = useRef(true);
+
+  useEffect(() => {
+    const cachedUser = localStorage.getItem("user") || "";
+
+    if (cachedUser) {
+      const user = JSON.parse(cachedUser) as IUser;
+      setValue({ ...value, user: user });
+    }
+  }, []);
 
   if (!userLoaded.current) {
     return (

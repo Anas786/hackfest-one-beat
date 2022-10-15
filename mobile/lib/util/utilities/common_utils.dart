@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:package_info_plus/package_info_plus.dart';
 
 import '../../ui/resources/app_strings.dart';
 import 'log_utils.dart';
@@ -36,6 +37,18 @@ class CommonUtils {
 
   static void removeCurrentFocus(BuildContext context) {
     FocusManager.instance.primaryFocus?.unfocus();
+  }
+
+  static bool isDrawerOpen(GlobalKey<ScaffoldState>? scaffoldKey) {
+    return scaffoldKey?.currentState?.isDrawerOpen ?? false;
+  }
+
+  static Future<String> getAppVersion({bool? withBuildNumber}) async {
+    PackageInfo package = await PackageInfo.fromPlatform();
+    if (withBuildNumber == true) {
+      return '${package.version} (${package.buildNumber})';
+    }
+    return package.version;
   }
 
   static Future<bool> onBackPressed(

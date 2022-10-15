@@ -1,9 +1,11 @@
+import { IUser } from "types";
+
 export interface IUserState {
   isLoading: boolean;
   isLoggedIn: boolean;
   refreshToken: string;
   accessToken: string;
-  user: User;
+  user: IUser;
 }
 
 export interface IUserContext {

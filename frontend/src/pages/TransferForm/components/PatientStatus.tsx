@@ -1,9 +1,8 @@
-import { FC, useEffect, useState } from "react";
+import { FC } from "react";
 import { Button, Form, Input, Select } from "antd";
 import { StyledLabel } from "./Label";
 import { IPatientStatus } from "../utils/types";
-import { IBedType, ITransportationType } from "types";
-import { getBedTypes, getTransportationTypes } from "services/auth/general";
+import { bedTypes, transportationTypes } from "../utils/constants";
 
 const { Option } = Select;
 
@@ -14,36 +13,9 @@ interface PatientStatusProps {
 export const PatientStatus: FC<PatientStatusProps> = ({ handleAddPatienStatus }) => {
   const [form] = Form.useForm<IPatientStatus>();
 
-  const [bedTypes, setBedTypes] = useState<Array<IBedType>>([]);
-  const [transportationTypes, setTransportationTypes] = useState<Array<ITransportationType>>([]);
-
-  useEffect(() => {
-    (async () => {
-      try {
-        const [bedTypeResponse, tranportTypeResponse] = await Promise.all([
-          getBedTypes(),
-          getTransportationTypes(),
-        ]);
-        const { data: bedTypeRes } = bedTypeResponse;
-        const { data: tranportTypeRes } = tranportTypeResponse;
-        const { data: _bedTypes } = bedTypeRes;
-        const { data: _transportTypes } = tranportTypeRes;
-        setBedTypes(_bedTypes);
-        setTransportationTypes(_transportTypes);
-        console.log(bedTypeResponse, tranportTypeResponse);
-      } catch (error) {
-        console.log(error);
-      }
-    })();
-  }, []);
-
   const handleFormSubmit = () => {
     const data = form.getFieldsValue();
     handleAddPatienStatus(data);
-  };
-
-  const handleChange = (value: any) => {
-    console.log(value);
   };
 
   return (
@@ -72,8 +44,7 @@ export const PatientStatus: FC<PatientStatusProps> = ({ handleAddPatienStatus })
           >
             <Select
               size="middle"
-              placeholder="Please select bed type"
-              onChange={handleChange}
+              placeholder="Please select transportation type"
               style={{ width: "100%" }}
             >
               {transportationTypes.map((transportationType) => (
@@ -83,16 +54,8 @@ export const PatientStatus: FC<PatientStatusProps> = ({ handleAddPatienStatus })
               ))}
             </Select>
           </Form.Item>
-          <StyledLabel text="Code Status" required={true} />
-          <Form.Item
-            name="codeStatus"
-            rules={[
-              {
-                required: true,
-                message: "Please enter code status!",
-              },
-            ]}
-          >
+          <StyledLabel text="Code Status" />
+          <Form.Item name="codeStatus">
             <Input name="codeStatus" />
           </Form.Item>
           <StyledLabel text="Bed Type" required={true} />
@@ -105,12 +68,7 @@ export const PatientStatus: FC<PatientStatusProps> = ({ handleAddPatienStatus })
               },
             ]}
           >
-            <Select
-              size="middle"
-              placeholder="Please select bed type"
-              onChange={handleChange}
-              style={{ width: "100%" }}
-            >
+            <Select size="middle" placeholder="Please select bed type" style={{ width: "100%" }}>
               {bedTypes.map((bedType) => (
                 <Option key={bedType.id} value={bedType.name}>
                   {bedType.name}

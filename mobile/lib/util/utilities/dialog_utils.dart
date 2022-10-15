@@ -139,10 +139,13 @@ class DialogUtils {
 
   static Widget? _buildMessage(String? message) {
     if (message != null) {
-      return SingleChildScrollView(
-        child: Text(
-          message,
-          style: GoogleFonts.poppins(),
+      return ScrollConfiguration(
+        behavior: const ScrollBehavior().copyWith(overscroll: false),
+        child: SingleChildScrollView(
+          child: Text(
+            message,
+            style: GoogleFonts.poppins(),
+          ),
         ),
       );
     }

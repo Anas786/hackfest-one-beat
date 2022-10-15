@@ -47,7 +47,7 @@ class Corners {
 class Texts {
   const Texts._internal();
 
-  static final TextStyle heading1 = GoogleFonts.raleway(
+  static final TextStyle heading1 = GoogleFonts.poppins(
     fontSize: 24,
     fontWeight: FontWeight.bold,
     letterSpacing: 0.48,

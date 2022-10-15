@@ -13,6 +13,7 @@ export default class extends BaseSchema {
       table.integer('bed_type_id')
       table.integer('eta').notNullable()
       table.integer('status').notNullable().defaultTo(1).comment('1=Initiated, 2=Approved, 3=Rejected, 4=Patient Arrived, 5=Cancelled, 6=Discharged')
+      table.text('notes')
 
       /**
        * Uses timestamptz for PostgreSQL and DATETIME2 for MSSQL

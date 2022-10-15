@@ -58,6 +58,12 @@ Route.get('/', async () => {
 	/** SPECIALTIES ROUTES */
 	Route.get('/specialties', 'SpecialtiesController.index')
 
+	/** BED TYPES ROUTES */
+	Route.get('/bed_types', 'BedTypesController.index')
+
+	/** TRANSPORTATIONS ROUTES */
+	Route.get('/transportations', 'TransportationsController.index')
+
 	/** FACILITY TYPES ROUTES */
 	Route.get('/facility_types', 'FacilityTypesController.index')
 

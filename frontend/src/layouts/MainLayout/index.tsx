@@ -1,12 +1,12 @@
 import { Layout, Menu } from "antd";
 import React, { ReactNode, useState } from "react";
-import { ReactComponent as Logo } from "images/logo.svg";
+import { ReactComponent as Logo } from "images/logo-light.svg";
 import "./styles.css";
 import { INavItem } from "types";
 import { GiHospitalCross } from "react-icons/gi";
 import { BiArrowFromLeft, BiArrowToLeft } from "react-icons/bi";
 import { ImCalendar } from "react-icons/im";
-import { FaHandHoldingMedical } from "react-icons/fa";
+import { FaHandHoldingMedical, FaPlus } from "react-icons/fa";
 import { useLocation, useNavigate } from "react-router-dom";
 
 const { Header, Sider, Content } = Layout;
@@ -59,7 +59,6 @@ export const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
           className="site-layout-background"
           style={{
             margin: "24px 16px",
-            padding: 24,
             minHeight: 280,
           }}
         >

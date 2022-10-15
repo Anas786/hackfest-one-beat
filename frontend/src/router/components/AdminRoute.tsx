@@ -1,7 +1,6 @@
 import { FC } from "react";
 import { Navigate, Outlet } from "react-router-dom";
 import { useProfile } from "hooks";
-import { Layout } from "layouts";
 
 export const AdminRoute: FC = () => {
   // const { userState } = useProfile();
@@ -10,9 +9,5 @@ export const AdminRoute: FC = () => {
 
   // if (!isLoggedIn || !isAdmin) return <Navigate to="/" replace />;
 
-  return (
-    <Layout>
-      <Outlet />
-    </Layout>
-  );
+  return <Outlet />;
 };

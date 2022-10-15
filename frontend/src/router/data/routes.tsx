@@ -6,15 +6,13 @@ import { TestPage } from "pages/Test";
 import { TransferForms } from "pages/TransferForm";
 import { IRoute } from "router/types";
 
-export const PUBLIC_ROUTES: Array<IRoute> = [
-  { path: "/login", element: <Login /> },
-  { path: "/test", element: <TestPage /> },
-];
+export const PUBLIC_ROUTES: Array<IRoute> = [{ path: "/login", element: <Login /> }];
 
 export const PROTECTED_ROUTES: Array<IRoute> = [{ path: "/protected", element: <ProtectedPage /> }];
 
 export const ADMIN_ROUTES: Array<IRoute> = [
   { path: "patients", element: <PatientsList /> },
+  { path: "/test", element: <TestPage /> },
   { path: "appointments", element: <AppointmentList /> },
   { path: "transfer-forms", element: <TransferForms /> },
 ];

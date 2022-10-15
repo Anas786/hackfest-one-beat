@@ -1,5 +1,6 @@
 import { FC } from "react";
 import { Route, Routes } from "react-router-dom";
+import { MainLayout } from "layouts/MainLayout";
 import { AdminRoute } from "./components";
 import { ADMIN_ROUTES, PUBLIC_ROUTES } from "./data/routes";
 
@@ -19,7 +20,14 @@ export const Router: FC = () => {
       </Route> */}
 
       {/* ADMIN ROUTES */}
-      <Route path="/" element={<AdminRoute />}>
+      <Route
+        path="/"
+        element={
+          <MainLayout>
+            <AdminRoute />
+          </MainLayout>
+        }
+      >
         {ADMIN_ROUTES.map((route) => (
           <Route key={route.path} path={route.path} element={route.element} />
         ))}

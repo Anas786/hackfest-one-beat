@@ -4,10 +4,10 @@ import { ReactComponent as Logo } from "images/logo-light.svg";
 import "./styles.css";
 import { INavItem } from "types";
 import { GiHospitalCross } from "react-icons/gi";
-import { BiArrowFromLeft, BiArrowToLeft } from "react-icons/bi";
 import { ImCalendar } from "react-icons/im";
-import { FaHandHoldingMedical, FaPlus } from "react-icons/fa";
+import { FaDashcube, FaHandHoldingMedical } from "react-icons/fa";
 import { useLocation, useNavigate } from "react-router-dom";
+import { MenuFoldOutlined, MenuUnfoldOutlined } from "@ant-design/icons";
 
 const { Header, Sider, Content } = Layout;
 
@@ -16,8 +16,8 @@ interface MainLayoutProps {
 }
 
 export const NAV_ITEMS: INavItem[] = [
+  { label: "Dashboard", path: "/dashboard", icon: <FaDashcube /> },
   { label: "Patients", path: "/patients", icon: <GiHospitalCross /> },
-  { label: "Test", path: "/test", icon: <GiHospitalCross /> },
   { label: "Appointments", path: "/appointments", icon: <ImCalendar /> },
   { label: "Transfer Forms", path: "/transfer-forms", icon: <FaHandHoldingMedical /> },
 ];
@@ -37,7 +37,7 @@ export const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
         <Menu
           theme="dark"
           mode="inline"
-          defaultSelectedKeys={["/patients"]}
+          defaultSelectedKeys={[pathname]}
           items={NAV_ITEMS.map((item) => {
             return {
               key: item.path,
@@ -49,17 +49,26 @@ export const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
         />
       </Sider>
       <Layout className="site-layout">
-        <Header className="site-layout-background" style={{ padding: 0, display: "flex" }}>
-          <div onClick={() => setCollapsed(!collapsed)}>
-            {collapsed ? <BiArrowFromLeft fontSize={32} /> : <BiArrowToLeft fontSize={32} />}
-          </div>
+        <Header
+          className="site-layout-background"
+          style={{
+            padding: 0,
+            display: "flex",
+            alignItems: "baseline",
+            gap: "12px",
+            paddingLeft: "12px",
+          }}
+        >
+          {React.createElement(collapsed ? MenuUnfoldOutlined : MenuFoldOutlined, {
+            className: "trigger",
+            onClick: () => setCollapsed(!collapsed),
+          })}
           <h2>{NAV_ITEMS.find((item) => item.path === pathname)?.label}</h2>
         </Header>
         <Content
-          className="site-layout-background"
           style={{
             margin: "24px 16px",
-            minHeight: 280,
+            height: "100%",
           }}
         >
           {children}

@@ -1,4 +1,4 @@
-import { Table } from "antd";
+import { Card, Table } from "antd";
 import type { ColumnsType, TableProps } from "antd/es/table";
 import React from "react";
 
@@ -65,5 +65,7 @@ const onChange: TableProps<DataType>["onChange"] = (pagination, filters, sorter,
 };
 
 export const AppointmentList: React.FC = () => (
-  <Table columns={columns} dataSource={data} onChange={onChange} />
+  <Card style={{ borderRadius: "12px" }}>
+    <Table columns={columns} dataSource={data} onChange={onChange} />
+  </Card>
 );

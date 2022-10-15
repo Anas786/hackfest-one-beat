@@ -32,7 +32,7 @@ export const AppointmentList = () => {
           <TableHead sx={{ backgroundColor: theme.palette.grey["500"] }}>
             <TableRow>
               {headers.map((header) => (
-                <TableCell sx={{ color: "white" }} align="center">
+                <TableCell key={header} sx={{ color: "white" }} align="center">
                   {header}
                 </TableCell>
               ))}

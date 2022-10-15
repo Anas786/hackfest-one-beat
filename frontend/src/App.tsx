@@ -5,6 +5,7 @@ import { Router } from "router";
 import { ToastContainer } from "react-toastify";
 import { ThemeProvider } from "@mui/system";
 import { theme } from "ui/theme";
+import "antd/dist/antd.min.css";
 
 import "react-toastify/dist/ReactToastify.css";
 import "./App.css";

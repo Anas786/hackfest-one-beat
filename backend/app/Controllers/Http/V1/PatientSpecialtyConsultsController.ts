@@ -2,9 +2,9 @@ import type { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
 import Env from '@ioc:Adonis/Core/Env'
 import ApiResponse from 'App/Traits/ApiResponse'
 // import CreateFacilityValidator from 'App/Validators/Facility/CreateFacilityValidator'
-import PatientDiagnosticOrder from 'App/Models/PatientDiagnosticOrder'
+import PatientSpecialtyConsult from 'App/Models/PatientSpecialtyConsult'
 
-export default class PatientDiagnosticOrdersController extends ApiResponse {
+export default class PatientSpecialtyConsultsController extends ApiResponse {
 
     public async index(ctx: HttpContextContract) {  
         
@@ -16,19 +16,11 @@ export default class PatientDiagnosticOrdersController extends ApiResponse {
             if( patient_id ) {
                 
                 if( paginate != null && paginate == '1' || paginate == 1 ) {
-                    const diagnosticOrders = await PatientDiagnosticOrder
+                    const diagnosticOrders = await PatientSpecialtyConsult
                         .query()
-                        .preload('blood_tests', (bloodTestsQuery) => {
-                            bloodTestsQuery
-                                .preload('blood_test')
-                        })
-                        .preload('urine_tests', (urineTestsQuery) => {
-                            urineTestsQuery
-                                .preload('urine_test')
-                        })
-                        .preload('imaging_tests', (imagingTestsQuery) => {
-                            imagingTestsQuery
-                                .preload('imaging_test')
+                        .preload('consults', (consultsQuery) => {
+                            consultsQuery
+                                .preload('consult')
                         })
                         .if(
                             patient_id != null,
@@ -62,19 +54,11 @@ export default class PatientDiagnosticOrdersController extends ApiResponse {
                     return this.success(ctx, diagnosticOrders)
                     
                 } else {
-                    const diagnosticOrders = await PatientDiagnosticOrder
+                    const diagnosticOrders = await PatientSpecialtyConsult
                         .query()
-                        .preload('blood_tests', (bloodTestsQuery) => {
-                            bloodTestsQuery
-                                .preload('blood_test')
-                        })
-                        .preload('urine_tests', (urineTestsQuery) => {
-                            urineTestsQuery
-                                .preload('urine_test')
-                        })
-                        .preload('imaging_tests', (imagingTestsQuery) => {
-                            imagingTestsQuery
-                                .preload('imaging_test')
+                        .preload('consults', (consultsQuery) => {
+                            consultsQuery
+                                .preload('consult')
                         })
                         .if(
                             patient_id != null,
@@ -119,66 +103,36 @@ export default class PatientDiagnosticOrdersController extends ApiResponse {
     public async create(ctx: HttpContextContract) {
         const { 
             appointment_id,
-            blood_tests,
-            urine_tests,
-            imaging_tests,
+            consults,
             notes
         } = ctx.request.all()
         const patient_id = ctx.request.param('id')
 
         try {
 
-            const diagnosticOrder = new PatientDiagnosticOrder()
+            const specialtyConsult = new PatientSpecialtyConsult()
 
-            diagnosticOrder.patientId = patient_id
-            diagnosticOrder.appointmentId = appointment_id
-            diagnosticOrder.notes = notes
+            specialtyConsult.patientId = patient_id
+            specialtyConsult.appointmentId = appointment_id
+            specialtyConsult.notes = notes
 
-            await diagnosticOrder.save()
+            await specialtyConsult.save()
 
-            // Add blood tests
-            await diagnosticOrder
-                .related('blood_tests')
+            // Add consults
+            await specialtyConsult
+                .related('consults')
                 .query()
                 .delete()
 
-            const bloodTestIds = blood_tests.split(',').map((v) => {
-                return { bloodTestId: v }
+            const consultIds = consults.split(',').map((v) => {
+                return { consultId: v }
             })
 
-            await diagnosticOrder
-                .related('blood_tests')
-                .createMany(bloodTestIds)
+            await specialtyConsult
+                .related('consults')
+                .createMany(consultIds)
 
-            // Add urine tests
-            await diagnosticOrder
-                .related('urine_tests')
-                .query()
-                .delete()
-
-            const urineTestIds = urine_tests.split(',').map((v) => {
-                return { urineTestId: v }
-            })
-
-            await diagnosticOrder
-                .related('urine_tests')
-                .createMany(urineTestIds)
-
-            // Add imaging tests
-            await diagnosticOrder
-                .related('imaging_tests')
-                .query()
-                .delete()
-
-            const imagingTestIds = imaging_tests.split(',').map((v) => {
-                return { imagingTestId: v }
-            })
-
-            await diagnosticOrder
-                .related('imaging_tests')
-                .createMany(imagingTestIds)
-
-            return this.success(ctx, null, 'Diagnostic Order has been created')
+            return this.success(ctx, null, 'Specialty Consult has been created')
 
         } catch (error) {
             console.log(error)

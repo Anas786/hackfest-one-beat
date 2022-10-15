@@ -1,0 +1,4 @@
+.dashboard-stats {
+  display: flex;
+  justify-content: space-between;
+}

@@ -1,16 +1,10 @@
 import { Card, Table } from "antd";
 import type { ColumnsType, TableProps } from "antd/es/table";
-import React from "react";
+import React, { useEffect, useState } from "react";
+import { fetchPatients } from "services/patients";
+import { IPatient } from "types";
 
-interface DataType {
-  key: React.Key;
-  name: string;
-  chinese: number;
-  math: number;
-  english: number;
-}
-
-const columns: ColumnsType<DataType> = [
+const columns: ColumnsType<IPatient> = [
   {
     title: "Name",
     dataIndex: "name",
@@ -29,43 +23,20 @@ const columns: ColumnsType<DataType> = [
   },
 ];
 
-const data: DataType[] = [
-  {
-    key: "1",
-    name: "John Brown",
-    chinese: 98,
-    math: 60,
-    english: 70,
-  },
-  {
-    key: "2",
-    name: "Jim Green",
-    chinese: 98,
-    math: 66,
-    english: 89,
-  },
-  {
-    key: "3",
-    name: "Joe Black",
-    chinese: 98,
-    math: 90,
-    english: 70,
-  },
-  {
-    key: "4",
-    name: "Jim Red",
-    chinese: 88,
-    math: 99,
-    english: 89,
-  },
-];
+export const PatientsList: React.FC = () => {
+  const [patients, setPatients] = useState<Array<IPatient>>([]);
 
-const onChange: TableProps<DataType>["onChange"] = (pagination, filters, sorter, extra) => {
-  console.log("params", pagination, filters, sorter, extra);
+  useEffect(() => {
+    const fetchList = async () => {
+      const data = await fetchPatients();
+      setPatients(data);
+    };
+    fetchList();
+  }, []);
+
+  return (
+    <Card>
+      <Table columns={columns} dataSource={patients} />
+    </Card>
+  );
 };
-
-export const PatientsList: React.FC = () => (
-  <Card style={{ borderRadius: "12px" }}>
-    <Table columns={columns} dataSource={data} onChange={onChange} />
-  </Card>
-);

@@ -3,8 +3,10 @@ import { useParams } from "react-router-dom";
 import { Row, Col, Card, Typography, Tabs } from "antd";
 import { fetchPatientDetail } from "services/patients";
 import { IPatient } from "types";
-import "./styles.css";
 import { toast } from "react-toastify";
+import { Loader } from "ui";
+import { getDateString } from "utils/common";
+import "./styles.css";
 
 export const PatientDetail = () => {
   const { patientId } = useParams();
@@ -34,7 +36,7 @@ export const PatientDetail = () => {
   ];
 
   if (loading) {
-    return <h1>Loading...</h1>;
+    return <Loader />;
   }
 
   return (
@@ -43,7 +45,7 @@ export const PatientDetail = () => {
         <Card bordered={false} className="criclebox">
           <Title level={5}>{"Patient Information"}</Title>
           <Paragraph style={{ marginBottom: 5 }}>{"Detailed Patient Information"}</Paragraph>
-          <Tabs defaultActiveKey="1" style={{ marginTop: 20 }} items={items}></Tabs>
+          <Tabs defaultActiveKey="item-1" style={{ marginTop: 20 }} items={items}></Tabs>
         </Card>
       </div>
     </div>
@@ -81,13 +83,4 @@ const PatientInfoPane = (patient?: IPatient) => {
       </Col>
     </Row>
   );
-};
-
-export const getDateString = (isoFormatDate?: string | Date) => {
-  if (!isoFormatDate) return "---";
-  const date = new Date(isoFormatDate);
-  const day = date.getUTCDate();
-  const month = date.getUTCMonth() + 1;
-  const year = date.getFullYear();
-  return `${year}-${month < 10 ? "0" + month : month}-${day < 10 ? "0" + day : day}`;
 };

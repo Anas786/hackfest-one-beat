@@ -110,3 +110,37 @@ export interface IResponse<T> {
     data: T;
   };
 }
+
+export interface CreatePatientPayload {
+  first_name: string;
+  middle_name?: string;
+  last_name: string;
+  email?: string;
+  phone: string;
+  nic: string;
+  dob: string;
+  gender: IGender;
+  user_name?: string;
+  password?: string;
+}
+
+export type IGender = "M" | "F";
+
+export interface CreatePatientResponse {
+  id: number;
+  mr_number: string;
+  first_name: string;
+  middle_name: null;
+  last_name: string;
+  user_name: string;
+  email: null;
+  phone: string;
+  nic: string;
+  gender: string;
+  dob: string;
+  role_id: number;
+  category_id: number;
+  is_active: boolean;
+  created_at: string;
+  updated_at: string;
+}

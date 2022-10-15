@@ -15,7 +15,7 @@ export default class extends BaseSeeder {
 				email: 'admin@user.com',
 				password: '12345678',
 				roleId: 1,
-				categoryId: Category.CATEGORY.HL,
+				categoryId: Category.CATEGORY.HOSPITAL,
 				isActive: true
 			}
 		])

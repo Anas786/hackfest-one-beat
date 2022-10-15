@@ -1,35 +1,36 @@
 import React, { useState } from "react";
-import { Box, Card, Input, useTheme } from "@mui/material";
-import { Button } from "ui";
 import { useNavigate } from "react-router-dom";
-import { ReactComponent as Logo } from "images/logo.svg";
+import { Box, Card, Input, useTheme } from "@mui/material";
 import { toast } from "react-toastify";
+import { useAuth, useProfile } from "hooks";
+import { Button } from "ui";
 import { ILoginUser } from "types/user";
-import { loginUser } from "services/auth/auth";
 import { PRIMARY_GRADIENT } from "constants/colors";
+import { ReactComponent as Logo } from "images/logo.svg";
 
 export const Login = () => {
+  const [user, setUser] = useState<ILoginUser>({ username: "", password: "" });
+
   const theme = useTheme();
   const navigate = useNavigate();
-  const [user, setUser] = useState<ILoginUser>({ username: "", password: "" });
-  const [isLoading, setIsLoading] = useState(false);
+  const { userState } = useProfile();
+  const { login } = useAuth();
+
+  const { isLoading } = userState;
 
   const handleLogin = async () => {
-    setIsLoading(true);
     try {
-      // await loginUser(user);
+      const { result, message } = await login(user);
+      console.log(result, message);
       navigate("/patients");
       toast.success("Logged In Successfully");
     } catch (e) {
       toast.error("Login failed");
-    } finally {
-      setIsLoading(false);
     }
   };
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) =>
     setUser({ ...user, [e.target.name]: e.target.value });
-  };
 
   return (
     <Box

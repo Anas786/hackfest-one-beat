@@ -7,7 +7,7 @@ import ApiResponse from 'App/Traits/ApiResponse'
 export default class AuthController extends ApiResponse {
 
     public async login(ctx: HttpContextContract) {
-        const username = ctx.request.input('username')
+        const username = ctx.request.input('user_name')
         const password = ctx.request.input('password')
 
         try {

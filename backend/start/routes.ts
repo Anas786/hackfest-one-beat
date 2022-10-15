@@ -30,6 +30,7 @@ Route.get('/', async () => {
  Route.group(() => {
 
 	Route.post('/auth/login', 'AuthController.login')
+	Route.post('/patients', 'PatientsController.create')
 
 }).namespace('App/Controllers/Http/V1').prefix('/api/v1')
 
@@ -41,6 +42,7 @@ Route.get('/', async () => {
 	/** USER ROUTES */
 	Route.get('/users', 'UsersController.index')
 	Route.get('/users/:id', 'UsersController.index')
+	Route.post('/users', 'UsersController.create')
 
 	/** ROLES ROUTES */
 	Route.get('/roles', 'RolesController.index')
@@ -59,7 +61,26 @@ Route.get('/', async () => {
 	/** FACILITY TYPES ROUTES */
 	Route.get('/facility_types', 'FacilityTypesController.index')
 
+	/** COUNTRIES ROUTES */
+	Route.get('/countries', 'CountriesController.index')
+
 	/** FACILITIES ROUTES */
 	Route.get('/facilities', 'FacilitiesController.index')
+	Route.get('/facilities/:id', 'FacilitiesController.index')
+	Route.post('/facilities', 'FacilitiesController.create')
+
+	/** PATIENTS ROUTES */
+	Route.get('/patients', 'PatientsController.index')
+	Route.get('/patients/:id', 'PatientsController.index')
+
+	/** DOCTORS ROUTES */
+	Route.get('/doctors', 'DoctorsController.index')
+	Route.get('/doctors/:id', 'DoctorsController.index')
+
+	/** APPOINTMENTS ROUTES */
+	Route.get('/appointments', 'AppointmentsController.index')
+	Route.get('/appointments/:id', 'AppointmentsController.index')
+	Route.post('/appointments', 'AppointmentsController.create')
+	Route.post('/appointments/check_availability', 'AppointmentsController.createcheckAvailability')
 	
 }).namespace('App/Controllers/Http/V1').prefix('/api/v1').middleware(['auth:api'])

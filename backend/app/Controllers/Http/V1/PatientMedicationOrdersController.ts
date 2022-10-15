@@ -2,10 +2,10 @@ import type { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
 import Env from '@ioc:Adonis/Core/Env'
 import ApiResponse from 'App/Traits/ApiResponse'
 // import CreateFacilityValidator from 'App/Validators/Facility/CreateFacilityValidator'
-import PatientMedicalHistory from 'App/Models/PatientMedicalHistory'
+import PatientMedicationOrder from 'App/Models/PatientMedicationOrder'
 import User from 'App/Models/User'
 
-export default class PatientMedicalHistoriesController extends ApiResponse {
+export default class PatientMedicationOrdersController extends ApiResponse {
 
     public async index(ctx: HttpContextContract) {  
         
@@ -17,7 +17,7 @@ export default class PatientMedicalHistoriesController extends ApiResponse {
             if( patient_id ) {
                 
                 if( paginate != null && paginate == '1' || paginate == 1 ) {
-                    const medicalHistories = await PatientMedicalHistory
+                    const medicationOrders = await PatientMedicationOrder
                         .query()
                         .if(
                             patient_id != null,
@@ -48,10 +48,10 @@ export default class PatientMedicalHistoriesController extends ApiResponse {
                         )
                     .paginate(page, limit ? limit : Env.get('PAGINATION_LIMIT'))
                     
-                    return this.success(ctx, medicalHistories)
+                    return this.success(ctx, medicationOrders)
                     
                 } else {
-                    const medicalHistories = await PatientMedicalHistory
+                    const medicationOrders = await PatientMedicationOrder
                         .query()
                         .if(
                             patient_id != null,
@@ -81,7 +81,7 @@ export default class PatientMedicalHistoriesController extends ApiResponse {
                             }
                         )
     
-                    return this.success(ctx, medicalHistories)
+                    return this.success(ctx, medicationOrders)
                 }
 
             }
@@ -96,13 +96,8 @@ export default class PatientMedicalHistoriesController extends ApiResponse {
     public async create(ctx: HttpContextContract) {
         const { 
             appointment_id,
-            temperature,
-            glucose,
-            bp_systolic,
-            bp_diastolic,
-            pulse,
-            o2_level,
-            other_allergies,
+            diet_id,
+            iv_fluid_id,
             notes
         } = ctx.request.all()
         const patient_id = ctx.request.param('id')
@@ -111,19 +106,14 @@ export default class PatientMedicalHistoriesController extends ApiResponse {
 
             const user = await User.findOrFail(patient_id)
 
-            await user.related('medical_histories').create({
+            await user.related('medication_orders').create({
                 appointmentId: appointment_id,
-                temperature: temperature,
-                glucose: glucose,
-                bpSystolic: bp_systolic,
-                bpDiastolic: bp_diastolic,
-                pulse: pulse,
-                o2Level: o2_level,
-                otherAllergies: other_allergies,
+                dietId: diet_id,
+                ivFluidId: iv_fluid_id,
                 notes: notes
             })
 
-            return this.success(ctx, null, 'Medical Record has been created')
+            return this.success(ctx, null, 'Medication Order has been created')
 
         } catch (error) {
             console.log(error.messages)
@@ -132,3 +122,4 @@ export default class PatientMedicalHistoriesController extends ApiResponse {
     }
 
 }
+

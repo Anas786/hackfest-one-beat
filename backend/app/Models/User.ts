@@ -8,6 +8,7 @@ import Specialty from 'App/Models/Specialty'
 import Timezone from 'App/Models/Timezone'
 import Facility from 'App/Models/Facility'
 import PatientMedicalHistory from 'App/Models/PatientMedicalHistory'
+import PatientMedicationOrder from 'App/Models/PatientMedicationOrder'
 
 export default class User extends BaseModel {
 	@column({ isPrimary: true })
@@ -130,4 +131,10 @@ export default class User extends BaseModel {
 		foreignKey: 'patientId',
 	})
 	public medical_histories: HasMany<typeof PatientMedicalHistory>
+
+	@hasMany(() => PatientMedicationOrder, {
+		localKey: 'id',
+		foreignKey: 'patientId',
+	})
+	public medication_orders: HasMany<typeof PatientMedicationOrder>
 }

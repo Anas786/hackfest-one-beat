@@ -1,5 +1,11 @@
 import { DateTime } from 'luxon'
-import { BaseModel, column } from '@ioc:Adonis/Lucid/Orm'
+import { BaseModel, belongsTo, BelongsTo, column, hasMany, HasMany } from '@ioc:Adonis/Lucid/Orm'
+import User from 'App/Models/User'
+import Appointment from 'App/Models/Appointment'
+import Facility from 'App/Models/Facility'
+import Transportation from 'App/Models/Transportation'
+import BedType from 'App/Models/BedType'
+import AdmissionDiagnostic from './AdmissionDiagnostic'
 
 export default class Admission extends BaseModel {
 
@@ -22,6 +28,12 @@ export default class Admission extends BaseModel {
 	public patientId: number
 
 	@column()
+	public appointmentId: number
+
+	@column()
+	public referralFacilityId: number
+
+	@column()
 	public facilityId: number
 
 	@column()
@@ -31,7 +43,7 @@ export default class Admission extends BaseModel {
 	public bedTypeId?: number
 
 	@column()
-	public eta: number
+	public eta: string
 
 	@column()
 	public status: number
@@ -44,4 +56,46 @@ export default class Admission extends BaseModel {
 
 	@column.dateTime({ autoCreate: true, autoUpdate: true })
 	public updatedAt: DateTime
+
+	@belongsTo(() => User, {
+		localKey: 'id',
+		foreignKey: 'patientId',
+	})
+	public patient: BelongsTo<typeof User>
+
+	@belongsTo(() => Appointment, {
+		localKey: 'id',
+		foreignKey: 'appointmentId',
+	})
+	public appointment: BelongsTo<typeof Appointment>
+
+	@belongsTo(() => Facility, {
+		localKey: 'id',
+		foreignKey: 'facilityId',
+	})
+	public facility: BelongsTo<typeof Facility>
+
+	@belongsTo(() => Facility, {
+		localKey: 'id',
+		foreignKey: 'referralFacilityId',
+	})
+	public referral_facility: BelongsTo<typeof Facility>
+
+	@belongsTo(() => Transportation, {
+		localKey: 'id',
+		foreignKey: 'facilityId',
+	})
+	public transportation: BelongsTo<typeof Transportation>
+
+	@belongsTo(() => BedType, {
+		localKey: 'id',
+		foreignKey: 'bedTypeId',
+	})
+	public bed_type: BelongsTo<typeof BedType>
+
+	@hasMany(() => AdmissionDiagnostic, {
+		localKey: 'id',
+		foreignKey: 'admissionId',
+	})
+	public diagnostics: HasMany<typeof AdmissionDiagnostic>
 }

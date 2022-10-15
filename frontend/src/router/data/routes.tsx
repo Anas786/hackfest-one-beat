@@ -18,5 +18,5 @@ export const ADMIN_ROUTES: Array<IRoute> = [
   { path: "appointments", element: <AppointmentList /> },
   { path: "transfer-forms", element: <TransferForms /> },
   { path: "patients/:patientId", element: <PatientDetail /> },
-  { path: "appointments/:id", element: <AppointmentDetail /> },
+  { path: "appointments/:appointmentId/:patientId", element: <AppointmentDetail /> },
 ];

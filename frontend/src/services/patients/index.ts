@@ -24,6 +24,19 @@ interface IPatientParams {
   mr_number?: string;
 }
 
+export interface IPostMedicalOrderData {
+  patient_id: number;
+  appointment_id: number;
+  glucose: number;
+  temperature?: number;
+  bp_systolic: number;
+  bp_diastolic: number;
+  pulse: number;
+  o2_level: number;
+  other_allergies?: string;
+  notes?: string;
+}
+
 export const fetchPatients = async (params: IPatientParams = {}) => {
   const response = await apiClient.get(`${PATIENT_API}`, { params });
   return response?.data?.data;
@@ -68,4 +81,36 @@ export const fetchSpecialityConsults = async (id: number) => {
     `${PATIENT_API}/${id}/specialty_consults?paginate=1&limit=10&page=1`
   );
   return response.data;
+};
+
+export const postMedicalOrder = async (data: IPostMedicalOrderData) => {
+  const response = await apiClient.post(`${PATIENT_API}/${data.patient_id}/medical_records`);
+  return response?.data;
+};
+
+export const postMedicationOrder = async (data: any) => {
+  const response = await apiClient.post(
+    `${PATIENT_API}/${data.patient_id}/medication_orders`,
+    data,
+    {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    }
+  );
+  return response?.data;
+};
+
+export const postDiagnosticOrder = async (data: any, patient_id: number) => {
+  const response = await apiClient.post(`${PATIENT_API}/${patient_id}/diagnostic_orders`, data);
+  return response?.data;
+};
+
+export const postSpecialtyConsults = async (data: any, patient_id: number) => {
+  const response = await apiClient.post(`${PATIENT_API}/${patient_id}/specialty_consults`, data, {
+    headers: {
+      "Content-Type": "multipart/form-data",
+    },
+  });
+  return response?.data;
 };

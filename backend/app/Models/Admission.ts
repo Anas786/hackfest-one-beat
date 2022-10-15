@@ -1,10 +1,11 @@
 import { DateTime } from 'luxon'
-import { BaseModel, belongsTo, BelongsTo, column } from '@ioc:Adonis/Lucid/Orm'
+import { BaseModel, belongsTo, BelongsTo, column, hasMany, HasMany } from '@ioc:Adonis/Lucid/Orm'
 import User from 'App/Models/User'
 import Appointment from 'App/Models/Appointment'
 import Facility from 'App/Models/Facility'
 import Transportation from 'App/Models/Transportation'
 import BedType from 'App/Models/BedType'
+import AdmissionDiagnostic from './AdmissionDiagnostic'
 
 export default class Admission extends BaseModel {
 
@@ -91,4 +92,10 @@ export default class Admission extends BaseModel {
 		foreignKey: 'bedTypeId',
 	})
 	public bed_type: BelongsTo<typeof BedType>
+
+	@hasMany(() => AdmissionDiagnostic, {
+		localKey: 'id',
+		foreignKey: 'admissionId',
+	})
+	public diagnostics: HasMany<typeof AdmissionDiagnostic>
 }

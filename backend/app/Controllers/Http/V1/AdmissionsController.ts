@@ -23,6 +23,7 @@ export default class AdmissionsController extends ApiResponse {
                     .preload('appointment')
                     .preload('transportation')
                     .preload('bed_type')
+                    .preload('diagnostics')
                     .where('id', id)
                     .firstOrFail()
     
@@ -38,6 +39,7 @@ export default class AdmissionsController extends ApiResponse {
                         .preload('appointment')
                         .preload('transportation')
                         .preload('bed_type')
+                        .preload('diagnostics')
                         .if(
                             status != null, 
                             (query) => {
@@ -95,6 +97,7 @@ export default class AdmissionsController extends ApiResponse {
                         .preload('appointment')
                         .preload('transportation')
                         .preload('bed_type')
+                        .preload('diagnostics')
                         .if(
                             status != null, 
                             (query) => {
@@ -162,7 +165,8 @@ export default class AdmissionsController extends ApiResponse {
             bed_type_id,
             eta,
             status,
-            notes
+            notes,
+            diagnostics
         } = ctx.request.all()
 
         try {
@@ -185,6 +189,21 @@ export default class AdmissionsController extends ApiResponse {
             admission.status = status != null ? status : Admission.STATUS.INITIATED
 
             await admission.save()
+
+            // Detach all diagnostics from this patient
+            await admission
+                .related('diagnostics')
+                .query()
+                .delete()
+
+            const diagnosticsIds = diagnostics.split(',').map((v) => {
+                return { diagnosticId: v }
+            })
+
+            // Attach the diagnostics again
+            await admission
+                .related('diagnostics')
+                .createMany(diagnosticsIds)
 
             return this.success(ctx, admission.toJSON(), 'Admission has been created')
 

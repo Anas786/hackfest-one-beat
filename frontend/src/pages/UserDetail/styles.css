@@ -1,0 +1,14 @@
+.detail-description {
+    margin: 2px 0;
+    font-weight: 600;
+    font-size: 13px;
+    color: #252020;
+}
+
+.detail-title {
+    font-size: 12px;
+    font-weight: 400;
+    margin-bottom: 0;
+    margin-top: 15px;
+    color: #595959; 
+}

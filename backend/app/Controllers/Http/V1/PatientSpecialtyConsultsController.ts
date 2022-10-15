@@ -2,10 +2,9 @@ import type { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
 import Env from '@ioc:Adonis/Core/Env'
 import ApiResponse from 'App/Traits/ApiResponse'
 // import CreateFacilityValidator from 'App/Validators/Facility/CreateFacilityValidator'
-import PatientMedicationOrder from 'App/Models/PatientMedicationOrder'
-import User from 'App/Models/User'
+import PatientSpecialtyConsult from 'App/Models/PatientSpecialtyConsult'
 
-export default class PatientMedicationOrdersController extends ApiResponse {
+export default class PatientSpecialtyConsultsController extends ApiResponse {
 
     public async index(ctx: HttpContextContract) {  
         
@@ -17,8 +16,12 @@ export default class PatientMedicationOrdersController extends ApiResponse {
             if( patient_id ) {
                 
                 if( paginate != null && paginate == '1' || paginate == 1 ) {
-                    const medicationOrders = await PatientMedicationOrder
+                    const diagnosticOrders = await PatientSpecialtyConsult
                         .query()
+                        .preload('consults', (consultsQuery) => {
+                            consultsQuery
+                                .preload('consult')
+                        })
                         .if(
                             patient_id != null,
                             (query) => {
@@ -48,11 +51,15 @@ export default class PatientMedicationOrdersController extends ApiResponse {
                         )
                     .paginate(page, limit ? limit : Env.get('PAGINATION_LIMIT'))
                     
-                    return this.success(ctx, medicationOrders)
+                    return this.success(ctx, diagnosticOrders)
                     
                 } else {
-                    const medicationOrders = await PatientMedicationOrder
+                    const diagnosticOrders = await PatientSpecialtyConsult
                         .query()
+                        .preload('consults', (consultsQuery) => {
+                            consultsQuery
+                                .preload('consult')
+                        })
                         .if(
                             patient_id != null,
                             (query) => {
@@ -81,7 +88,7 @@ export default class PatientMedicationOrdersController extends ApiResponse {
                             }
                         )
     
-                    return this.success(ctx, medicationOrders)
+                    return this.success(ctx, diagnosticOrders)
                 }
 
             }
@@ -96,32 +103,41 @@ export default class PatientMedicationOrdersController extends ApiResponse {
     public async create(ctx: HttpContextContract) {
         const { 
             appointment_id,
-            diet_id,
-            iv_fluid_id,
-            meds,
+            consults,
             notes
         } = ctx.request.all()
         const patient_id = ctx.request.param('id')
 
         try {
 
-            const user = await User.findOrFail(patient_id)
+            const specialtyConsult = new PatientSpecialtyConsult()
 
-            await user.related('medication_orders').create({
-                appointmentId: appointment_id,
-                dietId: diet_id,
-                ivFluidId: iv_fluid_id,
-                meds: meds,
-                notes: notes
+            specialtyConsult.patientId = patient_id
+            specialtyConsult.appointmentId = appointment_id
+            specialtyConsult.notes = notes
+
+            await specialtyConsult.save()
+
+            // Add consults
+            await specialtyConsult
+                .related('consults')
+                .query()
+                .delete()
+
+            const consultIds = consults.split(',').map((v) => {
+                return { consultId: v }
             })
 
-            return this.success(ctx, null, 'Medication Order has been created')
+            await specialtyConsult
+                .related('consults')
+                .createMany(consultIds)
+
+            return this.success(ctx, null, 'Specialty Consult has been created')
 
         } catch (error) {
-            console.log(error.messages)
+            console.log(error)
             return this.error(ctx, error.messages)
         }
     }
 
 }
-

@@ -2,10 +2,9 @@ import type { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
 import Env from '@ioc:Adonis/Core/Env'
 import ApiResponse from 'App/Traits/ApiResponse'
 // import CreateFacilityValidator from 'App/Validators/Facility/CreateFacilityValidator'
-import PatientMedicationOrder from 'App/Models/PatientMedicationOrder'
-import User from 'App/Models/User'
+import PatientDiagnosticOrder from 'App/Models/PatientDiagnosticOrder'
 
-export default class PatientMedicationOrdersController extends ApiResponse {
+export default class PatientDiagnosticOrdersController extends ApiResponse {
 
     public async index(ctx: HttpContextContract) {  
         
@@ -17,8 +16,20 @@ export default class PatientMedicationOrdersController extends ApiResponse {
             if( patient_id ) {
                 
                 if( paginate != null && paginate == '1' || paginate == 1 ) {
-                    const medicationOrders = await PatientMedicationOrder
+                    const diagnosticOrders = await PatientDiagnosticOrder
                         .query()
+                        .preload('blood_tests', (bloodTestsQuery) => {
+                            bloodTestsQuery
+                                .preload('blood_test')
+                        })
+                        .preload('urine_tests', (urineTestsQuery) => {
+                            urineTestsQuery
+                                .preload('urine_test')
+                        })
+                        .preload('imaging_tests', (imagingTestsQuery) => {
+                            imagingTestsQuery
+                                .preload('imaging_test')
+                        })
                         .if(
                             patient_id != null,
                             (query) => {
@@ -48,11 +59,23 @@ export default class PatientMedicationOrdersController extends ApiResponse {
                         )
                     .paginate(page, limit ? limit : Env.get('PAGINATION_LIMIT'))
                     
-                    return this.success(ctx, medicationOrders)
+                    return this.success(ctx, diagnosticOrders)
                     
                 } else {
-                    const medicationOrders = await PatientMedicationOrder
+                    const diagnosticOrders = await PatientDiagnosticOrder
                         .query()
+                        .preload('blood_tests', (bloodTestsQuery) => {
+                            bloodTestsQuery
+                                .preload('blood_test')
+                        })
+                        .preload('urine_tests', (urineTestsQuery) => {
+                            urineTestsQuery
+                                .preload('urine_test')
+                        })
+                        .preload('imaging_tests', (imagingTestsQuery) => {
+                            imagingTestsQuery
+                                .preload('imaging_test')
+                        })
                         .if(
                             patient_id != null,
                             (query) => {
@@ -81,7 +104,7 @@ export default class PatientMedicationOrdersController extends ApiResponse {
                             }
                         )
     
-                    return this.success(ctx, medicationOrders)
+                    return this.success(ctx, diagnosticOrders)
                 }
 
             }
@@ -96,32 +119,71 @@ export default class PatientMedicationOrdersController extends ApiResponse {
     public async create(ctx: HttpContextContract) {
         const { 
             appointment_id,
-            diet_id,
-            iv_fluid_id,
-            meds,
+            blood_tests,
+            urine_tests,
+            imaging_tests,
             notes
         } = ctx.request.all()
         const patient_id = ctx.request.param('id')
 
         try {
 
-            const user = await User.findOrFail(patient_id)
+            const diagnosticOrder = new PatientDiagnosticOrder()
 
-            await user.related('medication_orders').create({
-                appointmentId: appointment_id,
-                dietId: diet_id,
-                ivFluidId: iv_fluid_id,
-                meds: meds,
-                notes: notes
+            diagnosticOrder.patientId = patient_id
+            diagnosticOrder.appointmentId = appointment_id
+            diagnosticOrder.notes = notes
+
+            await diagnosticOrder.save()
+
+            // Add blood tests
+            await diagnosticOrder
+                .related('blood_tests')
+                .query()
+                .delete()
+
+            const bloodTestIds = blood_tests.split(',').map((v) => {
+                return { bloodTestId: v }
             })
 
-            return this.success(ctx, null, 'Medication Order has been created')
+            await diagnosticOrder
+                .related('blood_tests')
+                .createMany(bloodTestIds)
+
+            // Add urine tests
+            await diagnosticOrder
+                .related('urine_tests')
+                .query()
+                .delete()
+
+            const urineTestIds = urine_tests.split(',').map((v) => {
+                return { urineTestId: v }
+            })
+
+            await diagnosticOrder
+                .related('urine_tests')
+                .createMany(urineTestIds)
+
+            // Add imaging tests
+            await diagnosticOrder
+                .related('imaging_tests')
+                .query()
+                .delete()
+
+            const imagingTestIds = imaging_tests.split(',').map((v) => {
+                return { imagingTestId: v }
+            })
+
+            await diagnosticOrder
+                .related('imaging_tests')
+                .createMany(imagingTestIds)
+
+            return this.success(ctx, null, 'Diagnostic Order has been created')
 
         } catch (error) {
-            console.log(error.messages)
+            console.log(error)
             return this.error(ctx, error.messages)
         }
     }
 
 }
-

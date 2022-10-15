@@ -1,11 +1,10 @@
 import { DateTime } from 'luxon'
-import { BaseModel, belongsTo, BelongsTo, column } from '@ioc:Adonis/Lucid/Orm'
-import User from 'App/Models/User'
+import { BaseModel, belongsTo, BelongsTo, column, hasMany, HasMany } from '@ioc:Adonis/Lucid/Orm'
 import Appointment from 'App/Models/Appointment'
-import Diet from 'App/Models/Diet'
-import IvFluid from 'App/Models/IvFluid'
+import User from 'App/Models/User'
+import PatientSpecialtyConsultConsult from './PatientSpecialtyConsultConsult'
 
-export default class PatientMedicationOrder extends BaseModel {
+export default class PatientSpecialtyConsult extends BaseModel {
 	@column({ isPrimary: true })
 	public id: number
 
@@ -14,15 +13,6 @@ export default class PatientMedicationOrder extends BaseModel {
 
 	@column()
 	public patientId: number
-
-	@column()
-	public dietId: number
-
-	@column()
-	public ivFluidId: number
-
-	@column()
-	public meds: string
 
 	@column()
 	public notes: string
@@ -45,15 +35,9 @@ export default class PatientMedicationOrder extends BaseModel {
 	})
 	public appointment: BelongsTo<typeof Appointment>
 
-	@belongsTo(() => Diet, {
+	@hasMany(() => PatientSpecialtyConsultConsult, {
 		localKey: 'id',
-		foreignKey: 'dietId',
+		foreignKey: 'patientSpecialtyConsultId',
 	})
-	public diet: BelongsTo<typeof Diet>
-
-	@belongsTo(() => IvFluid, {
-		localKey: 'id',
-		foreignKey: 'ivFluidId',
-	})
-	public iv_fluid: BelongsTo<typeof IvFluid>
+	public consults: HasMany<typeof PatientSpecialtyConsultConsult>
 }

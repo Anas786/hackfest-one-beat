@@ -1,18 +1,14 @@
 import type { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
 import Env from '@ioc:Adonis/Core/Env'
-import { string } from '@ioc:Adonis/Core/Helpers'
 import User from 'App/Models/User'
 import ApiResponse from 'App/Traits/ApiResponse'
 import Role from 'App/Models/Role'
-import Category from 'App/Models/Category'
-import CreatePatientValidator from 'App/Validators/Patient/CreatePatientValidator'
-import GeneralHelper from 'App/Helpers/GeneralHelper'
 
-export default class PatientsController extends ApiResponse {
+export default class DoctorsController extends ApiResponse {
 
     public async index(ctx: HttpContextContract) {  
         
-        const { paginate, page, limit, sort, order, is_active, gender, nic, mr_number } = ctx.request.qs()
+        const { paginate, page, limit, sort, order, is_active, facility_id } = ctx.request.qs()
         const id = ctx.request.param('id')
 
         try {
@@ -23,10 +19,11 @@ export default class PatientsController extends ApiResponse {
                     .query()
                     .preload('role')
                     .preload('category')
+                    .preload('specialty')
+                    .preload('degree')
                     .preload('timezone')
                     .where('id', id)
-                    .where('role_id', Role.ROLE.USER)
-                    .where('category_id', Category.CATEGORY.PATIENT)
+                    .where('role_id', Role.ROLE.PHYSICIAN)
                     .firstOrFail()
     
                 return this.success(ctx, user)
@@ -38,6 +35,8 @@ export default class PatientsController extends ApiResponse {
                     .query()
                     .preload('role')
                     .preload('category')
+                    .preload('specialty')
+                    .preload('degree')
                     .preload('timezone')
                     .if(
                         is_active != null, 
@@ -49,27 +48,9 @@ export default class PatientsController extends ApiResponse {
                         }
                     )
                     .if(
-                        gender != null, 
+                        facility_id != null, 
                         (query) => {
-                            query.where('gender', gender)
-                        },
-                        () => {
-        
-                        }
-                    )
-                    .if(
-                        nic != null, 
-                        (query) => {
-                            query.where('nic', nic)
-                        },
-                        () => {
-        
-                        }
-                    )
-                    .if(
-                        mr_number != null, 
-                        (query) => {
-                            query.where('mr_number', mr_number)
+                            query.where('facility_id', facility_id)
                         },
                         () => {
         
@@ -84,8 +65,7 @@ export default class PatientsController extends ApiResponse {
                             query.orderBy('created_at', 'desc')
                         }
                     )
-                    .where('role_id', Role.ROLE.USER)
-                    .where('category_id', Category.CATEGORY.PATIENT)
+                    .where('role_id', Role.ROLE.PHYSICIAN)
                     .paginate(page, limit ? limit : Env.get('PAGINATION_LIMIT'))
                     
                     return this.success(ctx, users)
@@ -95,6 +75,8 @@ export default class PatientsController extends ApiResponse {
                     .query()
                     .preload('role')
                     .preload('category')
+                    .preload('specialty')
+                    .preload('degree')
                     .preload('timezone')
                     .if(
                         is_active != null, 
@@ -106,27 +88,9 @@ export default class PatientsController extends ApiResponse {
                         }
                     )
                     .if(
-                        gender != null, 
+                        facility_id != null, 
                         (query) => {
-                            query.where('gender', gender)
-                        },
-                        () => {
-        
-                        }
-                    )
-                    .if(
-                        nic != null, 
-                        (query) => {
-                            query.where('nic', nic)
-                        },
-                        () => {
-        
-                        }
-                    )
-                    .if(
-                        mr_number != null, 
-                        (query) => {
-                            query.where('mr_number', mr_number)
+                            query.where('facility_id', facility_id)
                         },
                         () => {
         
@@ -151,7 +115,6 @@ export default class PatientsController extends ApiResponse {
                         }
                     )
                     .where('role_id', Role.ROLE.USER)
-                    .where('category_id', Category.CATEGORY.PATIENT)
     
                     return this.success(ctx, users)
                 }
@@ -164,53 +127,6 @@ export default class PatientsController extends ApiResponse {
         
     }
 
-    public async create(ctx: HttpContextContract) {
-        const { 
-            first_name,
-            middle_name,
-            last_name,
-            user_name,
-            password,
-            email,
-            nic,
-            dob,
-            gender,
-            phone
-        } = ctx.request.all()
-
-        try {
-            // Validate parameters
-            await ctx.request.validate(CreatePatientValidator)
-
-            const userName = (user_name != null) ? user_name : string.generateRandom(8)
-            const passwordd = (password != null) ? password : '12345678'
-            const mr = GeneralHelper.generateMrNumber()
-
-            const user = new User()
-
-            user.mrNumber = mr
-            user.firstName = first_name
-            user.middleName = middle_name
-            user.lastName = last_name
-            user.userName = userName
-            user.password = passwordd
-            user.email = email
-            user.phone = phone
-            user.nic = nic
-            user.gender = gender
-            user.dob = dob
-            user.roleId = Role.ROLE.USER
-            user.categoryId = Category.CATEGORY.PATIENT
-            user.isActive = true
-
-            await user.save()
-
-            return this.success(ctx, user.toJSON(), 'Patient has been created')
-
-        } catch (error) {
-            console.log(error)
-            return this.error(ctx, error.messages)
-        }
-    }
+    
 
 }

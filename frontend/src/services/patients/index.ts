@@ -16,5 +16,5 @@ interface IPatientParams {
 
 export const fetchPatients = async (params: IPatientParams = {}) => {
   const response = await axios.get(`${PATIENT_API}`, { params });
-  return response.data as Array<IPatient>;
+  return response?.data?.data;
 };

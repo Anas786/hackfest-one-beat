@@ -15,27 +15,29 @@ import Interceptors from "Interceptor";
 const App: FC = () => {
   return (
     <ThemeProvider theme={theme}>
-      <Interceptors>
-        <UserProvider>
-          <AuthProvider>
-            <BrowserRouter>
-              <ToastContainer
-                position="top-right"
-                autoClose={3000}
-                hideProgressBar={false}
-                newestOnTop={false}
-                closeOnClick
-                rtl={false}
-                pauseOnFocusLoss
-                draggable
-                pauseOnHover
-                theme="light"
-              />
-              <Router />
-            </BrowserRouter>
-          </AuthProvider>
-        </UserProvider>
-      </Interceptors>
+      <UserProvider>
+        <AuthProvider>
+          <BrowserRouter>
+            <Interceptors>
+              <>
+                <ToastContainer
+                  position="top-right"
+                  autoClose={3000}
+                  hideProgressBar={false}
+                  newestOnTop={false}
+                  closeOnClick
+                  rtl={false}
+                  pauseOnFocusLoss
+                  draggable
+                  pauseOnHover
+                  theme="light"
+                />
+                <Router />
+              </>
+            </Interceptors>
+          </BrowserRouter>
+        </AuthProvider>
+      </UserProvider>
     </ThemeProvider>
   );
 };

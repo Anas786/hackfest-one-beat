@@ -7,19 +7,27 @@ import { IPatient } from "types";
 const columns: ColumnsType<IPatient> = [
   {
     title: "Name",
-    dataIndex: "name",
+    dataIndex: "first_name",
   },
   {
-    title: "Chinese Score",
-    dataIndex: "chinese",
+    title: "Email",
+    dataIndex: "email",
   },
   {
-    title: "Math Score",
-    dataIndex: "math",
+    title: "NIC",
+    dataIndex: "nic",
   },
   {
-    title: "English Score",
-    dataIndex: "english",
+    title: "Phone",
+    dataIndex: "phone",
+  },
+  {
+    title: "Gender",
+    dataIndex: "gender",
+  },
+  {
+    title: "DOB",
+    dataIndex: "dob",
   },
 ];
 
@@ -29,6 +37,7 @@ export const PatientsList: React.FC = () => {
   useEffect(() => {
     const fetchList = async () => {
       const data = await fetchPatients();
+
       setPatients(data);
     };
     fetchList();

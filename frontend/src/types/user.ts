@@ -79,17 +79,3 @@ export interface IResponse<T> {
     data: T;
   };
 }
-
-export interface IBedType {
-  id: number;
-  name: string;
-  created_at: string;
-  updated_at: string;
-}
-
-export interface ITransportationType {
-  id: number;
-  name: string;
-  created_at: string;
-  updated_at: string;
-}

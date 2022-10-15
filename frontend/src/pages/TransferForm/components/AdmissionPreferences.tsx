@@ -1,7 +1,10 @@
 import { FC } from "react";
-import { Button, Form, Input } from "antd";
+import { Button, Form, Input, Select } from "antd";
 import { StyledLabel } from "./Label";
 import { IAdmissionPreferences } from "../utils/types";
+import { facilities, ETA } from "../utils/constants";
+
+const { Option } = Select;
 
 interface AdmissionPreferencesProps {
   handleAddAdmissionPreferences: (data: IAdmissionPreferences) => void;
@@ -41,19 +44,13 @@ export const AdmissionPreferences: FC<AdmissionPreferencesProps> = ({
               },
             ]}
           >
-            <Input name="admittingHospitla" />
-          </Form.Item>
-          <StyledLabel text="Preferred Admitting Group" required={true} />
-          <Form.Item
-            name="admittingGroup"
-            rules={[
-              {
-                required: true,
-                message: "Please enter admitting group!",
-              },
-            ]}
-          >
-            <Input name="admittingGroup" />
+            <Select size="middle" placeholder="Please select facility" style={{ width: "100%" }}>
+              {facilities.map((facility) => (
+                <Option key={facility.id} value={facility.name}>
+                  {facility.name}
+                </Option>
+              ))}
+            </Select>
           </Form.Item>
           <StyledLabel text="Preferred Admitting Physician" />
           <Form.Item name="admittingPhysician">
@@ -73,7 +70,17 @@ export const AdmissionPreferences: FC<AdmissionPreferencesProps> = ({
               },
             ]}
           >
-            <Input name="patientEta" />
+            <Select
+              size="middle"
+              placeholder="Please select patient's ETA"
+              style={{ width: "100%" }}
+            >
+              {ETA.map((eta) => (
+                <Option key={eta.id} value={eta.id}>
+                  {eta.name}
+                </Option>
+              ))}
+            </Select>
           </Form.Item>
         </div>
         <Button block size="large" htmlType="submit" type="primary">

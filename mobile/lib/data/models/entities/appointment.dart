@@ -1,3 +1,5 @@
+import '../../../util/constants/app_constants.dart';
+import '../../../util/utilities/datetime_utils.dart';
 import '../base_entity.dart';
 import 'doctor.dart';
 import 'facility.dart';
@@ -31,6 +33,13 @@ class Appointment extends BaseEntity {
     this.doctor,
   }) : super(id: id);
 
+  String? get readableAppointmentDate {
+    return DateTimeUtils.format(
+      AppConstants.readableDayFormat,
+      DateTimeUtils.parse(appointmentDate),
+    );
+  }
+
   static List<Appointment>? fromJsonAsList(dynamic data) {
     if (data == null) {
       return null;
@@ -47,15 +56,11 @@ class Appointment extends BaseEntity {
     appointmentTime = json['appointment_time'];
     doctorId = json['doctor_id'];
     status = json['status'];
-    patient = json['patient'] != null
-        ? Patient.fromJson(json['patient'])
-        : null;
-    facility = json['facility'] != null
-        ? Facility.fromJson(json['facility'])
-        : null;
-    doctor = json['doctor'] != null
-        ? Doctor.fromJson(json['doctor'])
-        : null;
+    patient =
+        json['patient'] != null ? Patient.fromJson(json['patient']) : null;
+    facility =
+        json['facility'] != null ? Facility.fromJson(json['facility']) : null;
+    doctor = json['doctor'] != null ? Doctor.fromJson(json['doctor']) : null;
   }
 
   @override

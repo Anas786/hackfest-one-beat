@@ -27,10 +27,10 @@ export default class Facility extends BaseModel {
 	public countryId: string
 
 	@column()
-	public latitude?: string
+	public latitude?: number
 
 	@column()
-	public longitude?: string
+	public longitude?: number
 
 	@column()
 	public facilityTypeId: string

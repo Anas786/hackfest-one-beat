@@ -59,7 +59,12 @@ Route.get('/', async () => {
 	/** FACILITY TYPES ROUTES */
 	Route.get('/facility_types', 'FacilityTypesController.index')
 
+	/** COUNTRIES ROUTES */
+	Route.get('/countries', 'CountriesController.index')
+
 	/** FACILITIES ROUTES */
 	Route.get('/facilities', 'FacilitiesController.index')
+	Route.get('/facilities/:id', 'FacilitiesController.index')
+	Route.post('/facilities', 'FacilitiesController.create')
 	
 }).namespace('App/Controllers/Http/V1').prefix('/api/v1').middleware(['auth:api'])

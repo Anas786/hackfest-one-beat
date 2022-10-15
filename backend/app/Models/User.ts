@@ -6,10 +6,14 @@ import Category from 'App/Models/Category'
 import Degree from 'App/Models/Degree'
 import Specialty from 'App/Models/Specialty'
 import Timezone from 'App/Models/Timezone'
+import Facility from 'App/Models/Facility'
 
 export default class User extends BaseModel {
 	@column({ isPrimary: true })
 	public id: number
+
+	@column()
+	public mrNumber?: string
 
 	@column()
 	public firstName: string
@@ -37,6 +41,9 @@ export default class User extends BaseModel {
 
 	@column()
 	public categoryId: number
+
+	@column()
+	public facilityId?: number
 
 	@column()
 	public gender: string
@@ -98,6 +105,12 @@ export default class User extends BaseModel {
 		foreignKey: 'degreeId',
 	})
 	public degree: BelongsTo<typeof Degree>
+
+	@belongsTo(() => Facility, {
+		localKey: 'id',
+		foreignKey: 'facilityId',
+	})
+	public facility: BelongsTo<typeof Facility>
 
 	@belongsTo(() => Specialty, {
 		localKey: 'id',

@@ -41,6 +41,7 @@ Route.get('/', async () => {
 	/** USER ROUTES */
 	Route.get('/users', 'UsersController.index')
 	Route.get('/users/:id', 'UsersController.index')
+	Route.post('/users', 'UsersController.create')
 
 	/** ROLES ROUTES */
 	Route.get('/roles', 'RolesController.index')
@@ -71,5 +72,15 @@ Route.get('/', async () => {
 	Route.get('/patients', 'PatientsController.index')
 	Route.get('/patients/:id', 'PatientsController.index')
 	Route.post('/patients', 'PatientsController.create')
+
+	/** DOCTORS ROUTES */
+	Route.get('/doctors', 'DoctorsController.index')
+	Route.get('/doctors/:id', 'DoctorsController.index')
+
+	/** APPOINTMENTS ROUTES */
+	Route.get('/appointments', 'AppointmentsController.index')
+	Route.get('/appointments/:id', 'AppointmentsController.index')
+	Route.post('/appointments', 'AppointmentsController.create')
+	Route.post('/appointments/check_availability', 'AppointmentsController.createcheckAvailability')
 	
 }).namespace('App/Controllers/Http/V1').prefix('/api/v1').middleware(['auth:api'])

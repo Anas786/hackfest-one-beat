@@ -17,6 +17,7 @@ export default class FacilitiesController extends ApiResponse {
 
                 const facility = await Facility
                 .query()
+                .preload('type')
                 .where('id', id)
                 .firstOrFail()
     
@@ -27,6 +28,7 @@ export default class FacilitiesController extends ApiResponse {
                 if( paginate != null && paginate == '1' || paginate == 1 ) {
                     const facilities = await Facility
                     .query()
+                    .preload('type')
                     .if(
                         sort != null,
                         (query) => {
@@ -52,6 +54,7 @@ export default class FacilitiesController extends ApiResponse {
                 } else {
                     const facilities = await Facility
                     .query()
+                    .preload('type')
                     .if(
                         facility_type_id != null,
                         (query) => {

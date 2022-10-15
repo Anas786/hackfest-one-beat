@@ -1,5 +1,6 @@
 import { DateTime } from 'luxon'
-import { BaseModel, column } from '@ioc:Adonis/Lucid/Orm'
+import { BaseModel, belongsTo, BelongsTo, column } from '@ioc:Adonis/Lucid/Orm'
+import FacilityType from 'App/Models/FacilityType'
 
 export default class Facility extends BaseModel {
 	@column({ isPrimary: true })
@@ -58,4 +59,10 @@ export default class Facility extends BaseModel {
 
 	@column.dateTime({ autoCreate: true, autoUpdate: true })
 	public updatedAt: DateTime
+
+	@belongsTo(() => FacilityType, {
+		localKey: 'id',
+		foreignKey: 'facilityTypeId',
+	})
+	public type: BelongsTo<typeof FacilityType>
 }

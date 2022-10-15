@@ -22,6 +22,9 @@ export default class PatientMedicationOrder extends BaseModel {
 	public ivFluidId: number
 
 	@column()
+	public meds: string
+
+	@column()
 	public notes: string
 
 	@column.dateTime({ autoCreate: true })

@@ -98,6 +98,7 @@ export default class PatientMedicationOrdersController extends ApiResponse {
             appointment_id,
             diet_id,
             iv_fluid_id,
+            meds,
             notes
         } = ctx.request.all()
         const patient_id = ctx.request.param('id')
@@ -110,6 +111,7 @@ export default class PatientMedicationOrdersController extends ApiResponse {
                 appointmentId: appointment_id,
                 dietId: diet_id,
                 ivFluidId: iv_fluid_id,
+                meds: meds,
                 notes: notes
             })
 

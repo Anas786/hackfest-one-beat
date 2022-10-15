@@ -90,5 +90,10 @@ Route.get('/', async () => {
 	Route.get('/appointments/:id', 'AppointmentsController.index')
 	Route.post('/appointments', 'AppointmentsController.create')
 	Route.post('/appointments/check_availability', 'AppointmentsController.createcheckAvailability')
+
+	/** ADMISSION ROUTES */
+	Route.get('/admissions', 'AdmissionsController.index')
+	Route.get('/admissions/:id', 'AdmissionsController.index')
+	Route.post('/admissions', 'AdmissionsController.create')
 	
 }).namespace('App/Controllers/Http/V1').prefix('/api/v1').middleware(['auth:api'])

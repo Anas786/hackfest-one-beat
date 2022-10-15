@@ -5,7 +5,7 @@ import "./styles.css";
 import { INavItem } from "types";
 import { GiHospitalCross } from "react-icons/gi";
 import { ImCalendar } from "react-icons/im";
-import { FaDashcube, FaHandHoldingMedical, FaPlus } from "react-icons/fa";
+import { FaDashcube, FaHandHoldingMedical } from "react-icons/fa";
 import { useLocation, useNavigate } from "react-router-dom";
 import { MenuFoldOutlined, MenuUnfoldOutlined } from "@ant-design/icons";
 
@@ -37,7 +37,7 @@ export const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
         <Menu
           theme="dark"
           mode="inline"
-          defaultSelectedKeys={["/patients"]}
+          defaultSelectedKeys={[pathname]}
           items={NAV_ITEMS.map((item) => {
             return {
               key: item.path,

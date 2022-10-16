@@ -10,7 +10,7 @@ function LineChart() {
     <>
       <div className="linechart">
         <div>
-          <Title level={5}>Clinic Admits / Discharged</Title>
+          <Title level={5}>Admits / Discharged</Title>
           <Paragraph className="lastweek">
             than last year <span className="bnb2">+20%</span>
           </Paragraph>

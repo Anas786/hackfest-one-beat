@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Box, Card, Input, useTheme } from "@mui/material";
 import { useAuth, useProfile } from "hooks";
@@ -16,6 +16,11 @@ export const Login = () => {
   const { login } = useAuth();
 
   const { isLoading } = userState;
+
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    if (token) navigate("/dashboard");
+  }, [navigate]);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) =>
     setUser({ ...user, [e.target.name]: e.target.value });

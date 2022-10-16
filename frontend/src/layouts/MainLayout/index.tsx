@@ -57,8 +57,9 @@ export const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
         />
         <div style={{ position: "relative", height: "65vh" }}>
           <Button
-            style={{ position: "absolute", margin: "16px", bottom: "10px", left: 0, right: 0 }}
+            style={{ position: "absolute", margin: "16px", bottom: "10px", left: 0, right: 0, color: "white" }}
             onClick={logout}
+            type={"primary"}
           >
             Logout
           </Button>

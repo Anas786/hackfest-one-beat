@@ -74,6 +74,7 @@ export const AppointmentList: React.FC = () => {
               setShowTransfer(true);
               setSelectedAppointment(record);
             }}
+            type={"primary"}
           >
             Transfer
           </Button>
@@ -96,7 +97,7 @@ export const AppointmentList: React.FC = () => {
     <Card>
       <div style={{ display: "flex", flexDirection: "column", gap: "16px" }}>
         <div style={{ display: "flex", flexDirection: "row-reverse" }}>
-          <Button onClick={() => setShowAddModal(true)}>Create Appointment</Button>
+          <Button type={"primary"} onClick={() => setShowAddModal(true)}>Create Appointment</Button>
         </div>
         <Table columns={columns} dataSource={appointments} onChange={onChange} />
       </div>

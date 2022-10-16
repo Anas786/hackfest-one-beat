@@ -121,13 +121,8 @@ export const PatientsList: React.FC = () => {
     <Card>
       <div style={{ display: "flex", flexDirection: "column", gap: "16px" }}>
         <div style={{ display: "flex", flexDirection: "row-reverse", gap: "10px" }}>
-          <Button onClick={() => setShowAddModal(true)}>Create User</Button>
-          <Search
-            placeholder="Search by MR # or CNIC #"
-            allowClear
-            onSearch={onSearch}
-            style={{ width: "300px" }}
-          />
+          <Button onClick={() => setShowAddModal(true)} style={{ height: "40px" }} type={"primary"}>Create User</Button>
+          <Search placeholder="Search by MR # or CNIC #" onSearch={onSearch} style={{ maxWidth: "300px" }} enterButton="Search" size="large" />
         </div>
         <Table columns={columns} dataSource={patients} onChange={onChange} />
       </div>

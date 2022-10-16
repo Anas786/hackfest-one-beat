@@ -18,7 +18,7 @@ export const MedicationOrder = ({ appointment_id, patient_id }: IMedicationOrder
   const handleSubmit = async () => {
     try {
       const data = form.getFieldsValue();
-      const response = await postMedicationOrder({
+      await postMedicationOrder({
         ...data,
         meds: data.meds.join(","),
         appointment_id,

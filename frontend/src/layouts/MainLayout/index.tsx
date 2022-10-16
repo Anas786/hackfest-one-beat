@@ -1,4 +1,4 @@
-import { Layout, Menu } from "antd";
+import { Button, Layout, Menu } from "antd";
 import React, { ReactNode, useState } from "react";
 import { ReactComponent as Logo } from "images/logo-light.svg";
 import "./styles.css";
@@ -8,6 +8,7 @@ import { ImCalendar } from "react-icons/im";
 import { FaDashcube, FaHandHoldingMedical } from "react-icons/fa";
 import { useLocation, useNavigate } from "react-router-dom";
 import { MenuFoldOutlined, MenuUnfoldOutlined } from "@ant-design/icons";
+import { useAuth } from "hooks";
 
 const { Header, Sider, Content } = Layout;
 
@@ -16,10 +17,16 @@ interface MainLayoutProps {
 }
 
 export const NAV_ITEMS: INavItem[] = [
-  { label: "Dashboard", path: "/dashboard", icon: <FaDashcube /> },
-  { label: "Patients", path: "/patients", icon: <GiHospitalCross /> },
-  { label: "Appointments", path: "/appointments", icon: <ImCalendar /> },
-  { label: "Transfer Forms", path: "/transfer-forms", icon: <FaHandHoldingMedical /> },
+  { label: "Dashboard", path: "/dashboard", icon: <FaDashcube />, show: true },
+  { label: "Patients", path: "/patients", icon: <GiHospitalCross />, show: true },
+  { label: "Appointments", path: "/appointments", icon: <ImCalendar />, show: true },
+  { label: "Transfer Forms", path: "/transfer-forms", icon: <FaHandHoldingMedical />, show: true },
+  {
+    label: "Patient Information",
+    path: "/patients/",
+    icon: <FaHandHoldingMedical />,
+    show: false,
+  },
 ];
 
 export const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
@@ -27,6 +34,7 @@ export const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
 
   const navigate = useNavigate();
   const location = useLocation();
+  const { logout } = useAuth();
 
   const { pathname } = location;
 
@@ -38,7 +46,7 @@ export const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
           theme="dark"
           mode="inline"
           defaultSelectedKeys={[pathname]}
-          items={NAV_ITEMS.map((item) => {
+          items={NAV_ITEMS.filter((item) => item.show).map((item) => {
             return {
               key: item.path,
               icon: item.icon,
@@ -47,6 +55,14 @@ export const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
             };
           })}
         />
+        <div style={{ position: "relative", height: "65vh" }}>
+          <Button
+            style={{ position: "absolute", margin: "16px", bottom: "10px", left: 0, right: 0 }}
+            onClick={logout}
+          >
+            Logout
+          </Button>
+        </div>
       </Sider>
       <Layout className="site-layout">
         <Header
@@ -63,7 +79,7 @@ export const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
             className: "trigger",
             onClick: () => setCollapsed(!collapsed),
           })}
-          <h2>{NAV_ITEMS.find((item) => item.path === pathname)?.label}</h2>
+          <h2>{NAV_ITEMS.find((item) => pathname.includes(item.path))?.label}</h2>
         </Header>
         <Content
           style={{

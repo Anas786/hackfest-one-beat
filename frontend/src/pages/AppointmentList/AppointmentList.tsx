@@ -8,14 +8,6 @@ import { formatDate, SHORTENED_DATE_FORMAT } from "utils/date";
 import { EditOutlined } from "@ant-design/icons";
 import { useNavigate } from "react-router-dom";
 
-interface DataType {
-  key: React.Key;
-  name: string;
-  chinese: number;
-  math: number;
-  english: number;
-}
-
 const onChange: TableProps<IAppointment>["onChange"] = (pagination, filters, sorter, extra) => {
   console.log("params", pagination, filters, sorter, extra);
 };
@@ -72,6 +64,7 @@ export const AppointmentList: React.FC = () => {
         ),
       },
     ],
+    // eslint-disable-next-line
     [appointments]
   );
 

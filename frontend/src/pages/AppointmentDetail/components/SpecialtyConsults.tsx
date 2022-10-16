@@ -25,7 +25,7 @@ export const SpecialtyConsults = ({ appointment_id, patient_id }: ISpecialtyCons
       formdata.append("notes", data.notes || "");
       formdata.append("consults", data.consults.join(","));
 
-      const response = await postSpecialtyConsults(formdata, patient_id);
+      await postSpecialtyConsults(formdata, patient_id);
       toast.success("Specialty Consults Added successfully");
     } catch (e) {
       console.log(e);

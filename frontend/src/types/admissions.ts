@@ -1,0 +1,85 @@
+export interface IAdmissions {
+  id: number;
+  code: string;
+  patient_id: number;
+  appointment_id: number;
+  facility_id: number;
+  referral_facility_id: number;
+  transportation_id: number;
+  bed_type_id: number;
+  eta: string;
+  status: number;
+  notes: null;
+  created_at: string;
+  updated_at: string;
+  patient: {
+    id: number;
+    mr_number: null;
+    first_name: string;
+    middle_name: null;
+    last_name: string;
+    user_name: string;
+    email: null;
+    nic: string;
+    phone: string;
+    category_id: number;
+    gender: string;
+    dob: string;
+    role_id: number;
+    facility_id: null;
+    degree_id: null;
+    specialty_id: null;
+    timezone_id: null;
+    notify: number;
+    two_step_verification: number;
+    is_active: number;
+    remember_me_token: null;
+    created_at: string;
+    updated_at: string;
+  };
+  facility: {
+    id: number;
+    name: string;
+    address: string;
+    address2: null;
+    zip: string;
+    city: string;
+    state: string;
+    country_id: number;
+    latitude: string;
+    longitude: string;
+    facility_type_id: number;
+    phone: string;
+    email: string;
+    representative_name: string;
+    representative_phone: string;
+    representative_email: string;
+    is_active: number;
+    created_at: string;
+    updated_at: string;
+  };
+  transportation: {
+    id: number;
+    name: string;
+    created_at: string;
+    updated_at: string;
+  };
+  appointment: {
+    id: number;
+    code: string;
+    user_id: number;
+    facility_id: number;
+    appointment_date: string;
+    appointment_time: string;
+    doctor_id: number;
+    status: number;
+    created_at: string;
+    updated_at: string;
+  };
+  bed_type: {
+    id: number;
+    name: string;
+    created_at: string;
+    updated_at: string;
+  };
+}

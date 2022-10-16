@@ -4,7 +4,7 @@ import { AppointmentDetail } from "pages/AppointmentDetail";
 import { Dashboard } from "pages/Dashboard";
 import { Login } from "pages/Login";
 import { PatientsList } from "pages/PatientList";
-import { TransferForms } from "pages/TransferForm";
+import { AdmissionsList } from "pages/Admissions";
 import { PatientDetail } from "pages/UserDetail";
 import { IRoute } from "router/types";
 
@@ -16,7 +16,7 @@ export const ADMIN_ROUTES: Array<IRoute> = [
   { path: "dashboard", element: <Dashboard /> },
   { path: "patients", element: <PatientsList /> },
   { path: "appointments", element: <AppointmentList /> },
-  { path: "transfer-forms", element: <TransferForms /> },
+  { path: "transfer-forms", element: <AdmissionsList /> },
   { path: "patients/:patientId", element: <PatientDetail /> },
   { path: "appointments/:appointmentId/:patientId", element: <AppointmentDetail /> },
 ];

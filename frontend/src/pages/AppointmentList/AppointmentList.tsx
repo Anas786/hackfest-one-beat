@@ -7,6 +7,7 @@ import { IAppointment } from "types";
 import { formatDate, SHORTENED_DATE_FORMAT } from "utils/date";
 import { EditOutlined } from "@ant-design/icons";
 import { useNavigate } from "react-router-dom";
+import { Transfer } from "./components/Transfer/Transfer";
 
 interface DataType {
   key: React.Key;
@@ -23,6 +24,8 @@ const onChange: TableProps<IAppointment>["onChange"] = (pagination, filters, sor
 export const AppointmentList: React.FC = () => {
   const [appointments, setAppointments] = useState<Array<IAppointment>>([]);
   const [showAddModal, setShowAddModal] = useState(false);
+  const [showTransfer, setShowTransfer] = useState(false);
+  const [selectedAppointment, setSelectedAppointment] = useState<IAppointment | null>(null);
 
   const navigate = useNavigate();
 
@@ -71,6 +74,19 @@ export const AppointmentList: React.FC = () => {
           </div>
         ),
       },
+      {
+        title: "Transfer",
+        render: (value, record) => (
+          <Button
+            onClick={() => {
+              setShowTransfer(true);
+              setSelectedAppointment(record);
+            }}
+          >
+            Transfer
+          </Button>
+        ),
+      },
     ],
     [appointments]
   );
@@ -93,6 +109,9 @@ export const AppointmentList: React.FC = () => {
       </div>
       <Drawer open={showAddModal} onClose={() => setShowAddModal(false)}>
         <CreateAppointment closeDrawer={() => setShowAddModal(false)} />
+      </Drawer>
+      <Drawer open={showTransfer} onClose={() => setShowTransfer(false)}>
+        <Transfer closeDrawer={() => setShowTransfer(false)} appointment={selectedAppointment!} />
       </Drawer>
     </Card>
   );

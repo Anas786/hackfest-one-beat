@@ -1,6 +1,4 @@
-import React from "react";
 import { Button, Form, Input, Select } from "antd";
-import TextArea from "antd/lib/input/TextArea";
 import { BLOOD_TESTS_OPTIONS, IMAGING_TESTS_OPTIONS, URINE_TESTS_OPTIONS } from "constants/common";
 import { StyledLabel } from "pages/TransferForm/components/Label";
 import { postDiagnosticOrder } from "services";
@@ -25,7 +23,7 @@ export const DiagnosticOrder = ({ appointment_id, patient_id }: IDiagnosticOrder
       formdata.append("urine_tests", data.urine_tests.join(","));
       formdata.append("imaging_tests", data.imaging_tests.join(","));
 
-      const response = await postDiagnosticOrder(formdata, patient_id);
+      await postDiagnosticOrder(formdata, patient_id);
 
       toast.success("Diagnostic Order Added successfully");
     } catch (e) {

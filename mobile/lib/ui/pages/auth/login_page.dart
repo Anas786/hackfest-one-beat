@@ -111,6 +111,7 @@ class _LoginPageState extends State<LoginPage> {
       valueListenable: _uiState,
       builder: (context, value, child) {
         return CustomTextField(
+          initialValue: 'mohsin.raza',
           labelText: AppStrings.username,
           hint: AppStrings.usernameHint,
           keyboardType: TextInputType.text,
@@ -134,6 +135,7 @@ class _LoginPageState extends State<LoginPage> {
           valueListenable: _obsecurePassword,
           builder: (context, value, child) {
             return CustomTextField(
+              initialValue: '12345678',
               labelText: AppStrings.password,
               hint: AppStrings.passwordHint,
               obscureText: value,

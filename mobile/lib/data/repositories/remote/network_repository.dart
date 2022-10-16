@@ -4,6 +4,7 @@ import '../../enums/request_type.dart';
 import '../../models/entities/appointment.dart';
 import '../../models/entities/facility.dart';
 import '../../models/entities/patient.dart';
+import '../../models/network/requests/appointment_request.dart';
 import '../../models/network/requests/auth_request.dart';
 import '../../models/network/requests/patient_request.dart';
 import '../../models/network/responses/auth_response.dart';
@@ -17,6 +18,8 @@ abstract class NetworkRepository {
   Future<Result<Patient>> createPatient(PatientRequest? request);
 
   Future<Result<List<Appointment>>> getAppointments(int? patientId);
+
+  Future<Result<Appointment>> createAppointment(AppointmentRequest? request);
 
   Future<Result<List<Facility>>> getFacilities();
 }
@@ -66,6 +69,25 @@ class NetworkRepositoryImpl extends BaseRepositoryImpl
       );
       return response.parse<List<Appointment>>((data) {
         return Appointment.fromJsonAsList(data);
+      });
+    } catch (e) {
+      return Result.fromError(e);
+    }
+  }
+
+  @override
+  Future<Result<Appointment>> createAppointment(
+    AppointmentRequest? request,
+  ) async {
+    try {
+      final response = await NetworkClient.instance.request(
+        RequestType.post,
+        endpoint: Endpoints.appointments,
+        token: await getAuthToken(),
+        body: request?.toJson(),
+      );
+      return response.parse<Appointment>((data) {
+        return data != null ? Appointment.fromJson(data) : null;
       });
     } catch (e) {
       return Result.fromError(e);

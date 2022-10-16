@@ -3,6 +3,7 @@ import { Route, Routes } from "react-router-dom";
 import { MainLayout } from "layouts/MainLayout";
 import { AdminRoute } from "./components";
 import { ADMIN_ROUTES, PUBLIC_ROUTES } from "./data/routes";
+import { NotFound } from "pages/404";
 
 export const Router: FC = () => {
   return (
@@ -32,6 +33,8 @@ export const Router: FC = () => {
           <Route key={route.path} path={route.path} element={route.element} />
         ))}
       </Route>
+
+      <Route path="*" element={<NotFound />} />
     </Routes>
   );
 };

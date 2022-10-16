@@ -2,9 +2,9 @@ import { FC, ReactNode, useContext, createContext } from "react";
 import { UserContext } from "contexts/UserContext";
 import { INITIAL_AUTH_STATE } from "./constants";
 import { INITIAL_USER_STATE } from "contexts/UserContext/constants";
-import { loginUser, signupUser } from "services/auth/auth";
+import { loginUser } from "services/auth/auth";
 import { IAuthState } from "./types";
-import { ILoginResponse, ILoginUser, ISignupResponse, ISignupUser } from "types";
+import { ILoginResponse, ILoginUser } from "types";
 import { toast } from "react-toastify";
 
 export const AuthContext = createContext<IAuthState>(INITIAL_AUTH_STATE);
@@ -16,31 +16,12 @@ type AuthProviderProps = {
 export const AuthProvider: FC<AuthProviderProps> = ({ children }) => {
   const { userState, setUserState } = useContext(UserContext);
 
-  const signup = async (payload: ISignupUser): Promise<ISignupResponse> => {
-    try {
-      setUserState({ ...userState, isLoading: true });
-      const signUpResponse = await signupUser(payload);
-      const { result, message } = signUpResponse;
-      console.log(message);
-      if (result === "failed") {
-        logout();
-        return signUpResponse;
-      }
-      setUserState({ ...userState, isLoading: false });
-      return signUpResponse;
-    } catch (error) {
-      // TODO handle error
-      logout();
-      throw new Error("Signup failed.");
-    }
-  };
-
   const login = async (payload: ILoginUser): Promise<ILoginResponse> => {
     try {
       setUserState({ ...userState, isLoading: true });
       const logInResponse = await loginUser(payload);
 
-      const { data, message, status } = logInResponse;
+      const { data } = logInResponse;
 
       const { token, user } = data;
 
@@ -60,13 +41,13 @@ export const AuthProvider: FC<AuthProviderProps> = ({ children }) => {
 
   const logout = () => {
     setUserState(INITIAL_USER_STATE);
+    localStorage.clear();
   };
 
   return (
     <AuthContext.Provider
       value={{
         login,
-        signup,
         logout,
       }}
     >

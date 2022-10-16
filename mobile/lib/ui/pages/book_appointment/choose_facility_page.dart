@@ -2,14 +2,18 @@ import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:provider/provider.dart';
 
+import '../../../data/models/ui/page_arguments.dart';
+import '../../../util/constants/route_constants.dart';
 import '../../../util/utilities/common_utils.dart';
 import '../../../util/utilities/dialog_utils.dart';
 import '../../../util/utilities/log_utils.dart';
+import '../../../util/utilities/navigation_utils.dart';
 import '../../dialogs/progress_dialog.dart';
 import '../../helpers/custom_field_helper.dart';
 import '../../resources/app_styles.dart';
 import '../../resources/app_theme.dart';
 import '../../view_models/facility/facility_view_model.dart';
+import '../../widgets/facility_item.dart';
 
 class ChooseFacilityPage extends StatefulWidget {
   const ChooseFacilityPage({Key? key}) : super(key: key);
@@ -66,20 +70,30 @@ class _ChooseFacilityPageState extends State<ChooseFacilityPage> {
     return Column(
       children: [
         _buildSearchBar(),
-        Insets.gapH24,
         Expanded(
           child: Consumer<FacilityViewModel>(
             builder: (context, value, child) {
-              return ListView.separated(
-                itemCount: value.facilities?.length ?? 0,
-                itemBuilder: (context, index) {
-                  final item = value.facilities?.elementAt(index);
-                  LogUtils.info('Facility: ${item?.name}');
-                  return Container();
-                },
-                separatorBuilder: (context, index) {
-                  return Insets.gapW16;
-                },
+              return Padding(
+                padding: const EdgeInsets.all(16.0),
+                child: ListView.separated(
+                  itemCount: value.facilities?.length ?? 0,
+                  itemBuilder: (context, index) {
+                    final item = value.facilities?.elementAt(index);
+                    return FacilityItem(
+                      facility: item,
+                      callback: (item) {
+                        NavigationUtils.push(
+                          context,
+                          RouteConstants.chooseDate,
+                          args: PageArguments(data: item?.id),
+                        );
+                      },
+                    );
+                  },
+                  separatorBuilder: (context, index) {
+                    return Insets.gapH16;
+                  },
+                ),
               );
             },
           ),

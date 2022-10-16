@@ -4,7 +4,6 @@ import { IAuthState } from "./types";
 
 export const INITIAL_AUTH_STATE: IAuthState = {
   login: async () => EMPTY_LOGIN_RESPONSE,
-  signup: async () => EMPTY_SIGNUP_RESPONSE,
   logout: () => {},
 };
 

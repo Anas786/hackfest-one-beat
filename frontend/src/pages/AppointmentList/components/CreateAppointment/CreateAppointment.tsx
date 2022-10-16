@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from "react";
-import { Button, Card, DatePicker, Form, Select, TimePicker } from "antd";
+import { useEffect, useState } from "react";
+import { Button, DatePicker, Form, Select, TimePicker } from "antd";
 import { StyledLabel } from "pages/TransferForm/components/Label";
 import { IDoctor, IPatient } from "types";
 import { facilities } from "pages/TransferForm/utils/constants";
@@ -27,7 +27,7 @@ export const CreateAppointment = ({ closeDrawer }: ICreateAppointmentProps) => {
         appointment_date: getFormattedDate(appointment_date._d),
         appointment_time: getFormattedTime(appointment_time._d),
       };
-      const response = await createAppointment(parsedData);
+      await createAppointment(parsedData);
       toast.success("Appointment created successfully");
       closeDrawer();
     } catch (e) {

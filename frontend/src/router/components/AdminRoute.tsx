@@ -3,11 +3,10 @@ import { Navigate, Outlet } from "react-router-dom";
 import { useProfile } from "hooks";
 
 export const AdminRoute: FC = () => {
-  // const { userState } = useProfile();
-  // const { isLoggedIn, user } = userState;
-  // const { isAdmin } = user;
+  const { userState } = useProfile();
+  const { isLoggedIn } = userState;
 
-  // if (!isLoggedIn || !isAdmin) return <Navigate to="/" replace />;
+  if (!isLoggedIn) return <Navigate to="/login" replace />;
 
   return <Outlet />;
 };

@@ -123,10 +123,10 @@ export const PatientsList: React.FC = () => {
         <div style={{ display: "flex", flexDirection: "row-reverse", gap: "10px" }}>
           <Button onClick={() => setShowAddModal(true)}>Create User</Button>
           <Search
-            placeholder="input search text"
+            placeholder="Search by MR # or CNIC #"
             allowClear
             onSearch={onSearch}
-            style={{ width: "200px" }}
+            style={{ width: "300px" }}
           />
         </div>
         <Table columns={columns} dataSource={patients} onChange={onChange} />

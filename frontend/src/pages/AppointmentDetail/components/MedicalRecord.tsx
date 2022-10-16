@@ -16,7 +16,7 @@ export const MedicalRecord = ({ appointment_id, patient_id }: IMedicalRecordProp
   const handleSubmit = async () => {
     try {
       const data = form.getFieldsValue();
-      const response = await postMedicalOrder({ ...data, appointment_id, patient_id });
+      await postMedicalOrder({ ...data, appointment_id, patient_id });
       toast.success("Medical Record Added successfully");
     } catch (e) {
       console.log(e);

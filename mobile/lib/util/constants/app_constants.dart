@@ -14,5 +14,6 @@ class AppConstants {
   // Date formats
   static const String readableDayFormat = 'dd MMM, yyyy';
   static const String readableTimeFormat = 'hh:mm a';
-  static const dateRequestFormat = 'yyy-MM-dd';
+  static const dateRequestFormat = 'yyyy-MM-dd';
+  static const timeRequestFormat = 'HH:mm:ss';
 }

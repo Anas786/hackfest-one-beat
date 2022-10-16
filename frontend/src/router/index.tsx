@@ -2,10 +2,15 @@ import { FC } from "react";
 import { Route, Routes } from "react-router-dom";
 import { MainLayout } from "layouts/MainLayout";
 import { AdminRoute } from "./components";
-import { ADMIN_ROUTES, PUBLIC_ROUTES } from "./data/routes";
+import { ADMIN_ROUTES, HOSPITAL_ROUTES, PUBLIC_ROUTES } from "./data/routes";
 import { NotFound } from "pages/404";
+import { useProfile } from "hooks";
 
 export const Router: FC = () => {
+  const { userState } = useProfile();
+  const { user } = userState;
+  const { category } = user;
+  const name = category?.name;
   return (
     <Routes>
       {/* PUBLIC ROUTES */}
@@ -29,7 +34,7 @@ export const Router: FC = () => {
           </MainLayout>
         }
       >
-        {ADMIN_ROUTES.map((route) => (
+        {(name === "Hospital" ? HOSPITAL_ROUTES : ADMIN_ROUTES).map((route) => (
           <Route key={route.path} path={route.path} element={route.element} />
         ))}
       </Route>

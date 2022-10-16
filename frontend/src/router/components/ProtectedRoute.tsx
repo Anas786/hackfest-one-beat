@@ -1,12 +1,8 @@
 import { FC } from "react";
 import { Navigate, Outlet } from "react-router-dom";
-import { useProfile } from "hooks";
 
 export const ProtectedRoute: FC = () => {
-  const { userState } = useProfile();
-  const { isLoggedIn } = userState;
-
-  if (!isLoggedIn) return <Navigate to="/" replace />;
-
+  const token = localStorage.getItem("token");
+  if (!token) return <Navigate to="/login" replace />;
   return <Outlet />;
 };

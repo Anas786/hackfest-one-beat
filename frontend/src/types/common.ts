@@ -5,4 +5,5 @@ export interface INavItem {
   path: string;
   icon: JSX.Element;
   show: boolean;
+  withoutHospital?: boolean;
 }

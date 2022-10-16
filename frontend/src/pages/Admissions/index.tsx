@@ -1,9 +1,13 @@
 import React, { useEffect, useState } from "react";
-import { Card, Table, TableProps } from "antd";
+import { Card, Table, TableProps, Tooltip } from "antd";
 import type { ColumnsType } from "antd/es/table";
 import { IAdmissions } from "types";
 import { Loader } from "ui";
 import { fetchAdmissions } from "services/admissions";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faEye } from "@fortawesome/free-solid-svg-icons";
+import { Link } from "react-router-dom";
+import * as Styled from "../Admissions/styled";
 
 const columns: ColumnsType<IAdmissions> = [
   {
@@ -47,6 +51,22 @@ const columns: ColumnsType<IAdmissions> = [
     title: "ETA",
     dataIndex: "eta",
     render: (_, record) => record.eta,
+  },
+  {
+    key: 9,
+    title: "Action",
+    render: (record) => {
+      const { patient_id } = record;
+      return (
+        <Styled.ActionWrapper>
+          <Link to={`/patients/${patient_id}`} className="preview">
+            <Tooltip title="View Details">
+              <FontAwesomeIcon icon={faEye} />
+            </Tooltip>
+          </Link>
+        </Styled.ActionWrapper>
+      );
+    },
   },
 ];
 

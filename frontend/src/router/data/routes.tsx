@@ -1,4 +1,3 @@
-import { ProtectedPage } from "pages";
 import { AppointmentList } from "pages/AppointmentList";
 import { AppointmentDetail } from "pages/AppointmentDetail";
 import { Dashboard } from "pages/Dashboard";
@@ -11,7 +10,7 @@ import { Home } from "pages/Home";
 
 export const PUBLIC_ROUTES: Array<IRoute> = [{ path: "/login", element: <Login /> }];
 
-export const PROTECTED_ROUTES: Array<IRoute> = [{ path: "/protected", element: <ProtectedPage /> }];
+// export const PROTECTED_ROUTES: Array<IRoute> = [{ path: "/protected", element: <ProtectedPage /> }];
 
 export const ADMIN_ROUTES: Array<IRoute> = [
   { path: "/", element: <Home /> },
@@ -21,4 +20,11 @@ export const ADMIN_ROUTES: Array<IRoute> = [
   { path: "transfer-forms", element: <AdmissionsList /> },
   { path: "patients/:patientId", element: <PatientDetail /> },
   { path: "appointments/:appointmentId/:patientId", element: <AppointmentDetail /> },
+];
+
+export const HOSPITAL_ROUTES = [
+  { path: "/", element: <Home /> },
+  { path: "dashboard", element: <Dashboard /> },
+  { path: "transfer-forms", element: <AdmissionsList /> },
+  { path: "patients/:patientId", element: <PatientDetail /> },
 ];

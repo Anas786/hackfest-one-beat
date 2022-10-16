@@ -8,7 +8,7 @@ import { ImCalendar } from "react-icons/im";
 import { FaDashcube, FaHandHoldingMedical } from "react-icons/fa";
 import { useLocation, useNavigate } from "react-router-dom";
 import { MenuFoldOutlined, MenuUnfoldOutlined } from "@ant-design/icons";
-import { useAuth } from "hooks";
+import { useAuth, useProfile } from "hooks";
 
 const { Header, Sider, Content } = Layout;
 
@@ -29,6 +29,17 @@ export const NAV_ITEMS: INavItem[] = [
   },
 ];
 
+export const HOSPITAL_NAV_ITEMS: INavItem[] = [
+  { label: "Dashboard", path: "/dashboard", icon: <FaDashcube />, show: true },
+  { label: "Transfer Forms", path: "/transfer-forms", icon: <FaHandHoldingMedical />, show: true },
+  {
+    label: "Patient Information",
+    path: "/patients/",
+    icon: <FaHandHoldingMedical />,
+    show: false,
+  },
+];
+
 export const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
   const [collapsed, setCollapsed] = useState(false);
 
@@ -38,6 +49,11 @@ export const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
 
   const { pathname } = location;
 
+  const { userState } = useProfile();
+  const { user } = userState;
+  const { category } = user;
+  const name = category?.name;
+
   return (
     <Layout style={{ height: "100vh" }}>
       <Sider width={"250"} collapsedWidth={80} trigger={null} collapsible collapsed={collapsed}>
@@ -46,18 +62,27 @@ export const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
           theme="dark"
           mode="inline"
           defaultSelectedKeys={[pathname]}
-          items={NAV_ITEMS.filter((item) => item.show).map((item) => {
-            return {
-              key: item.path,
-              icon: item.icon,
-              onClick: () => navigate(item.path),
-              label: item.label,
-            };
-          })}
+          items={(name === "Hospital" ? HOSPITAL_NAV_ITEMS : NAV_ITEMS)
+            .filter((item) => item.show)
+            .map((item) => {
+              return {
+                key: item.path,
+                icon: item.icon,
+                onClick: () => navigate(item.path),
+                label: item.label,
+              };
+            })}
         />
-        <div style={{ position: "relative", height: "65vh" }}>
+        <div style={{ position: "relative", height: name === "Hospital" ? "75vh" : "65vh" }}>
           <Button
-            style={{ position: "absolute", margin: "16px", bottom: "10px", left: 0, right: 0, color: "white" }}
+            style={{
+              position: "absolute",
+              margin: "16px",
+              bottom: "10px",
+              left: 0,
+              right: 0,
+              color: "white",
+            }}
             onClick={logout}
             type={"primary"}
           >

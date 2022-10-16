@@ -1,3 +1,5 @@
+import { IBedType, IFacility, ITransportationType } from "pages/TransferForm/utils/types";
+
 export const ADMISSION_STATUS_OPTIONS = [
   { label: "INITIATED", value: 1 },
   { label: "APPROVED", value: 2 },
@@ -56,4 +58,89 @@ export const CONSULT_OPTIONS = [
   { label: "Cardiology", value: 1 },
   { label: "Pulmonology", value: 2 },
   { label: "Nephrology", value: 3 },
+];
+
+export const BED_TYPES: Array<IBedType> = [
+  {
+    id: 2,
+    name: "Intensive Care Unit",
+    created_at: "2022-10-15T17:39:38.000+05:00",
+    updated_at: "2022-10-15T17:39:38.000+05:00",
+  },
+  {
+    id: 3,
+    name: "Intermediate Medical Unit",
+    created_at: "2022-10-15T17:39:38.000+05:00",
+    updated_at: "2022-10-15T17:39:38.000+05:00",
+  },
+  {
+    id: 1,
+    name: "Pediatrics Bed",
+    created_at: "2022-10-15T17:39:38.000+05:00",
+    updated_at: "2022-10-15T17:39:38.000+05:00",
+  },
+];
+
+export const TRANSPORTAT_TYPES: Array<ITransportationType> = [
+  {
+    id: 3,
+    name: "Air Medical Transport",
+    created_at: "2022-10-15T17:39:38.000+05:00",
+    updated_at: "2022-10-15T17:39:38.000+05:00",
+  },
+  {
+    id: 1,
+    name: "Ambulance",
+    created_at: "2022-10-15T17:39:38.000+05:00",
+    updated_at: "2022-10-15T17:39:38.000+05:00",
+  },
+  {
+    id: 2,
+    name: "Personal Transportation",
+    created_at: "2022-10-15T17:39:38.000+05:00",
+    updated_at: "2022-10-15T17:39:38.000+05:00",
+  },
+];
+
+export const ETA = [
+  {
+    id: 1,
+    name: "1 hr",
+  },
+  {
+    id: 2,
+    name: "2 hr",
+  },
+  {
+    id: 5,
+    name: "5 hr",
+  },
+  {
+    id: 7,
+    name: "7 hr",
+  },
+];
+
+export const FACILITIES: Array<IFacility> = [
+  {
+    id: 1,
+    name: "Liaquat National Hospital",
+    address: "National Stadium Rd",
+    address2: null,
+    zip: "74800",
+    city: "Karachi",
+    state: "Sindh",
+    country_id: 167,
+    latitude: "24.89",
+    longitude: "67.07",
+    facility_type_id: 2,
+    phone: "021111456456",
+    email: "info@lnh.edu.pk",
+    representative_name: "Ali Akbar",
+    representative_phone: "+92123456789",
+    representative_email: "aliakbar@lnh.edu.pk",
+    is_active: 1,
+    created_at: "2022-10-15T12:11:36.000+05:00",
+    updated_at: "2022-10-15T12:11:36.000+05:00",
+  },
 ];

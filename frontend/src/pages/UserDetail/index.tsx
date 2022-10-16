@@ -18,6 +18,7 @@ import {
 import { toast } from "react-toastify";
 import { Loader } from "ui";
 import "./styles.css";
+import { DIET_OPTIONS, IV_FLUIDS_OPTIONS } from "constants/common";
 
 export const PatientDetail = () => {
   const { patientId } = useParams();
@@ -192,11 +193,24 @@ const MedicationOrdersPane = (medicationOrders?: Array<IMedicationOrder>) => {
       key: 2,
       title: "Diet Id",
       dataIndex: "diet_id",
+      render: (_: any, record: any) => {
+        const diet = DIET_OPTIONS.find((diet) => diet.value === record.diet_id);
+        return diet?.label || record.diet_id;
+      },
     },
     {
       key: 3,
       title: "IV Fluid Id",
       dataIndex: "iv_fluid_id",
+      render: (_: any, record: any) => {
+        const iv_fluid = IV_FLUIDS_OPTIONS.find((fluid) => fluid.value === record.iv_fluid_id);
+        return iv_fluid?.label || record.diet_id;
+      },
+    },
+    {
+      key: 5,
+      title: "Meds",
+      dataIndex: "meds",
     },
     {
       key: 4,

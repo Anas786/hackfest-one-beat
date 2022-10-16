@@ -42,6 +42,7 @@ export const AuthProvider: FC<AuthProviderProps> = ({ children }) => {
   const logout = () => {
     setUserState(INITIAL_USER_STATE);
     localStorage.clear();
+    window.location.reload();
   };
 
   return (

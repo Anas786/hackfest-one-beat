@@ -1,5 +1,4 @@
 import { apiClient } from "constants/axiosUtils";
-import { IAppointment } from "types";
 
 const VERSION = `/api/v1`;
 const ADMISSION_API = `${VERSION}/admissions`;
